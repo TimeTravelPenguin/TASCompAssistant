@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace TASCompAssistant
 	{
 		// Should this be readonly??
 		private readonly ObservableCollection<Competitor> Competitors = new ObservableCollection<Competitor>();
+		private Graph Graph;
 
 
 		/*	TODO:
@@ -93,7 +95,7 @@ namespace TASCompAssistant
 			Competitors.Clear();
 
 			var r = new Random();
-			for (int i = 1; i <= 10; i++)
+			for (int i = 1; i <= 20; i++)
 			{
 				var start = r.Next(0, 1000);
 				Competitors.Add(new Competitor()
@@ -172,6 +174,20 @@ namespace TASCompAssistant
 		private void Chkbox_SplitDQView_Unchecked(object sender, RoutedEventArgs e)
 		{
 
+		}
+
+		private void TestGraph(object sender, RoutedEventArgs e)
+		{
+			var data = new List<double>();
+
+			foreach (var item in Competitors)
+			{
+				data.Add(item.VIs);
+			}
+
+			Graph = new Graph(data);
+
+			StatisticsGraph.Series = Graph.SeriesCollection;
 		}
 	}
 }

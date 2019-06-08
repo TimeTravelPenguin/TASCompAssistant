@@ -17,3 +17,9 @@ D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\App.b
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Newtonsoft.Json.dll
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Newtonsoft.Json.xml
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.csproj.CopyComplete
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.dll
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.Wpf.dll
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.pdb
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.xml
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.Wpf.pdb
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.Wpf.xml

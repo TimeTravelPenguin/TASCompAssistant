@@ -4,6 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:TASCompAssistant"
+		xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
 		mc:Ignorable="d"
 		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
 		ResizeMode="CanResize" Icon="Icons/QBlock.ico">
@@ -49,6 +50,7 @@
 				</MenuItem>
 				<MenuItem Header="Add Test Data" Click="TestData_Add"/>
 				<MenuItem Header="Test Sort" Click="SortCompetition"/>
+				<MenuItem Header="Test Statistics" Click="TestGraph"/>
 			</Menu>
 			<StackPanel/>
 		</DockPanel>
@@ -169,6 +171,21 @@
 										Width="*"/>
 						</DataGrid.Columns>
 					</DataGrid>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="Statistics">
+				<Grid>
+					<lvc:CartesianChart x:Name="StatisticsGraph"
+										Series="{Binding SeriesCollection}"
+										LegendLocation="Top">
+						<lvc:CartesianChart.AxisY>
+							<lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+						</lvc:CartesianChart.AxisY>
+						<lvc:CartesianChart.AxisX>
+							<lvc:Axis Title="" Labels="{Binding Labels}"></lvc:Axis>
+						</lvc:CartesianChart.AxisX>
+					</lvc:CartesianChart>
 				</Grid>
 			</TabItem>
 
