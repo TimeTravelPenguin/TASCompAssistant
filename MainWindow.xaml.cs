@@ -67,9 +67,6 @@ namespace TASCompAssistant
 					DQReason = "coming soon...", // Fix this later
 				};
 
-				// Calculate Place
-				competitor.Place = 0;
-
 				Competitors.Add(competitor);
 			}
 			catch (Exception ex)
