@@ -1,20 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TASCompAssistant
 {
@@ -23,7 +13,8 @@ namespace TASCompAssistant
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private ObservableCollection<Competitor> Competitors = new ObservableCollection<Competitor>();
+		// Should this be readonly??
+		private readonly ObservableCollection<Competitor> Competitors = new ObservableCollection<Competitor>();
 
 
 		/*	TODO:
@@ -32,19 +23,19 @@ namespace TASCompAssistant
 				- Add check for Competitors for objects with equivilant Username values, to avoid duplicates
 					- On event there is duplicate upon entering via left feild, initiate a yes/no prompt
 					  to determine if you should overwrite the values previously submitted for that username
-				- Fix the sorting algorithm for Competitors in SortCompetition()
 				- Look into using CollectionViewSource rather than ObservableCollection
 				- When doubleclicking a checkbox in the datagrid to edit the value, unles you click away, it doesn't commit the edit.
 				  can we make it so that upon the value change of the text box, the commit occures?
 		*/
-
 
 		public MainWindow()
 		{
 			InitializeComponent();
 
 			// Set up datagrid ItemsSource
-			Datagrid_Competition.ItemsSource = Competitors;
+			var competitors = new ListCollectionView(Competitors);
+			competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
+			Datagrid_Competition.ItemsSource = competitors;
 			Datagrid_Score.ItemsSource = Competitors;
 		}
 
@@ -101,43 +92,17 @@ namespace TASCompAssistant
 		{
 			Competitors.Clear();
 
-			Competitors.Add(new Competitor()
+			var r = new Random();
+			for (int i = 1; i <= 10; i++)
 			{
-				Username = "MKDasher",
-				VIStart = 0,
-				VIEnd = 768
-			});
-			Competitors.Add(new Competitor()
-			{
-				Username = "CeeSZee ",
-				VIStart = 0,
-				VIEnd = 770
-			});
-			Competitors.Add(new Competitor()
-			{
-				Username = "Non5en5e",
-				VIStart = 0,
-				VIEnd = 773
-			});
-			Competitors.Add(new Competitor()
-			{
-				Username = "Rush57",
-				VIStart = 0,
-				VIEnd = 773
-			});
-			Competitors.Add(new Competitor()
-			{
-				Username = "BlackMozart",
-				VIStart = 0,
-				VIEnd = 782
-			});
-			Competitors.Add(new Competitor()
-			{
-				Username = "Krithalith",
-				VIStart = 0,
-				VIEnd = 786
-			});
-
+				var start = r.Next(0, 1000);
+				Competitors.Add(new Competitor()
+				{
+					Username = $"User {i}",
+					VIStart = start,
+					VIEnd = start + r.Next(0, 1000)
+				});
+			}
 
 			string output = JsonConvert.SerializeObject(Competitors);
 			Clipboard.SetText(output);
@@ -145,32 +110,49 @@ namespace TASCompAssistant
 
 		private void SortCompetition(object sender, RoutedEventArgs e)
 		{
-			// THIS CODE IS BAD AND NOT COMPLETE
+			// THIS CODE IS BAD BUT IT WORKS >:(
 
-
-			// Concept:		=== TODO ===
-			// Sort places with 1st place having the smallest TimeInSeconds
-			// If competitor is DQ = True, set their place to LAST. That is, all DQ playes will be
-			// the following placed the number after the non-DQ last place.
+			// Set all DQ's place to total competitors (aka, last place)
+			foreach (var item in Competitors)
+			{
+				if (item.DQ)
+				{
+					item.Place = Competitors.Count;
+				}
+			}
 
 			// Sort by time in seconds
 			var Sorted = new ObservableCollection<Competitor>(Competitors.OrderBy(i => i.TimeInSeconds));
 
-			// Set first place
-			Sorted[0].Place = 1;
-			for (int i = 1; i < Sorted.Count; i++)
+			// Set first place that isn't a dq
+			int place = 0;
+			foreach (var item in Sorted)
 			{
-				if (Sorted[i].TimeInSeconds > Sorted[i - 1].TimeInSeconds)
+				place++;
+				if (!item.DQ)
 				{
-					Sorted[i].Place = i + 1;
-				}
-				else
-				{
-					Sorted[i].Place = Sorted[i - 1].Place;
+					item.Place = 1;
+					break;
 				}
 			}
 
-			// This is bad. Look into this => https://stackoverflow.com/questions/19112922/sort-observablecollectionstring-through-c-sharp
+			// Set the rest of the competitor's place, excluding DQ's competitors
+			for (int i = 1; i < Sorted.Count; i++)
+			{
+				if (!Sorted[i].DQ)
+				{
+					if (Sorted[i].TimeInSeconds > Sorted[i - 1].TimeInSeconds)
+					{
+						Sorted[i].Place = ++place;
+					}
+					else
+					{
+						Sorted[i].Place = place;
+					}
+				}
+			}
+
+			// The following is bad. Look into this => https://stackoverflow.com/questions/19112922/sort-observablecollectionstring-through-c-sharp
 			// This is here because otherwise the event to update UI doesn't trigger. Idk why.
 			// Once a better datatype is chosen, the whole sorting method can be altered to be simpler, and more efficient. See above link.
 			Competitors.Clear();
@@ -178,6 +160,18 @@ namespace TASCompAssistant
 			{
 				Competitors.Add(item);
 			}
+		}
+
+		// Add DQ Grouping to Datagrid
+		private void Chkbox_SplitDQView_Checked(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		// Remove DQ Grouping to Datagrid
+		private void Chkbox_SplitDQView_Unchecked(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

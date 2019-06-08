@@ -5,7 +5,8 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:TASCompAssistant"
 		mc:Ignorable="d"
-		Title="TAS Competition Assistant" Height="376.545" Width="833.518" ResizeMode="CanMinimize" Icon="Icons/QBlock.ico">
+		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
+		ResizeMode="CanResize" Icon="Icons/QBlock.ico">
 
 	<!--
 		TODO:
@@ -30,9 +31,10 @@
 			<!-- This is padding -->
 			<RowDefinition Height="5" />
 			<RowDefinition Height="20" />
-			<RowDefinition Height="1*" />
+			<RowDefinition Height="275" />
+			<RowDefinition Height="*" />
 			<!-- This is padding -->
-			<RowDefinition Height="20" />
+			<RowDefinition Height="30" />
 		</Grid.RowDefinitions>
 
 		<!-- Row 0 -->
@@ -75,23 +77,37 @@
 				  VerticalAlignment="Center"
 				  HorizontalAlignment="Right"
 				  Margin="0,0,5,0"
-				  IsChecked="True"/>
+				  IsChecked="True" Checked="Chkbox_SplitDQView_Checked" Unchecked="Chkbox_SplitDQView_Unchecked"/>
 
 		<!-- Put in tabbed thingee -->
-		<TabControl Grid.Row="2" Grid.RowSpan="2" Grid.Column="2">
+		<TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2">
 			<TabItem Header="Competition Leaderboard">
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
-						ItemsSource="{Binding Path=Competitors}"
-						AutoGenerateColumns="False"
-						Grid.Column="2"
-						Grid.Row="3"
-						IsReadOnly="False"
-						CanUserReorderColumns="False"
-						CanUserResizeRows="False"
-						CanUserResizeColumns="True"
-						CanUserDeleteRows="True">
+							  ItemsSource="{Binding Path=Competitors}"
+							  AutoGenerateColumns="False"
+							  Grid.Column="2"
+							  Grid.Row="3"
+							  HorizontalGridLinesBrush="DarkGray"
+							  VerticalGridLinesBrush="DarkGray"
+							  IsReadOnly="False"
+							  CanUserReorderColumns="False"
+							  CanUserResizeRows="False"
+							  CanUserResizeColumns="True"
+							  CanUserDeleteRows="True"
+							  CanUserAddRows="False">
+						<!-- Grouping Style -->
+						<DataGrid.GroupStyle>
+							<GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+								<GroupStyle.Panel>
+									<ItemsPanelTemplate>
+										<DataGridRowsPresenter/>
+									</ItemsPanelTemplate>
+								</GroupStyle.Panel>
+							</GroupStyle>
+						</DataGrid.GroupStyle>
+						<!-- Column Information -->
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Place"
 										Binding="{Binding Path=Place}"
@@ -132,15 +148,15 @@
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Score -->
 					<DataGrid x:Name="Datagrid_Score"
-						ItemsSource="{Binding Path=Competitors}"
-						AutoGenerateColumns="False"
-						Grid.Column="2"
-						Grid.Row="3"
-						IsReadOnly="True"
-						CanUserReorderColumns="False"
-						CanUserResizeRows="False"
-						CanUserResizeColumns="True"
-						CanUserDeleteRows="True">
+							  ItemsSource="{Binding Path=Competitors}"
+							  AutoGenerateColumns="False"
+							  Grid.Column="2"
+							  Grid.Row="3"
+							  IsReadOnly="True"
+							  CanUserReorderColumns="False"
+							  CanUserResizeRows="False"
+							  CanUserResizeColumns="True"
+							  CanUserDeleteRows="True">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Place"
 										Binding="{Binding Path=Place}"
@@ -161,7 +177,7 @@
 		<!-- Row 3 -->
 
 		<!-- Group Box -->
-		<GroupBox Grid.Row="3" Grid.Column="1">
+		<GroupBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,-2">
 			<GroupBox.Header>
 				<StackPanel Orientation="Horizontal">
 					<Image Source="Icons/Mushroom.ico" Margin="3,0" Height="15"/>
@@ -244,7 +260,7 @@
 								<RowDefinition Height="15" />
 								<RowDefinition Height="20" />
 								<RowDefinition Height="20" />
-								<RowDefinition Height="40" />
+								<RowDefinition Height="45" />
 								<RowDefinition Height="*" />
 							</Grid.RowDefinitions>
 
@@ -291,7 +307,12 @@
 
 		<!-- Row 4 -->
 
+		<!-- Row 5 -->
+
 		<!-- Toolbar -->
-		<ToolBar Grid.Row="4" Grid.ColumnSpan="4" Margin="0,5,0,0"/>
+		<ToolBar Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5,0,0">
+			<TextBlock x:Name="txtBlock_OpenedFile" Text="No file opened..."
+					   FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
+		</ToolBar>
 	</Grid>
 </Window>

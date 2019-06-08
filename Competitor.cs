@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace TASCompAssistant
 {
-	internal class Competitor
+	internal class Competitor : ObservableCollection<Competitor>
 	{
 		public int Place { get; set; }
 		public string Username { get; set; }
@@ -14,6 +14,7 @@ namespace TASCompAssistant
 		public string TimeFormated { get { return GetFormatTime(); } }
 		public int Rerecords { get; set; }
 		public bool DQ { get; set; }
+		public string Qualification { get { return GetQualification(); } }
 		public string DQReason { get; set; }
 		public double Score { get; set; }
 		public int ScorePlace { get; set; }
@@ -31,6 +32,18 @@ namespace TASCompAssistant
 			ScorePlace = 0;
 		}
 
+		private string GetQualification()
+		{
+			if (DQ)
+			{
+				return "Disqualified";
+			}
+			else
+			{
+				return "Qualified";
+			}
+		}
+
 		private double GetTime()
 		{
 			return Math.Round((double)VIs / 60, 3);
@@ -40,7 +53,7 @@ namespace TASCompAssistant
 		{
 			double sec = TimeInSeconds;
 			TimeSpan time = TimeSpan.FromSeconds(sec);
-			string str = string.Empty;
+			string str;
 
 			if (sec < 60)
 			{
