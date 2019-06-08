@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace TASCompAssistant
 {
-	internal class Competitor
-	{
-		public int Place { get; set; }
-		public string Username { get; set; }
-		public int VIStart { get; set; }
-		public int VIEnd { get; set; }
-		public int VIs { get { return VIEnd - VIStart; } }
-		public double TimeInSeconds { get { return GetTime(); } }
-		public string TimeFormated { get { return GetFormatTime(); } }
-		public int Rerecords { get; set; }
-		public bool DQ { get; set; }
-		public string DQReason { get; set; }
-		public double Score { get; set; }
+internal class Competitor
+{
+	public int Place { get; set; } = 0;
+	public string Username { get; set; } = "No username set";
+	public int VIStart { get; set; } = 0;
+	public int VIEnd { get; set; } = 0;
+	public int VIs { get { return VIEnd - VIStart; } }
+	public double TimeInSeconds { get { return GetTime(); } }
+	public string TimeFormated { get { return GetFormatTime(); } }
+	public int Rerecords { get; set; } = 0;
+	public bool DQ { get; set; } = false;
+	public string DQReason { get; set; } = "No DQ Reason given";
+	public double Score { get; set; } = 0;
+	public int ScorePlace { get; set; } = 0;
 
 		private double GetTime()
 		{
@@ -27,22 +25,27 @@ namespace TASCompAssistant
 
 		private string GetFormatTime()
 		{
-			string time = string.Empty;
-
 			double sec = TimeInSeconds;
-			double ms = Math.Round(sec - Math.Floor(sec), 3);
-			var min = Math.Floor(sec) % 60;
+			TimeSpan time = TimeSpan.FromSeconds(sec);
+			string str = string.Empty;
 
 			if (sec < 60)
 			{
-				time = $"{Math.Floor(sec)}\'{ms.ToString().TrimStart("0.".ToCharArray())}";
+				str = time.ToString(@"ss\s\:fff\m\s");
+
 			}
-			else if (sec >= 60)
+			else if (sec < 3600)
 			{
-				time = $"{min}\"{sec}\'{ms}";
+				str = time.ToString(@"mm\m\:ss\s\:fff\m\s");
+
+			}
+			else
+			{
+				str = time.ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
+
 			}
 
-			return time;
+			return str.Replace(':', ' ');
 		}
 	}
 

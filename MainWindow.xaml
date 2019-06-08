@@ -5,44 +5,55 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:TASCompAssistant"
 		mc:Ignorable="d"
-		Title="TAS Competition Assistant" Height="376.545" Width="833.518" ResizeMode="CanMinimize" Loaded="Window_Loaded">
+		Title="TAS Competition Assistant" Height="376.545" Width="833.518" ResizeMode="CanMinimize" Icon="Icons/QBlock.ico">
 
 	<!--
 		TODO:
-			1. Fix error when double clicking a cell to edit the datagrid when IsReadOnly="false"	
+			1. Add DQ Stuff
+			2. Add grouping to the competition datagrid to separate DQ submissions
+				- Source: https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control
 	-->
 
 	<Grid>
+		<!-- Column and Row Definitions to help keep shit neat -->
 		<Grid.ColumnDefinitions>
+			<!-- This is padding -->
 			<ColumnDefinition Width="10" />
 			<ColumnDefinition Width="200" />
 			<ColumnDefinition Width="1*" />
+			<!-- This is padding -->
 			<ColumnDefinition Width="10" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<!-- This is padding -->
 			<RowDefinition Height="20" />
+			<!-- This is padding -->
 			<RowDefinition Height="5" />
 			<RowDefinition Height="20" />
 			<RowDefinition Height="1*" />
-			<RowDefinition Height="0" />
 			<!-- This is padding -->
 			<RowDefinition Height="20" />
 		</Grid.RowDefinitions>
 
+		<!-- Row 0 -->
+
 		<!-- Menu Bar -->
-		<DockPanel Grid.ColumnSpan="5">
+		<DockPanel Grid.Row="0" Grid.ColumnSpan="5">
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_File">
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
 					<MenuItem Header="_Close" Click="MenuItem_File_Exit_Click"/>
 				</MenuItem>
+				<MenuItem Header="Add Test Data" Click="TestData_Add"/>
+				<MenuItem Header="Test Sort" Click="SortCompetition"/>
 			</Menu>
-			<StackPanel></StackPanel>
+			<StackPanel/>
 		</DockPanel>
 
 		<!-- Row 1 -->
+
+		<!-- Row 2 -->
 
 		<!-- Competitor Text -->
 		<!-- Import font so users can see it -->
@@ -50,86 +61,21 @@
 				   VerticalAlignment="Center"
 				   HorizontalAlignment="Center"
 				   FontFamily="{StaticResource MarioOdyssey}"
-				   FontSize="16">
+				   FontSize="14">
 			TASComp Assistant
 		</TextBlock>
 
-		<!-- Group Box -->
-		<GroupBox Grid.Row="3" Grid.Column="1">
-			<GroupBox.Header>
-				<StackPanel Orientation="Horizontal">
-					<!-- Add Image
-					<Image Source="" Margin="3,0" />
-					-->
-					<TextBlock>Add Competitor</TextBlock>
-				</StackPanel>
-			</GroupBox.Header>
-
-			<Grid>
-
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="60" />
-					<ColumnDefinition Width="1*" />
-				</Grid.ColumnDefinitions>
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="1*"/>
-				</Grid.RowDefinitions>
-
-				<TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11">Username:</TextBlock>
-				<TextBox x:Name="txtbox_Username"
-						 Grid.Row="0" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4"/>
-
-				<TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11">Starting VI:</TextBlock>
-				<TextBox x:Name="txtbox_VIStart"
-						 Grid.Row="1" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4"/>
-
-				<TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11">Ending VI:</TextBlock>
-				<TextBox x:Name="txtbox_VIEnd"
-						 Grid.Row="2" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4"/>
-
-				<TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11">Rerecords:</TextBlock>
-				<TextBox x:Name="txtbox_Rerecords"
-						 Grid.Row="3" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4"/>
-
-				<CheckBox x:Name="chkbox_DQ" Grid.Row="4" Grid.Column="0"
-						  VerticalAlignment="Center"
-						  HorizontalAlignment="Center">
-					DQ?
-				</CheckBox>
-
-				<Button x:Name="btn_AddCompetitor" Grid.Row="4" Grid.Column="1" Margin="5,3" Click="btn_AddCompetitor_Click">Add Competitor</Button>
-
-				<!-- DQ Section -->
-				<GroupBox Header="GroupBox Sample" Grid.Row="5" Grid.ColumnSpan="2">
-					<StackPanel>
-						<!-- Add DQ Chkboxes here -->
-						<TextBlock VerticalAlignment="Center"
-								   HorizontalAlignment="Center"
-								   Text="Dummy text"/>
-						<Button Content="Button" Click="Button_Click"/>
-					</StackPanel>
-				</GroupBox>
-
-			</Grid>
-		</GroupBox>
+		<!-- Checkbox to change Competition Leaderboard to display DQs separately -->
+		<!-- ZIndex brings checkbox to front -->
+		<CheckBox x:Name="chkbox_SplitDQView"
+				  Panel.ZIndex="1"
+				  Content="Separate DQs"
+				  Grid.Row="2"
+				  Grid.Column="2" 
+				  VerticalAlignment="Center"
+				  HorizontalAlignment="Right"
+				  Margin="0,0,5,0"
+				  IsChecked="True"/>
 
 		<!-- Put in tabbed thingee -->
 		<TabControl Grid.Row="2" Grid.RowSpan="2" Grid.Column="2">
@@ -137,15 +83,46 @@
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
-							  ItemsSource="{Binding Path=Competitors}"
-							  Grid.Column="2"
-							  Grid.Row="3"
-							  IsReadOnly="False"
-							  CanUserReorderColumns="False"
-							  CanUserResizeRows="False"
-							  CanUserResizeColumns="False"
-							  CanUserDeleteRows="True">
+						ItemsSource="{Binding Path=Competitors}"
+						AutoGenerateColumns="False"
+						Grid.Column="2"
+						Grid.Row="3"
+						IsReadOnly="False"
+						CanUserReorderColumns="False"
+						CanUserResizeRows="False"
+						CanUserResizeColumns="True"
+						CanUserDeleteRows="True" AddingNewItem="Datagrid_Competition_UpdateLeaderboardRankings">
 						<DataGrid.Columns>
+							<DataGridTextColumn Header="Place"
+										Binding="{Binding Path=Place}"
+										Width="45"
+										IsReadOnly="True"/>
+							<DataGridTextColumn Header="Username"
+										Binding="{Binding Path=Username}"
+										Width="120"/>
+							<DataGridTextColumn Header="VIStart"
+										Binding="{Binding Path=VIStart}"
+										Width="Auto"/>
+							<DataGridTextColumn Header="VIEnd"
+										Binding="{Binding Path=VIEnd}"
+										Width="Auto"/>
+							<DataGridTextColumn Header="VIs"
+										Binding="{Binding Path=VIs}"
+										Width="Auto"
+										IsReadOnly="True"/>
+							<DataGridTextColumn Header="Time"
+										Binding="{Binding Path=TimeFormated}"
+										Width="Auto"
+										IsReadOnly="True"/>
+							<DataGridTextColumn Header="Rerecords"
+										Binding="{Binding Path=Rerecords}"
+										Width="Auto"/>
+							<DataGridCheckBoxColumn Header="DQ"
+										Binding="{Binding Path=DQ}"
+										Width="30"/>
+							<DataGridTextColumn Header="DQReason"
+										Binding="{Binding Path=DQReason}"
+										Width="Auto"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
@@ -155,13 +132,166 @@
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Score -->
 					<DataGrid x:Name="Datagrid_Score"
-							  Grid.Column="2"
-							  Grid.Row="3"/>
+						ItemsSource="{Binding Path=Competitors}"
+						AutoGenerateColumns="False"
+						Grid.Column="2"
+						Grid.Row="3"
+						IsReadOnly="True"
+						CanUserReorderColumns="False"
+						CanUserResizeRows="False"
+						CanUserResizeColumns="True"
+						CanUserDeleteRows="True">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Place"
+										Binding="{Binding Path=Place}"
+										Width="45"/>
+							<DataGridTextColumn Header="Username"
+										Binding="{Binding Path=Username}"
+										Width="*"/>
+							<DataGridTextColumn Header="Score"
+										Binding="{Binding Path=ScorePlace}"
+										Width="*"/>
+						</DataGrid.Columns>
+					</DataGrid>
 				</Grid>
 			</TabItem>
+
 		</TabControl>
 
+		<!-- Row 3 -->
+
+		<!-- Group Box -->
+		<GroupBox Grid.Row="3" Grid.Column="1">
+			<GroupBox.Header>
+				<StackPanel Orientation="Horizontal">
+					<Image Source="Icons/Mushroom.ico" Margin="3,0" Height="15"/>
+					<TextBlock FontSize="13">Add Competitor</TextBlock>
+				</StackPanel>
+			</GroupBox.Header>
+
+			<Grid>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="60" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
+				<TextBox x:Name="txtbox_Username"
+						 Grid.Row="0" 
+						 Grid.Column="1"
+						 VerticalAlignment="Center"
+						 Margin="0,4" Grid.ColumnSpan="2"/>
+
+				<TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
+				<TextBox x:Name="txtbox_VIStart"
+						 Grid.Row="1" 
+						 Grid.Column="1"
+						 VerticalAlignment="Center"
+						 Margin="0,4" Grid.ColumnSpan="2"/>
+
+				<TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
+				<TextBox x:Name="txtbox_VIEnd"
+						 Grid.Row="2" 
+						 Grid.Column="1"
+						 VerticalAlignment="Center"
+						 Margin="0,4" Grid.ColumnSpan="2"/>
+
+				<TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
+				<TextBox x:Name="txtbox_Rerecords"
+						 Grid.Row="3" 
+						 Grid.Column="1"
+						 VerticalAlignment="Center"
+						 Margin="0,4" Grid.ColumnSpan="2"/>
+
+				<CheckBox x:Name="chkbox_DQ" 
+						  Content="DQ?"
+						  Grid.Row="4" 
+						  Grid.Column="0"
+						  VerticalAlignment="Center"
+						  HorizontalAlignment="Center" 
+						  Margin="8,5" 
+						  Checked="Chkbox_DQ_ValueChanged" 
+						  Unchecked="Chkbox_DQ_ValueChanged"/>
+
+				<Button x:Name="btn_AddCompetitor" Grid.Row="4" Grid.Column="1" Margin="5,3" Click="btn_AddCompetitor_Click" Grid.ColumnSpan="2">Add Competitor</Button>
+
+				<!-- DQ Section -->
+				<GroupBox Grid.Row="5" Grid.ColumnSpan="3">
+					<GroupBox.Header>
+						<StackPanel Orientation="Horizontal">
+							<Image Source="Icons/Coin.ico" Margin="3,0" Height="15"/>
+							<TextBlock FontSize="13">DQ Reason</TextBlock>
+						</StackPanel>
+					</GroupBox.Header>
+					<StackPanel x:Name="stackPanel_DQReason" IsEnabled="False">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="15" />
+								<RowDefinition Height="20" />
+								<RowDefinition Height="20" />
+								<RowDefinition Height="40" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<!-- Textblock -->
+							<TextBlock Text="Reaons:" Grid.Row="0" Grid.Column="0"/>
+
+							<!-- DQ Checklist combobox -->
+							<ComboBox Text="Please select DQ reason..."
+									  IsReadOnly="True"
+									  IsEditable="True"
+									  Grid.Row="1" 
+									  Grid.Column="0" 
+									  Grid.ColumnSpan="2">
+								<CheckBox Content="Reason Alpha"/>
+								<CheckBox Content="Reason Beta"/>
+								<CheckBox Content="Reason Gamma"/>
+								<CheckBox Content="Reason Delta"/>
+							</ComboBox>
+
+							<!-- Textblock -->
+							<CheckBox x:Name="Chkbox_DQ_Other"
+								Content="Other:"
+									  Grid.Row="2" 
+									  Grid.Column="0" 
+									  IsChecked="False"
+									  VerticalAlignment="Bottom"
+									  Checked="Chkbox_DQ_Other_ValueChanged" 
+									  Unchecked="Chkbox_DQ_Other_ValueChanged"/>
+
+							<!-- "Other" reason textbox -->
+							<TextBox x:Name="txtBox_DQ_Other" 
+									 Grid.Row="3" 
+									 Grid.Column="0" 
+									 Grid.RowSpan="2" 
+									 Grid.ColumnSpan="2"
+									 IsEnabled="False"/>
+
+						</Grid>
+					</StackPanel>
+				</GroupBox>
+
+			</Grid>
+		</GroupBox>
+
+		<!-- Row 4 -->
+
 		<!-- Toolbar -->
-		<ToolBar Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5,0,0"/>
+		<ToolBar Grid.Row="4" Grid.ColumnSpan="4" Margin="0,5,0,0"/>
 	</Grid>
 </Window>

@@ -14,3 +14,6 @@ D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCo
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.exe
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.pdb
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\App.baml
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Newtonsoft.Json.dll
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Newtonsoft.Json.xml
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.csproj.CopyComplete
