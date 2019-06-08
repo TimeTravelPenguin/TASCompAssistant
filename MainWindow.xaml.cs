@@ -34,6 +34,8 @@ namespace TASCompAssistant
 					  to determine if you should overwrite the values previously submitted for that username
 				- Fix the sorting algorithm for Competitors in SortCompetition()
 				- Look into using CollectionViewSource rather than ObservableCollection
+				- When doubleclicking a checkbox in the datagrid to edit the value, unles you click away, it doesn't commit the edit.
+				  can we make it so that upon the value change of the text box, the commit occures?
 		*/
 
 
@@ -146,6 +148,9 @@ namespace TASCompAssistant
 
 		private void SortCompetition(object sender, RoutedEventArgs e)
 		{
+			// THIS CODE IS BAD AND NOT COMPLETE
+
+
 			// Concept:		=== TODO ===
 			// Sort places with 1st place having the smallest TimeInSeconds
 			// If competitor is DQ = True, set their place to LAST. That is, all DQ playes will be

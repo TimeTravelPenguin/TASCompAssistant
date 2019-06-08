@@ -91,7 +91,7 @@
 						CanUserReorderColumns="False"
 						CanUserResizeRows="False"
 						CanUserResizeColumns="True"
-						CanUserDeleteRows="True" AddingNewItem="Datagrid_Competition_UpdateLeaderboardRankings">
+						CanUserDeleteRows="True">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Place"
 										Binding="{Binding Path=Place}"
