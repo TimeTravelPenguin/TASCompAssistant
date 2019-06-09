@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
 
@@ -39,6 +41,19 @@ namespace TASCompAssistant
 			competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
 			Datagrid_Competition.ItemsSource = competitors;
 			Datagrid_Score.ItemsSource = Competitors;
+
+
+			// This is some blackmagic to make menu items appear on the right and not the left for whatever stupid reason microsoft has for doing so
+			var menuDropAlignmentField = typeof(SystemParameters).GetField("_menuDropAlignment", BindingFlags.NonPublic | BindingFlags.Static);
+			Action setAlignmentValue = () =>
+			{
+				if (SystemParameters.MenuDropAlignment && menuDropAlignmentField != null)
+				{
+					menuDropAlignmentField.SetValue(null, false);
+				}
+			};
+			setAlignmentValue();
+			SystemParameters.StaticPropertyChanged += (sender, e) => { setAlignmentValue(); };
 		}
 
 		private void MenuItem_File_Exit_Click(object sender, RoutedEventArgs e)
@@ -178,16 +193,38 @@ namespace TASCompAssistant
 
 		private void TestGraph(object sender, RoutedEventArgs e)
 		{
-			var data = new List<double>();
+			var compdata = new List<double>();
+			var dqdata = new List<double>();
 
 			foreach (var item in Competitors)
 			{
-				data.Add(item.VIs);
+				if (!item.DQ)
+				{
+					compdata.Add(item.VIs);
+				}
+				else if (item.DQ)
+				{
+					dqdata.Add(item.VIs);
+				}
 			}
 
-			Graph = new Graph(data);
+			Graph = new Graph(compdata, dqdata);
 
 			StatisticsGraph.Series = Graph.SeriesCollection;
+		}
+
+		private void DQReasonsProfileEditor_Open(object sender, RoutedEventArgs e)
+		{
+			// Get Profiles
+			var Profiles = new List<DQReasonProfile>()
+			{
+				new DQReasonProfile(){ProfileName = "Test Profile B", DQReasons = new List<string>(){"Reason B1", "Reason B2", "Reason B3"}},
+				new DQReasonProfile(){ProfileName = "Test Profile A", DQReasons = new List<string>(){"Reason A1", "Reason A2", "Reason A3"}},
+				new DQReasonProfile(){ProfileName = "Test Profile C", DQReasons = new List<string>(){"Reason C1", "Reason C2", "Reason C3"}}
+			};
+
+			var Editor = new DQReasonsEditor(Profiles);
+			Editor.Show();
 		}
 	}
 }

@@ -5,6 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:TASCompAssistant"
 		xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		mc:Ignorable="d"
 		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
 		ResizeMode="CanResize" Icon="Icons/QBlock.ico">
@@ -43,11 +44,23 @@
 		<!-- Menu Bar -->
 		<DockPanel Grid.Row="0" Grid.ColumnSpan="5">
 			<Menu DockPanel.Dock="Top">
+				<!-- File -->
 				<MenuItem Header="_File">
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
-					<MenuItem Header="_Close" Click="MenuItem_File_Exit_Click"/>
+					<MenuItem Header="_Close"
+							  Click="MenuItem_File_Exit_Click"/>
 				</MenuItem>
+				<!-- Settings -->
+				<MenuItem Header="_Settings">
+					<MenuItem Header="DQ Reasons Profiles...">
+						<MenuItem Header="Configure DQ Reasons Profile" 
+								  Click="DQReasonsProfileEditor_Open"/>
+						<MenuItem Header="Import DQ Reasons Profile"/>
+						<MenuItem Header="Export DQ Reasons Profile"/>
+					</MenuItem>
+				</MenuItem>
+				<!-- Debug options -->
 				<MenuItem Header="Add Test Data" Click="TestData_Add"/>
 				<MenuItem Header="Test Sort" Click="SortCompetition"/>
 				<MenuItem Header="Test Statistics" Click="TestGraph"/>
@@ -69,20 +82,25 @@
 			TASComp Assistant
 		</TextBlock>
 
-		<!-- Checkbox to change Competition Leaderboard to display DQs separately -->
+
+		<TextBlock Text="Competition:"
+				   Grid.Row="2"
+				   Grid.Column="2"
+				   HorizontalAlignment="Right"
+				   Panel.ZIndex="1"
+				   Margin="0,0,85,0"/>
+
 		<!-- ZIndex brings checkbox to front -->
-		<CheckBox x:Name="chkbox_SplitDQView"
-				  Panel.ZIndex="1"
-				  Content="Separate DQs"
-				  Grid.Row="2"
-				  Grid.Column="2" 
-				  VerticalAlignment="Center"
-				  HorizontalAlignment="Right"
-				  Margin="0,0,5,0"
-				  IsChecked="True" Checked="Chkbox_SplitDQView_Checked" Unchecked="Chkbox_SplitDQView_Unchecked"/>
+		<xctk:IntegerUpDown Name="myUpDownControl" 
+							Grid.Row="2" 
+							Grid.Column="2" 
+							HorizontalAlignment="Right"
+							Width="80"
+							Panel.ZIndex="1"
+							Minimum="1"/>
 
 		<!-- Put in tabbed thingee -->
-		<TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2">
+		<TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Margin="2,0,0,0">
 			<TabItem Header="Competition Leaderboard">
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Competition -->
@@ -290,12 +308,7 @@
 									  IsEditable="True"
 									  Grid.Row="1" 
 									  Grid.Column="0" 
-									  Grid.ColumnSpan="2">
-								<CheckBox Content="Reason Alpha"/>
-								<CheckBox Content="Reason Beta"/>
-								<CheckBox Content="Reason Gamma"/>
-								<CheckBox Content="Reason Delta"/>
-							</ComboBox>
+									  Grid.ColumnSpan="2"/>
 
 							<!-- Textblock -->
 							<CheckBox x:Name="Chkbox_DQ_Other"
