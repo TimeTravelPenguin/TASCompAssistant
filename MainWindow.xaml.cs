@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
 namespace TASCompAssistant
@@ -18,9 +20,7 @@ namespace TASCompAssistant
 	{
 		// Should this be readonly??
 		private readonly ObservableCollection<Competitor> Competitors = new ObservableCollection<Competitor>();
-		private Graph Graph;
-
-
+		
 		/*	TODO:
 				- Error handle & chack that textboxes contain numbers ONLY
 				- Add DQ Reasons
@@ -30,6 +30,7 @@ namespace TASCompAssistant
 				- Look into using CollectionViewSource rather than ObservableCollection
 				- When doubleclicking a checkbox in the datagrid to edit the value, unles you click away, it doesn't commit the edit.
 				  can we make it so that upon the value change of the text box, the commit occures?
+				- Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
 		*/
 
 		public MainWindow()
@@ -44,16 +45,16 @@ namespace TASCompAssistant
 
 
 			// This is some blackmagic to make menu items appear on the right and not the left for whatever stupid reason microsoft has for doing so
-			var menuDropAlignmentField = typeof(SystemParameters).GetField("_menuDropAlignment", BindingFlags.NonPublic | BindingFlags.Static);
-			Action setAlignmentValue = () =>
-			{
-				if (SystemParameters.MenuDropAlignment && menuDropAlignmentField != null)
-				{
-					menuDropAlignmentField.SetValue(null, false);
-				}
-			};
-			setAlignmentValue();
-			SystemParameters.StaticPropertyChanged += (sender, e) => { setAlignmentValue(); };
+			//var menuDropAlignmentField = typeof(SystemParameters).GetField("_menuDropAlignment", BindingFlags.NonPublic | BindingFlags.Static);
+			//Action setAlignmentValue = () =>
+			//{
+			//	if (SystemParameters.MenuDropAlignment && menuDropAlignmentField != null)
+			//	{
+			//		menuDropAlignmentField.SetValue(null, false);
+			//	}
+			//};
+			//setAlignmentValue();
+			//SystemParameters.StaticPropertyChanged += (sender, e) => { setAlignmentValue(); };
 		}
 
 		private void MenuItem_File_Exit_Click(object sender, RoutedEventArgs e)
@@ -208,7 +209,7 @@ namespace TASCompAssistant
 				}
 			}
 
-			Graph = new Graph(compdata, dqdata);
+			var Graph = new Graph(compdata, dqdata);
 
 			StatisticsGraph.Series = Graph.SeriesCollection;
 		}

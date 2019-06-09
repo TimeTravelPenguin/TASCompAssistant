@@ -140,8 +140,5 @@
   <ItemGroup>
     <Resource Include="Icons\QBlock.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="DQReasonProfiles\DQStandards_TASCompetition2019.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

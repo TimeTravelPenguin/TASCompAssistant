@@ -45,7 +45,8 @@
 		<DockPanel Grid.Row="0" Grid.ColumnSpan="5">
 			<Menu DockPanel.Dock="Top">
 				<!-- File -->
-				<MenuItem Header="_File">
+				<MenuItem Header="_File"
+						  >
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
 					<MenuItem Header="_Close"
@@ -179,7 +180,7 @@
 							  CanUserDeleteRows="True">
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Place"
-										Binding="{Binding Path=Place}"
+										Binding="{Binding Path=ScorePlace}"
 										Width="45"/>
 							<DataGridTextColumn Header="Username"
 										Binding="{Binding Path=Username}"
