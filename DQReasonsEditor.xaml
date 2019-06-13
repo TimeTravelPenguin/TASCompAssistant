@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:TASCompAssistant"
 		mc:Ignorable="d"
-		Title="DQReasonsEditor" Height="350" Width="400">
+		Title="DQReasonsEditor" Height="350" Width="320" ResizeMode="NoResize" Icon="Icons/QBlock.ico">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<!-- This is padding -->
@@ -16,30 +16,73 @@
 			<!-- This is padding -->
 			<ColumnDefinition Width="10" />
 		</Grid.ColumnDefinitions>
-		
+
 		<Grid.RowDefinitions>
 			<!-- This is padding -->
 			<RowDefinition Height="10" />
 			<RowDefinition Height="15" />
-			<RowDefinition Height="20" />
+			<RowDefinition Height="15" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="20" />
+			<RowDefinition Height="50" />
 			<!-- This is padding -->
 			<RowDefinition Height="10" />
 		</Grid.RowDefinitions>
 
 		<!-- Row 0 -->
-		
+
 		<!-- Row 1 -->
 		<TextBlock Text="Select Profile:" 
 				   Grid.Row="1" 
 				   Grid.Column="1"/>
-		
-		<ComboBox x:Name="combobox_DQProfiles" Text="Profile..."
+
+		<ComboBox x:Name="combobox_DQProfiles" Text="Profile..." FontSize="11"
+				  ItemsSource="{Binding Path=DQReasonProfiles}"
+				  DisplayMemberPath="ProfileName"
 				  Grid.Row="1" 
 				  Grid.Column="2" 
 				  Margin="0,-2"
 				  IsReadOnly="True"
-				  IsEditable="True"/>
+				  IsEditable="True" SelectionChanged="ComboBox_SelectionChanged" DropDownClosed="ComboBox_DropDownClosed"/>
+
+		<!-- Row 2 -->
+		<!-- Row 3 -->
+
+		<DockPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+			<DataGrid x:Name="datagrid_DQProfile"
+					  ItemsSource="{Binding Path=DQReasonProfiles}"
+					  DisplayMemberPath="DQReasons"
+					  AutoGenerateColumns="False"
+					  HorizontalGridLinesBrush="DarkGray"
+					  VerticalGridLinesBrush="DarkGray"
+					  IsReadOnly="False"
+					  CanUserReorderColumns="False"
+					  CanUserResizeRows="False"
+					  CanUserResizeColumns="True"
+					  CanUserDeleteRows="True"
+					  CanUserAddRows="False">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="DQ Reason"
+										Binding="{Binding DQReasons}"
+										Width="*"
+										IsReadOnly="True"/>
+				</DataGrid.Columns>
+
+			</DataGrid>
+		</DockPanel>
+
+		<!-- Row 4 -->
+
+		<TextBlock Text="Reason Description:" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,3,0,0"/>
+		<Button x:Name="btn_SubmitDQReason" Content="Submit Reason" FontSize="10" Grid.Row="4" Grid.Column="3" Margin="2,2"/>
+
+		<!-- Row 5 -->
+		<TextBox x:Name="txtbox_DQReason" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"
+				 TextWrapping="Wrap"
+				 AcceptsReturn="False"
+				 AcceptsTab="False"
+				 SpellCheck.IsEnabled="True"
+				 VerticalScrollBarVisibility="Auto"/>
 
 	</Grid>
 </Window>

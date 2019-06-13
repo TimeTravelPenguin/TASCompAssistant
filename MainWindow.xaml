@@ -45,12 +45,11 @@
 		<DockPanel Grid.Row="0" Grid.ColumnSpan="5">
 			<Menu DockPanel.Dock="Top">
 				<!-- File -->
-				<MenuItem Header="_File"
-						  >
+				<MenuItem Header="_File">
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
 					<MenuItem Header="_Close"
-							  Click="MenuItem_File_Exit_Click"/>
+							  Click="btn_Exit_Click"/>
 				</MenuItem>
 				<!-- Settings -->
 				<MenuItem Header="_Settings">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,26 +20,52 @@ namespace TASCompAssistant
 	/// </summary>
 	public partial class DQReasonsEditor : Window
 	{
-		private List<DQReasonProfile> Profiles = new List<DQReasonProfile>();
+		public ObservableCollection<DQReasonProfile> DQReasonProfiles = new ObservableCollection<DQReasonProfile>();
 
-		public DQReasonsEditor(List<DQReasonProfile> profiles)
+		/*	TODO:
+				- Add right click fuctions for delete reason & to copy reason to another profile
+		 */
+
+		public DQReasonsEditor(ObservableCollection<DQReasonProfile> profiles)
 		{
 			InitializeComponent();
 
 			// Sort Alphabetically
-			Profiles = profiles.OrderBy(x => x.ProfileName).ToList();
+			var Sorted = new ObservableCollection<DQReasonProfile>(profiles.OrderBy(i => i.ProfileName));
 
-			LoadProfiles();
+			DQReasonProfiles = Sorted;
+
+			// Set up ItemsSource bindings
+			combobox_DQProfiles.ItemsSource = DQReasonProfiles;
+			datagrid_DQProfile.ItemsSource = DQReasonProfiles[0].DQReasons;
+
+			SetDatagridSource(0);
 		}
 
-		private void LoadProfiles()
+		// I have no idea how any of this works, but it handles the combobox
+		private void SetDatagridSource(int selectedIndex)
 		{
-			combobox_DQProfiles.Items.Clear();
-
-			foreach (var profile in Profiles)
+			if (selectedIndex >= 0)
 			{
-				combobox_DQProfiles.Items.Add(profile.ProfileName);
+				datagrid_DQProfile.ItemsSource = DQReasonProfiles[selectedIndex].DQReasons;
 			}
+		}
+
+		private bool handle = true;
+		private void ComboBox_DropDownClosed(object sender, EventArgs e)
+		{
+			if (handle)
+			{
+				SetDatagridSource(combobox_DQProfiles.SelectedIndex);
+			}
+			handle = true;
+		}
+
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			ComboBox cmb = sender as ComboBox;
+			handle = !cmb.IsDropDownOpen;
+			SetDatagridSource(combobox_DQProfiles.SelectedIndex);
 		}
 	}
 }

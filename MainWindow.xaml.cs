@@ -20,7 +20,8 @@ namespace TASCompAssistant
 	{
 		// Should this be readonly??
 		private readonly ObservableCollection<Competitor> Competitors = new ObservableCollection<Competitor>();
-		
+		private ObservableCollection<DQReasonProfile> DQReasonProfiles = new ObservableCollection<DQReasonProfile>();
+
 		/*	TODO:
 				- Error handle & chack that textboxes contain numbers ONLY
 				- Add DQ Reasons
@@ -36,6 +37,10 @@ namespace TASCompAssistant
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			// Initialise defualt dq reasons profiles
+			DQReasonProfiles.Add(new DQReasonProfile().DefaultProfile());
+
 
 			// Set up datagrid ItemsSource
 			var competitors = new ListCollectionView(Competitors);
@@ -57,7 +62,7 @@ namespace TASCompAssistant
 			//SystemParameters.StaticPropertyChanged += (sender, e) => { setAlignmentValue(); };
 		}
 
-		private void MenuItem_File_Exit_Click(object sender, RoutedEventArgs e)
+		private void btn_Exit_Click(object sender, RoutedEventArgs e)
 		{
 			Environment.Exit(0);
 		}
@@ -216,16 +221,9 @@ namespace TASCompAssistant
 
 		private void DQReasonsProfileEditor_Open(object sender, RoutedEventArgs e)
 		{
-			// Get Profiles
-			var Profiles = new List<DQReasonProfile>()
-			{
-				new DQReasonProfile(){ProfileName = "Test Profile B", DQReasons = new List<string>(){"Reason B1", "Reason B2", "Reason B3"}},
-				new DQReasonProfile(){ProfileName = "Test Profile A", DQReasons = new List<string>(){"Reason A1", "Reason A2", "Reason A3"}},
-				new DQReasonProfile(){ProfileName = "Test Profile C", DQReasons = new List<string>(){"Reason C1", "Reason C2", "Reason C3"}}
-			};
-
-			var Editor = new DQReasonsEditor(Profiles);
+			var Editor = new DQReasonsEditor(DQReasonProfiles);
 			Editor.Show();
+			DQReasonProfiles = Editor.DQReasonProfiles;
 		}
 	}
 }
