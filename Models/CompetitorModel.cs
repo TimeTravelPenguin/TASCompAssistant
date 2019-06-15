@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace TASCompAssistant.Models
 {
-	internal class Competitor : ObservableCollection<Competitor>
+	internal class CompetitorModel : ObservableCollection<CompetitorModel>
 	{
 		public int Place { get; set; }
 		public string Username { get; set; }
 		public int VIStart { get; set; }
 		public int VIEnd { get; set; }
-		public int VIs { get { return VIEnd - VIStart; } }
-		public double TimeInSeconds { get { return GetTime(); } }
-		public string TimeFormated { get { return GetFormatTime(); } }
+		public int VIs { get => VIEnd - VIStart; }
+		public double TimeInSeconds { get => GetTime(); }
+		public string TimeFormated { get => GetFormatTime(); }
 		public int Rerecords { get; set; }
 		public bool DQ { get; set; }
-		public string Qualification { get { return GetQualification(); } }
-		public string DQReason { get; set; }
+		public string Qualification { get => GetQualification(); }
+		public List<string> DQReasons { get; set; }
 		public double Score { get; set; }
 		public int ScorePlace { get; set; }
 
-		public Competitor()
+		public CompetitorModel()
 		{
 			Place = 0;
 			Username = "No username set";
@@ -27,7 +28,7 @@ namespace TASCompAssistant.Models
 			VIEnd = 0;
 			Rerecords = 0;
 			DQ = false;
-			DQReason = string.Empty;
+			DQReasons = new List<string>();
 			Score = 0;
 			ScorePlace = 0;
 		}

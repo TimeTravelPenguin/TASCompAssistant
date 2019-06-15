@@ -1,15 +1,98 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
 using TASCompAssistant.Models;
+using Microsoft.Expression.Interactivity.Core;
+using System.Collections.Generic;
+using TASCompAssistant.ViewModels.Commands;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace TASCompAssistant.ViewModels
 {
-	class MainWindowViewModel
+	class MainWindowViewModel : PropertyChangedBase
 	{
-		// Should this be readonly??
-		private ObservableCollection<Competitor> Competitors { get; } = new ObservableCollection<Competitor>();
-		private ObservableCollection<DQReasonProfile> DQReasonProfiles { get; } = new ObservableCollection<DQReasonProfile>();
+		// This holds all the competitor data. This is used for ranking and scoring.
+		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
+		// and to allow for the scoring system to score all the points over all the previous competitions
+		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
+
+		// Contains all the DQ Reasons
+		public DQReasonsProfileModel DQReasons { get; } = new DQReasonsProfileModel();   // This is initialized as a default profile
+		public List<CheckBox> DQCheckBoxes
+		{
+			get
+			{
+				var dqs = new List<CheckBox>();
+				foreach (var dq in DQReasons.DQReasons)
+				{
+					dqs.Add(new CheckBox() { Content = dq });
+				}
+
+				return dqs;
+			}
+		}
+
+		//Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
+		public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } = new ObservableCollection<DQReasonsProfileModel>();
+
+		public ActionCommand AddCompetitorCommand { get; }
+		public ActionCommand AddDQReasonCommand { get; }
+
+		#region Properties for Adding Competitors
+
+		private string _username;
+		public string Username
+		{
+			get => _username;
+			set => SetValue(ref _username, value);
+		}
+
+		private int _viStart;
+		public int VIStart
+		{
+			get => _viStart;
+			set => SetValue(ref _viStart, value);
+		}
+
+		private int _viEnd;
+		public int VIEnd
+		{
+			get => _viEnd;
+			set => SetValue(ref _viEnd, value);
+		}
+
+		private int _rerecords;
+		public int Rerecords
+		{
+			get => _rerecords;
+			set => SetValue(ref _rerecords, value);
+		}
+
+		public bool _dq;
+		public bool DQ
+		{
+			get => _dq;
+			set => SetValue(ref _dq, value);
+		}
+
+		public bool _dqOther;
+		public bool DQOther
+		{
+			get => _dqOther;
+			set => SetValue(ref _dqOther, value);
+		}
+
+		private List<string> _dqOtherReason;
+		public List<string> DQOtherReason
+		{
+			get => _dqOtherReason;
+			set => SetValue(ref _dqOtherReason, value);
+		}
+
+		#endregion
+
+		public ListCollectionView DisqualificationGrouping { get; set; }
 
 		/*	TODO:
 				- Error handle & chack that textboxes contain numbers ONLY
@@ -26,12 +109,26 @@ namespace TASCompAssistant.ViewModels
 		//TODO: Code initilization
 		public MainWindowViewModel()
 		{
-			// Initialise defualt dq reasons profiles
-			DQReasonProfiles.Add(new DQReasonProfile().DefaultProfile());
 
+			// Initialize the default DQProfile
+			DQReasons.SetProfileDefaults();
+			DQProfiles.Add(DQReasons);
+
+			AddCompetitorCommand = new ActionCommand(() => Competitors.Add(new CompetitorModel
+			{
+				Username = Username,
+				VIStart = VIStart,
+				VIEnd = VIEnd,
+				Rerecords = Rerecords,
+				DQ = DQ,
+				DQReasons = new List<string>() { "Feature in development" } // How do I turn the selected check boxes + Other DQ Text textbox into a List<string>? How do I make it editable in the datagrid?
+																			// Should the datagrid have a combobox of DQ reasons or something?? How do I do this??
+			}));
 
 			// Set up datagrid ItemsSource
-			//competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
+			// How do you bind to this as a property so that you can clear and add groupings?
+			var competitors = new ListCollectionView(Competitors);
+			competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
 			//Datagrid_Score.ItemsSource = Competitors;
 		}
 

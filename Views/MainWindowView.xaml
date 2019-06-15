@@ -109,6 +109,7 @@
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
 							  ItemsSource="{Binding Competitors}"
+							  BindingGroup="{Binding DisqualificationGrouping}"
 							  AutoGenerateColumns="False"
 							  Grid.Column="2"
 							  Grid.Row="3"
@@ -160,7 +161,7 @@
 										Binding="{Binding Path=DQ}"
 										Width="30"/>
 							<DataGridTextColumn Header="DQReason"
-										Binding="{Binding Path=DQReason}"
+										Binding="{Binding Path=DQReasons}"
 										Width="Auto"/>
 						</DataGrid.Columns>
 					</DataGrid>
@@ -241,6 +242,7 @@
 
 				<TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
 				<TextBox x:Name="txtbox_Username"
+						 Text="{Binding Path=Username}"
 						 Grid.Row="0" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -248,6 +250,7 @@
 
 				<TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
 				<TextBox x:Name="txtbox_VIStart"
+						 Text="{Binding Path=VIStart}"
 						 Grid.Row="1" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -255,6 +258,7 @@
 
 				<TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
 				<TextBox x:Name="txtbox_VIEnd"
+						 Text="{Binding Path=VIEnd}"
 						 Grid.Row="2" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -262,6 +266,7 @@
 
 				<TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
 				<TextBox x:Name="txtbox_Rerecords"
+						 Text="{Binding Path=Rerecords}"
 						 Grid.Row="3" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -269,6 +274,7 @@
 
 				<CheckBox x:Name="chkbox_DQ" 
 						  Content="DQ?"
+						  IsChecked="{Binding Path=DQ}"
 						  Grid.Row="4" 
 						  Grid.Column="0"
 						  VerticalAlignment="Center"
@@ -280,7 +286,8 @@
 						Grid.Column="1"
 						Grid.ColumnSpan="2"
 						Margin="5,3"
-						Content="Add Competitor"/>
+						Content="Add Competitor"
+						Command="{Binding AddCompetitorCommand}"/>
 
 				<!-- DQ Section -->
 				<GroupBox Grid.Row="5" Grid.ColumnSpan="3">
@@ -290,7 +297,7 @@
 							<TextBlock FontSize="13">DQ Reason</TextBlock>
 						</StackPanel>
 					</GroupBox.Header>
-					<StackPanel x:Name="stackPanel_DQReason" IsEnabled="False">
+					<StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding Path=DQ}">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
@@ -310,6 +317,7 @@
 
 							<!-- DQ Checklist combobox -->
 							<ComboBox Text="Please select DQ reason..."
+									  ItemsSource="{Binding DQCheckBoxes}"
 									  IsReadOnly="True"
 									  IsEditable="True"
 									  Grid.Row="1" 
@@ -318,19 +326,20 @@
 
 							<!-- Textblock -->
 							<CheckBox x:Name="Chkbox_DQ_Other"
-								Content="Other:"
+									  Content="Other:"
+									  IsChecked="{Binding DQOther}"
 									  Grid.Row="2" 
-									  Grid.Column="0" 
-									  IsChecked="False"
+									  Grid.Column="0"
 									  VerticalAlignment="Bottom"/>
 
 							<!-- "Other" reason textbox -->
 							<TextBox x:Name="txtBox_DQ_Other" 
+									 Text="{Binding DQOtherReason}"
+									 IsEnabled="{Binding DQOther}"
 									 Grid.Row="3" 
 									 Grid.Column="0" 
 									 Grid.RowSpan="2" 
-									 Grid.ColumnSpan="2"
-									 IsEnabled="False"/>
+									 Grid.ColumnSpan="2"/>
 
 						</Grid>
 					</StackPanel>

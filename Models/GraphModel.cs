@@ -11,13 +11,13 @@ using System.Windows.Media;
 
 namespace TASCompAssistant.Models
 {
-	class Graph
+	class GraphModel
 	{
 		public ChartValues<ObservablePoint> CompetitionData = new ChartValues<ObservablePoint>();
 		public ChartValues<ObservablePoint> DQData = new ChartValues<ObservablePoint>();
 		public SeriesCollection SeriesCollection { get; set; }
 
-		public Graph(List<double> competitionData, List<double> dqData)
+		public GraphModel(List<double> competitionData, List<double> dqData)
 		{
 			ParseData(competitionData, dqData);
 

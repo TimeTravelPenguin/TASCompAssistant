@@ -10,7 +10,7 @@ namespace TASCompAssistant.ViewModels
 {
 	public class DQReasonsEditorViewModel
 	{
-		public ObservableCollection<DQReasonProfile> DQReasonProfiles { get; } = new ObservableCollection<DQReasonProfile>();
+		public ObservableCollection<DQReasonsProfileModel> DQReasonProfiles { get; } = new ObservableCollection<DQReasonsProfileModel>();
 
 		/*	TODO:
 				- Add right click fuctions for delete reason & to copy reason to another profile
