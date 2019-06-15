@@ -15,7 +15,7 @@ namespace TASCompAssistant.ViewModels
 		// This holds all the competitor data. This is used for ranking and scoring.
 		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
 		// and to allow for the scoring system to score all the points over all the previous competitions
-		public ObservableCollection<CompetitorModel> Competitors { get; set; } = new ObservableCollection<CompetitorModel>();
+		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
 		public CollectionViewSource CompetitorCollectionView { get; } = new CollectionViewSource();
 
 		//public ListCollectionView CompetitorsCollectionView { get; }
@@ -165,7 +165,7 @@ namespace TASCompAssistant.ViewModels
 			// Command to sort data
 			SortDataCommand = new ActionCommand(() => SortCompetition());
 
-			// Set up datagrid ItemsSource
+			// Set up datagrid grouping
 			//CompetitorsCollectionView = new ListCollectionView(Competitors);
 			//CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 			CompetitorCollectionView.Source = Competitors;
