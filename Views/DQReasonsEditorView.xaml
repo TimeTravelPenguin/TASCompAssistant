@@ -1,11 +1,12 @@
-﻿<Window x:Class="TASCompAssistant.DQReasonsEditor"
+﻿<Window x:Class="TASCompAssistant.Views.DQReasonsEditorView"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:TASCompAssistant"
+		xmlns:local="clr-namespace:TASCompAssistant.Views"
 		mc:Ignorable="d"
-		Title="DQReasonsEditor" Height="350" Width="320" ResizeMode="NoResize" Icon="Icons/QBlock.ico">
+		Title="DQReasonsEditor" Height="350" Width="320" ResizeMode="NoResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
+
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<!-- This is padding -->
@@ -43,7 +44,7 @@
 				  Grid.Column="2" 
 				  Margin="0,-2"
 				  IsReadOnly="True"
-				  IsEditable="True" SelectionChanged="ComboBox_SelectionChanged" DropDownClosed="ComboBox_DropDownClosed"/>
+				  IsEditable="True"/>
 
 		<!-- Row 2 -->
 		<!-- Row 3 -->
@@ -65,7 +66,8 @@
 					<DataGridTextColumn Header="DQ Reason"
 										Binding="{Binding DQReasons}"
 										Width="*"
-										IsReadOnly="True"/>
+										IsReadOnly="True"
+										SortDirection="Descending"/>
 				</DataGrid.Columns>
 
 			</DataGrid>

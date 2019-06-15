@@ -2,11 +2,9 @@ D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\TASCo
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\TASCompAssistant.exe
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\TASCompAssistant.pdb
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.csprojAssemblyReference.cache
-D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\MainWindow.g.cs
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\App.g.cs
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant_MarkupCompile.cache
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant_MarkupCompile.lref
-D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\MainWindow.baml
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.g.resources
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.Properties.Resources.resources
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.csproj.GenerateResource.cache
@@ -23,8 +21,6 @@ D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveC
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.xml
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.Wpf.pdb
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\LiveCharts.Wpf.xml
-D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\DQReasonsEditor.g.cs
-D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\DQReasonsEditor.baml
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Xceed.Wpf.AvalonDock.dll
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
 D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
@@ -82,3 +78,8 @@ C:\Users\filup\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj
 C:\Users\filup\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.csproj.CopyComplete
 C:\Users\filup\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.exe
 C:\Users\filup\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\TASCompAssistant.pdb
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\Views\DQReasonsEditorView.g.cs
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\Views\MainWindowView.g.cs
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\Views\DQReasonsEditorView.baml
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\Views\MainWindowView.baml
+D:\Dropbox (MJ Smith)\My Stuff\C#\TASCompAssist\TASCompAssistant\obj\Debug\GeneratedInternalTypeHelper.g.cs

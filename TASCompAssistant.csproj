@@ -80,11 +80,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="DQReasonsEditor.xaml">
+    <Page Include="Views\DQReasonsEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -92,14 +92,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Competitor.cs" />
-    <Compile Include="DQReasonProfile.cs" />
-    <Compile Include="DQReasonsEditor.xaml.cs">
-      <DependentUpon>DQReasonsEditor.xaml</DependentUpon>
+    <Compile Include="Models\Competitor.cs" />
+    <Compile Include="Models\DQReasonProfile.cs" />
+    <Compile Include="ViewModels\DQReasonsEditorViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\DQReasonsEditorView.xaml.cs">
+      <DependentUpon>DQReasonsEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Graph.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Models\Graph.cs" />
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -139,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\QBlock.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

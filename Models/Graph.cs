@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace TASCompAssistant
+namespace TASCompAssistant.Models
 {
 	class Graph
 	{

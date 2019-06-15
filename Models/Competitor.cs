@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace TASCompAssistant
+namespace TASCompAssistant.Models
 {
 	internal class Competitor : ObservableCollection<Competitor>
 	{

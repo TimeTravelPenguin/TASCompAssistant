@@ -1,26 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using TASCompAssistant.Models;
 
-namespace TASCompAssistant
+namespace TASCompAssistant.ViewModels
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+	class MainWindowViewModel
 	{
 		// Should this be readonly??
-		private readonly ObservableCollection<Competitor> Competitors = new ObservableCollection<Competitor>();
-		private ObservableCollection<DQReasonProfile> DQReasonProfiles = new ObservableCollection<DQReasonProfile>();
+		private ObservableCollection<Competitor> Competitors { get; } = new ObservableCollection<Competitor>();
+		private ObservableCollection<DQReasonProfile> DQReasonProfiles { get; } = new ObservableCollection<DQReasonProfile>();
 
 		/*	TODO:
 				- Error handle & chack that textboxes contain numbers ONLY
@@ -34,41 +23,30 @@ namespace TASCompAssistant
 				- Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
 		*/
 
-		public MainWindow()
+		//TODO: Code initilization
+		public MainWindowViewModel()
 		{
-			InitializeComponent();
-
 			// Initialise defualt dq reasons profiles
 			DQReasonProfiles.Add(new DQReasonProfile().DefaultProfile());
 
 
 			// Set up datagrid ItemsSource
-			var competitors = new ListCollectionView(Competitors);
-			competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
-			Datagrid_Competition.ItemsSource = competitors;
-			Datagrid_Score.ItemsSource = Competitors;
-
-
-			// This is some blackmagic to make menu items appear on the right and not the left for whatever stupid reason microsoft has for doing so
-			//var menuDropAlignmentField = typeof(SystemParameters).GetField("_menuDropAlignment", BindingFlags.NonPublic | BindingFlags.Static);
-			//Action setAlignmentValue = () =>
-			//{
-			//	if (SystemParameters.MenuDropAlignment && menuDropAlignmentField != null)
-			//	{
-			//		menuDropAlignmentField.SetValue(null, false);
-			//	}
-			//};
-			//setAlignmentValue();
-			//SystemParameters.StaticPropertyChanged += (sender, e) => { setAlignmentValue(); };
+			//competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
+			//Datagrid_Score.ItemsSource = Competitors;
 		}
 
+		/* TODO: Code button to exit program
 		private void btn_Exit_Click(object sender, RoutedEventArgs e)
 		{
 			Environment.Exit(0);
 		}
+		*/
 
-		private void btn_AddCompetitor_Click(object sender, RoutedEventArgs e)
+		// TODO: Code button to add competitor to datagrid
+		private void AddCompetitor()
 		{
+			#region Old code
+			/*
 			try // Do real error handling when you figure out how to
 			{
 				var competitor = new Competitor()
@@ -87,20 +65,12 @@ namespace TASCompAssistant
 			{
 				MessageBox.Show($"There was an error:\n{ex.Message}");
 			}
+			*/
+			#endregion
+
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			string msg = string.Empty;
-
-			foreach (var item in Competitors)
-			{
-				msg += $"{item.Username}   DQ: {item.DQ}" + Environment.NewLine;
-			}
-
-			MessageBox.Show(msg);
-		}
-
+		/* TODO: Enable/Disable DQ Reason stackpanel
 		private void Chkbox_DQ_ValueChanged(object sender, RoutedEventArgs e)
 		{
 			stackPanel_DQReason.IsEnabled = chkbox_DQ.IsChecked.Value;
@@ -110,7 +80,9 @@ namespace TASCompAssistant
 		{
 			txtBox_DQ_Other.IsEnabled = Chkbox_DQ_Other.IsChecked.Value;
 		}
+		*/
 
+		/* TODO: On press, add test data to datagrid
 		private void TestData_Add(object sender, RoutedEventArgs e)
 		{
 			Competitors.Clear();
@@ -126,11 +98,12 @@ namespace TASCompAssistant
 					VIEnd = start + r.Next(0, 1000)
 				});
 			}
-
 			string output = JsonConvert.SerializeObject(Competitors);
 			Clipboard.SetText(output);
 		}
+		*/
 
+		/* TODO: On Competitors change, rank the contestants ==> Don't neccissarily auto sort by rank
 		private void SortCompetition(object sender, RoutedEventArgs e)
 		{
 			// THIS CODE IS BAD BUT IT WORKS >:(
@@ -184,7 +157,9 @@ namespace TASCompAssistant
 				Competitors.Add(item);
 			}
 		}
+		*/
 
+		/* TODO: On checkbox change, enable/disable datagrid grouping
 		// Add DQ Grouping to Datagrid
 		private void Chkbox_SplitDQView_Checked(object sender, RoutedEventArgs e)
 		{
@@ -196,7 +171,9 @@ namespace TASCompAssistant
 		{
 
 		}
+		*/
 
+		/* TODO: Set the graph to display rankings of the competition datagrid => plot VIs/Place
 		private void TestGraph(object sender, RoutedEventArgs e)
 		{
 			var compdata = new List<double>();
@@ -218,12 +195,15 @@ namespace TASCompAssistant
 
 			StatisticsGraph.Series = Graph.SeriesCollection;
 		}
+		*/
 
+		/* TODO: Open the DQResonsProfileEditorView
 		private void DQReasonsProfileEditor_Open(object sender, RoutedEventArgs e)
 		{
 			var Editor = new DQReasonsEditor(DQReasonProfiles);
 			Editor.Show();
 			DQReasonProfiles = Editor.DQReasonProfiles;
 		}
+		*/
 	}
 }
