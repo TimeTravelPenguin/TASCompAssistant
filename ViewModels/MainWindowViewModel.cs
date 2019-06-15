@@ -15,8 +15,10 @@ namespace TASCompAssistant.ViewModels
 		// This holds all the competitor data. This is used for ranking and scoring.
 		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
 		// and to allow for the scoring system to score all the points over all the previous competitions
-		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
-		public ListCollectionView CollectionView { get; }
+		public ObservableCollection<CompetitorModel> Competitors { get; set; } = new ObservableCollection<CompetitorModel>();
+		public CollectionViewSource CompetitorCollectionView { get; } = new CollectionViewSource();
+
+		//public ListCollectionView CompetitorsCollectionView { get; }
 
 
 		// Contains all the DQ Reasons
@@ -38,8 +40,10 @@ namespace TASCompAssistant.ViewModels
 		//Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
 		public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } = new ObservableCollection<DQReasonsProfileModel>();
 
+		// Adds a new competitor to the datagrid
 		public ActionCommand AddCompetitorCommand { get; }
-		public ActionCommand AddDQReasonCommand { get; }
+		public ActionCommand AddTestDataCommand { get; }
+		public ActionCommand SortDataCommand { get; }
 
 		#region Properties for Adding Competitors
 
@@ -85,8 +89,8 @@ namespace TASCompAssistant.ViewModels
 			set => SetValue(ref _dqOther, value);
 		}
 
-		private List<string> _dqOtherReason;
-		public List<string> DQOtherReason
+		private string _dqOtherReason;
+		public string DQOtherReason
 		{
 			get => _dqOtherReason;
 			set => SetValue(ref _dqOtherReason, value);
@@ -114,20 +118,58 @@ namespace TASCompAssistant.ViewModels
 			DQReasons.SetProfileDefaults();
 			DQProfiles.Add(DQReasons);
 
-			AddCompetitorCommand = new ActionCommand(() => Competitors.Add(new CompetitorModel
+			// Command to add data to the competitor datagrid
+			AddCompetitorCommand = new ActionCommand(() =>
 			{
-				Username = Username,
-				VIStart = VIStart,
-				VIEnd = VIEnd,
-				Rerecords = Rerecords,
-				DQ = DQ,
-				DQReasons = new List<string>() { "Feature in development" } // How do I turn the selected check boxes + Other DQ Text textbox into a List<string>? How do I make it editable in the datagrid?
-																			// Should the datagrid have a combobox of DQ reasons or something?? How do I do this??
-			}));
+				Competitors.Add(new CompetitorModel
+				{
+					Username = Username,
+					VIStart = VIStart,
+					VIEnd = VIEnd,
+					Rerecords = Rerecords,
+					DQ = DQ,
+					DQReasons = new List<string>() { "Feature in development" } // How do I turn the selected check boxes + Other DQ Text textbox into a List<string>? How do I make it editable in the datagrid?
+																				// Should the datagrid have a combobox of DQ reasons or something?? How do I do this??
+				});
+
+				// Clear all fields
+				Username = "";
+				VIStart = 0;
+				VIEnd = 0;
+				Rerecords = 0;
+				DQ = false;
+				DQOther = false;
+				DQOtherReason = "";
+				// TODO: Reset all dq reasons to false
+
+			});
+
+			// Command to add random test data to datagrid
+			AddTestDataCommand = new ActionCommand(() =>
+			{
+				Competitors.Clear();
+
+				var r = new Random();
+				for (int i = 1; i <= 20; i++)
+				{
+					var start = r.Next(0, 1000);
+					Competitors.Add(new CompetitorModel()
+					{
+						Username = $"User {i}",
+						VIStart = start,
+						VIEnd = start + r.Next(0, 1000)
+					});
+				}
+			});
+
+			// Command to sort data
+			SortDataCommand = new ActionCommand(() => SortCompetition());
 
 			// Set up datagrid ItemsSource
-			CollectionView = new ListCollectionView(Competitors);
-			CollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+			//CompetitorsCollectionView = new ListCollectionView(Competitors);
+			//CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+			CompetitorCollectionView.Source = Competitors;
+			CompetitorCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 		}
 
 		/* TODO: Code button to exit program
@@ -165,45 +207,13 @@ namespace TASCompAssistant.ViewModels
 
 		}
 
-		/* TODO: Enable/Disable DQ Reason stackpanel
-		private void Chkbox_DQ_ValueChanged(object sender, RoutedEventArgs e)
-		{
-			stackPanel_DQReason.IsEnabled = chkbox_DQ.IsChecked.Value;
-		}
-
-		private void Chkbox_DQ_Other_ValueChanged(object sender, RoutedEventArgs e)
-		{
-			txtBox_DQ_Other.IsEnabled = Chkbox_DQ_Other.IsChecked.Value;
-		}
-		*/
-
-		/* TODO: On press, add test data to datagrid
-		private void TestData_Add(object sender, RoutedEventArgs e)
-		{
-			Competitors.Clear();
-
-			var r = new Random();
-			for (int i = 1; i <= 20; i++)
-			{
-				var start = r.Next(0, 1000);
-				Competitors.Add(new Competitor()
-				{
-					Username = $"User {i}",
-					VIStart = start,
-					VIEnd = start + r.Next(0, 1000)
-				});
-			}
-			string output = JsonConvert.SerializeObject(Competitors);
-			Clipboard.SetText(output);
-		}
-		*/
-
-		/* TODO: On Competitors change, rank the contestants ==> Don't neccissarily auto sort by rank
-		private void SortCompetition(object sender, RoutedEventArgs e)
+		// TODO: On Competitors change, rank the contestants ==> Don't neccissarily auto sort by rank
+		private void SortCompetition()
 		{
 			// THIS CODE IS BAD BUT IT WORKS >:(
 
-			// Set all DQ's place to total competitors (aka, last place)
+			#region OLD CODE
+			/* Set all DQ's place to total competitors (aka, last place)
 			foreach (var item in Competitors)
 			{
 				if (item.DQ)
@@ -213,7 +223,7 @@ namespace TASCompAssistant.ViewModels
 			}
 
 			// Sort by time in seconds
-			var Sorted = new ObservableCollection<Competitor>(Competitors.OrderBy(i => i.TimeInSeconds));
+			var Sorted = new ObservableCollection<CompetitorModel>(Competitors.OrderBy(i => i.TimeInSeconds));
 
 			// Set first place that isn't a dq
 			int place = 0;
@@ -241,18 +251,18 @@ namespace TASCompAssistant.ViewModels
 						Sorted[i].Place = place;
 					}
 				}
-			}
+			}*/
+			#endregion
 
 			// The following is bad. Look into this => https://stackoverflow.com/questions/19112922/sort-observablecollectionstring-through-c-sharp
 			// This is here because otherwise the event to update UI doesn't trigger. Idk why.
 			// Once a better datatype is chosen, the whole sorting method can be altered to be simpler, and more efficient. See above link.
-			Competitors.Clear();
-			foreach (var item in Sorted)
-			{
-				Competitors.Add(item);
-			}
+			//Competitors.Clear();
+			//foreach (var item in Sorted)
+			//{
+			//	Competitors.Add(item);
+			//}
 		}
-		*/
 
 		/* TODO: On checkbox change, enable/disable datagrid grouping
 		// Add DQ Grouping to Datagrid

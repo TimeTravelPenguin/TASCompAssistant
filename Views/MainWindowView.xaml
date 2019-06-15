@@ -7,6 +7,7 @@
 		xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
 		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
+		xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
 		mc:Ignorable="d"
 		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
 		ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
@@ -64,8 +65,8 @@
 					</MenuItem>
 				</MenuItem>
 				<!-- Debug options -->
-				<MenuItem Header="Add Test Data"/>
-				<MenuItem Header="Test Sort"/>
+				<MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
+				<MenuItem Header="Test Sort" Command="{Binding SortDataCommand}"/>
 				<MenuItem Header="Test Statistics"/>
 			</Menu>
 			<StackPanel/>
@@ -108,7 +109,7 @@
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
-							  ItemsSource="{Binding CollectionView}"
+							  ItemsSource="{Binding CompetitorCollectionView}"
 							  AutoGenerateColumns="False"
 							  Grid.Column="2"
 							  Grid.Row="3"
