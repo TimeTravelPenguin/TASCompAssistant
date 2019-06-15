@@ -16,6 +16,8 @@ namespace TASCompAssistant.ViewModels
 		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
 		// and to allow for the scoring system to score all the points over all the previous competitions
 		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
+		public ListCollectionView CollectionView { get; }
+
 
 		// Contains all the DQ Reasons
 		public DQReasonsProfileModel DQReasons { get; } = new DQReasonsProfileModel();   // This is initialized as a default profile
@@ -92,8 +94,6 @@ namespace TASCompAssistant.ViewModels
 
 		#endregion
 
-		public ListCollectionView DisqualificationGrouping { get; set; }
-
 		/*	TODO:
 				- Error handle & chack that textboxes contain numbers ONLY
 				- Add DQ Reasons
@@ -126,10 +126,8 @@ namespace TASCompAssistant.ViewModels
 			}));
 
 			// Set up datagrid ItemsSource
-			// How do you bind to this as a property so that you can clear and add groupings?
-			var competitors = new ListCollectionView(Competitors);
-			competitors.GroupDescriptions.Add(new PropertyGroupDescription("Qualification"));
-			//Datagrid_Score.ItemsSource = Competitors;
+			CollectionView = new ListCollectionView(Competitors);
+			CollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 		}
 
 		/* TODO: Code button to exit program

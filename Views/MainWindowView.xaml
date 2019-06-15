@@ -108,8 +108,7 @@
 				<Grid Background="#FFE5E5E5">
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
-							  ItemsSource="{Binding Competitors}"
-							  BindingGroup="{Binding DisqualificationGrouping}"
+							  ItemsSource="{Binding CollectionView}"
 							  AutoGenerateColumns="False"
 							  Grid.Column="2"
 							  Grid.Row="3"
@@ -353,6 +352,7 @@
 		<!-- Row 5 -->
 
 		<!-- Toolbar -->
+		<!-- MAKE THIS FILE A PROPERTY -->
 		<ToolBar Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5,0,0">
 			<TextBlock x:Name="txtBlock_OpenedFile" Text="No file opened..."
 					   FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
