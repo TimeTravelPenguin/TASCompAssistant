@@ -8,6 +8,7 @@
 		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
 		xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+		xmlns:local1="clr-namespace:TASCompAssistant"
 		mc:Ignorable="d"
 		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
 		ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
@@ -21,8 +22,7 @@
 
 	<Window.DataContext>
 		<viewmodels:MainWindowViewModel/>
-	</Window.DataContext>
-
+	</Window.DataContext>	
 	<Grid>
 		<!-- Column and Row Definitions to help keep shit neat -->
 		<Grid.ColumnDefinitions>

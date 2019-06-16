@@ -19,12 +19,11 @@ namespace TASCompAssistant.ViewModels
 		// and to allow for the scoring system to score all the points over all the previous competitions
 		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
 		public CollectionViewSource CompetitorsCollectionView { get; } = new CollectionViewSource();
-
 		//public ListCollectionView CompetitorsCollectionView { get; }
+
 		// SeriesCollection used to bind for livce charting
 		public SeriesCollection StatisticsGraph { get => TestGraph(); } // This is not right -- FIX IT
-
-
+		
 		// Contains all the DQ Reasons
 		public DQReasonsProfileModel DQReasons { get; } = new DQReasonsProfileModel();   // This is initialized as a default profile
 		public List<CheckBox> DQCheckBoxes
