@@ -110,7 +110,7 @@
 					
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
-							ItemsSource="{Binding CompetitorsCollectionView}"
+							ItemsSource="{Binding CompetitorCollection}"
 							AutoGenerateColumns="False"
 							Grid.Column="2"
 							Grid.Row="3"

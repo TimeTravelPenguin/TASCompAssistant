@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using LiveCharts;
 using LiveCharts.Wpf;
+using System.ComponentModel;
 
 namespace TASCompAssistant.ViewModels
 {
@@ -18,7 +19,13 @@ namespace TASCompAssistant.ViewModels
 		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
 		// and to allow for the scoring system to score all the points over all the previous competitions
 		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
-		public CollectionViewSource CompetitorsCollectionView { get; } = new CollectionViewSource();
+
+		private ICollectionView _competitorCollection;
+		public ICollectionView CompetitorCollection
+		{
+			get { return _competitorCollection; }
+		}
+
 
 		//public ListCollectionView CompetitorsCollectionView { get; }
 		// SeriesCollection used to bind for livce charting
@@ -162,7 +169,8 @@ namespace TASCompAssistant.ViewModels
 					{
 						Username = $"User {i}",
 						VIStart = start,
-						VIEnd = start + r.Next(0, 1000)
+						VIEnd = start + r.Next(0, 1000),
+						DQ = Convert.ToBoolean(r.Next(0,2))
 					});
 				}
 			});
@@ -176,8 +184,9 @@ namespace TASCompAssistant.ViewModels
 			// Set up datagrid grouping
 			//CompetitorsCollectionView = new ListCollectionView(Competitors);
 			//CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
-			CompetitorsCollectionView.Source = Competitors;
-			CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+			_competitorCollection = CollectionViewSource.GetDefaultView(Competitors);
+			_competitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+
 		}
 
 		// TODO: Code button to add competitor to datagrid
