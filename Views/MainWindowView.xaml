@@ -54,7 +54,7 @@
 				<MenuItem Header="_File">
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
-					<MenuItem Header="_Close"/>
+					<MenuItem Header="_Close" Command="{Binding ExitCommand}"/>
 				</MenuItem>
 				<!-- Settings -->
 				<MenuItem Header="_Settings">

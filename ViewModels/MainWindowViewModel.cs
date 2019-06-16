@@ -48,6 +48,7 @@ namespace TASCompAssistant.ViewModels
 		public ActionCommand AddCompetitorCommand { get; }
 		public ActionCommand AddTestDataCommand { get; }
 		public ActionCommand SortDataCommand { get; }
+		public ActionCommand ExitCommand { get; }
 
 		#region Properties for Adding Competitors
 
@@ -168,6 +169,9 @@ namespace TASCompAssistant.ViewModels
 
 			// Command to sort data
 			SortDataCommand = new ActionCommand(() => SortCompetition());
+			
+			// Command to Exit
+			ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
 			// Set up datagrid grouping
 			//CompetitorsCollectionView = new ListCollectionView(Competitors);
@@ -175,13 +179,6 @@ namespace TASCompAssistant.ViewModels
 			CompetitorsCollectionView.Source = Competitors;
 			CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 		}
-
-		/* TODO: Code button to exit program
-		private void btn_Exit_Click(object sender, RoutedEventArgs e)
-		{
-			Environment.Exit(0);
-		}
-		*/
 
 		// TODO: Code button to add competitor to datagrid
 		private void AddCompetitor()
