@@ -301,7 +301,7 @@
 							<TextBlock FontSize="13">DQ Reason</TextBlock>
 						</StackPanel>
 					</GroupBox.Header>
-					<StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding Path=DQ}">
+					<StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding Path=Competitor.DQ}">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
@@ -339,7 +339,7 @@
 							<!-- "Other" reason textbox -->
 							<TextBox x:Name="txtBox_DQ_Other" 
 									 Text="{Binding Competitor.DQOtherReason}"
-									 IsEnabled="{Binding DQOther}"
+									 IsEnabled="{Binding Competitor.DQOther}"
 									 Grid.Row="3" 
 									 Grid.Column="0" 
 									 Grid.RowSpan="2" 

@@ -168,7 +168,7 @@ namespace TASCompAssistant.ViewModels
 
 			// On change, sort grid
 			//SortCompetition();
-			//UpdateLiveChart();
+			UpdateLiveChart();
 		}
 
 		private void UpdateLiveChart()
