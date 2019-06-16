@@ -52,7 +52,7 @@
 			<Menu DockPanel.Dock="Top">
 				<!-- File -->
 				<MenuItem Header="_File">
-					<MenuItem Header="_New" Command="{Binding ClearDataGridCommand}"/>
+					<MenuItem Header="_New" Command="{Binding ClearAllCommand}"/>
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
 					<MenuItem Header="_Close" Command="{Binding ExitCommand}"/>

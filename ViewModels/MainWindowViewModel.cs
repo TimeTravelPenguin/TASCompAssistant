@@ -32,8 +32,6 @@ namespace TASCompAssistant.ViewModels
 		private ICollectionView _competitorCollection;
 		public ICollectionView CompetitorCollection { get => _competitorCollection; }
 
-
-		//public ListCollectionView CompetitorsCollectionView { get; }
 		// SeriesCollection used to bind for livce charting
 		public SeriesCollection StatisticsGraph { get => TestGraph(); } // This is not right -- FIX IT
 
@@ -60,7 +58,7 @@ namespace TASCompAssistant.ViewModels
 		// Adds a new competitor to the datagrid
 		public ActionCommand AddCompetitorCommand { get; }
 		public ActionCommand AddTestDataCommand { get; }
-		public ActionCommand ClearDataGridCommand { get; }
+		public ActionCommand ClearAllCommand { get; }
 		public ActionCommand SortDataCommand { get; }
 		public ActionCommand ExitCommand { get; }
 
@@ -95,7 +93,7 @@ namespace TASCompAssistant.ViewModels
 			AddCompetitorCommand = new ActionCommand(() => AddCompetitor());
 
 			// Command to clear the datagrid
-			ClearDataGridCommand = new ActionCommand(() => ClearAll());
+			ClearAllCommand = new ActionCommand(() => ClearAll());
 
 			// Command to add random test data to datagrid
 			AddTestDataCommand = new ActionCommand(() =>
@@ -170,7 +168,7 @@ namespace TASCompAssistant.ViewModels
 
 			// On change, sort grid
 			//SortCompetition();
-			UpdateLiveChart();
+			//UpdateLiveChart();
 		}
 
 		private void UpdateLiveChart()
