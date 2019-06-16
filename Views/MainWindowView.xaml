@@ -107,20 +107,22 @@
 		<TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Margin="2,0,0,0">
 			<TabItem Header="Competition Leaderboard">
 				<Grid Background="#FFE5E5E5">
+					
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
-							  ItemsSource="{Binding CompetitorCollectionView}"
-							  AutoGenerateColumns="False"
-							  Grid.Column="2"
-							  Grid.Row="3"
-							  HorizontalGridLinesBrush="DarkGray"
-							  VerticalGridLinesBrush="DarkGray"
-							  IsReadOnly="False"
-							  CanUserReorderColumns="False"
-							  CanUserResizeRows="False"
-							  CanUserResizeColumns="True"
-							  CanUserDeleteRows="True"
-							  CanUserAddRows="False">
+							ItemsSource="{Binding CompetitorsCollectionView}"
+							AutoGenerateColumns="False"
+							Grid.Column="2"
+							Grid.Row="3"
+							HorizontalGridLinesBrush="DarkGray"
+							VerticalGridLinesBrush="DarkGray"
+							IsReadOnly="False"
+							CanUserReorderColumns="False"
+							CanUserResizeRows="False"
+							CanUserResizeColumns="True"
+							CanUserDeleteRows="True"
+							CanUserAddRows="False">
+						
 						<!-- Grouping Style -->
 						<DataGrid.GroupStyle>
 							<GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
@@ -131,45 +133,46 @@
 								</GroupStyle.Panel>
 							</GroupStyle>
 						</DataGrid.GroupStyle>
+						
 						<!-- Column Information -->
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Place"
-										Binding="{Binding Path=Place}"
-										Width="45"
-										IsReadOnly="True"/>
+									Binding="{Binding Path=Place}"
+									Width="45"
+									IsReadOnly="True"/>
 							<DataGridTextColumn Header="Username"
-										Binding="{Binding Path=Username}"
-										Width="120"/>
+									Binding="{Binding Path=Username}"
+									Width="120"/>
 							<DataGridTextColumn Header="VIStart"
-										Binding="{Binding Path=VIStart}"
-										Width="Auto"/>
+									Binding="{Binding Path=VIStart}"
+									Width="Auto"/>
 							<DataGridTextColumn Header="VIEnd"
-										Binding="{Binding Path=VIEnd}"
-										Width="Auto"/>
+									Binding="{Binding Path=VIEnd}"
+									Width="Auto"/>
 							<DataGridTextColumn Header="VIs"
-										Binding="{Binding Path=VIs}"
-										Width="Auto"
-										IsReadOnly="True"/>
+									Binding="{Binding Path=VIs}"
+									Width="Auto"
+									IsReadOnly="True"/>
 							<DataGridTextColumn Header="Time"
-										Binding="{Binding Path=TimeFormated}"
-										Width="Auto"
-										IsReadOnly="True"/>
+									Binding="{Binding Path=TimeFormated}"
+									Width="Auto"
+									IsReadOnly="True"/>
 							<DataGridTextColumn Header="Rerecords"
-										Binding="{Binding Path=Rerecords}"
-										Width="Auto"/>
+									Binding="{Binding Path=Rerecords}"
+									Width="Auto"/>
 							<DataGridCheckBoxColumn Header="DQ"
-										Binding="{Binding Path=DQ}"
-										Width="30"/>
+									Binding="{Binding Path=DQ}"
+									Width="30"/>
 							<DataGridTextColumn Header="DQReason"
-										Binding="{Binding Path=DQReasons}"
-										Width="Auto"/>
+									Binding="{Binding Path=DQReasons}"
+									Width="Auto"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
 			</TabItem>
-
 			<TabItem Header="Score Leaderboard">
 				<Grid Background="#FFE5E5E5">
+					
 					<!-- Datagrid Score -->
 					<DataGrid x:Name="Datagrid_Score"
 							  ItemsSource="{Binding Path=Competitors}"
@@ -199,7 +202,7 @@
 			<TabItem Header="Statistics">
 				<Grid>
 					<lvc:CartesianChart x:Name="StatisticsGraph"
-										Series="{Binding SeriesCollection}"
+										Series="{Binding StatisticsGraph}"
 										LegendLocation="Top">
 						<lvc:CartesianChart.AxisY>
 							<lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>

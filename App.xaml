@@ -14,12 +14,12 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type GroupItem}">
 						<Expander x:Name="expander"
-								  IsExpanded="True"
-								  Background="DarkGray"
-								  Foreground="Black"
-								  BorderBrush="DarkGray"
-								  BorderThickness="1.75"
-								  Margin="0,5">
+							IsExpanded="True"
+							Background="DarkGray"
+							Foreground="Black"
+							BorderBrush="DarkGray"
+							BorderThickness="1.75"
+							Margin="0,5">
 							<Expander.Header>
 								<TextBlock Text="{Binding Name}"/>
 							</Expander.Header>

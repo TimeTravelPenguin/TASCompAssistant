@@ -7,6 +7,8 @@ using TASCompAssistant.ViewModels.Commands;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace TASCompAssistant.ViewModels
 {
@@ -16,9 +18,11 @@ namespace TASCompAssistant.ViewModels
 		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
 		// and to allow for the scoring system to score all the points over all the previous competitions
 		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
-		public CollectionViewSource CompetitorCollectionView { get; } = new CollectionViewSource();
+		public CollectionViewSource CompetitorsCollectionView { get; } = new CollectionViewSource();
 
 		//public ListCollectionView CompetitorsCollectionView { get; }
+		// SeriesCollection used to bind for livce charting
+		public SeriesCollection StatisticsGraph { get => TestGraph(); } // This is not right -- FIX IT
 
 
 		// Contains all the DQ Reasons
@@ -168,8 +172,8 @@ namespace TASCompAssistant.ViewModels
 			// Set up datagrid grouping
 			//CompetitorsCollectionView = new ListCollectionView(Competitors);
 			//CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
-			CompetitorCollectionView.Source = Competitors;
-			CompetitorCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+			CompetitorsCollectionView.Source = Competitors;
+			CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 		}
 
 		/* TODO: Code button to exit program
@@ -278,8 +282,8 @@ namespace TASCompAssistant.ViewModels
 		}
 		*/
 
-		/* TODO: Set the graph to display rankings of the competition datagrid => plot VIs/Place
-		private void TestGraph(object sender, RoutedEventArgs e)
+		//TODO: Set the graph to display rankings of the competition datagrid => plot VIs/Place
+		private SeriesCollection TestGraph()
 		{
 			var compdata = new List<double>();
 			var dqdata = new List<double>();
@@ -296,11 +300,10 @@ namespace TASCompAssistant.ViewModels
 				}
 			}
 
-			var Graph = new Graph(compdata, dqdata);
+			var Graph = new GraphModel(compdata, dqdata);
 
-			StatisticsGraph.Series = Graph.SeriesCollection;
+			return Graph.SeriesCollection;
 		}
-		*/
 
 		/* TODO: Open the DQResonsProfileEditorView
 		private void DQReasonsProfileEditor_Open(object sender, RoutedEventArgs e)
