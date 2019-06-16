@@ -52,6 +52,7 @@
 			<Menu DockPanel.Dock="Top">
 				<!-- File -->
 				<MenuItem Header="_File">
+					<MenuItem Header="_New" Command="{Binding ClearDataGridCommand}"/>
 					<MenuItem Header="_Open"/>
 					<MenuItem Header="_Save"/>
 					<MenuItem Header="_Close" Command="{Binding ExitCommand}"/>
@@ -245,7 +246,7 @@
 
 				<TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
 				<TextBox x:Name="txtbox_Username"
-						 Text="{Binding Path=Username}"
+						 Text="{Binding Path=Competitor.Username}"
 						 Grid.Row="0" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -253,7 +254,7 @@
 
 				<TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
 				<TextBox x:Name="txtbox_VIStart"
-						 Text="{Binding Path=VIStart}"
+						 Text="{Binding Path=Competitor.VIStart}"
 						 Grid.Row="1" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -261,7 +262,7 @@
 
 				<TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
 				<TextBox x:Name="txtbox_VIEnd"
-						 Text="{Binding Path=VIEnd}"
+						 Text="{Binding Path=Competitor.VIEnd}"
 						 Grid.Row="2" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -269,7 +270,7 @@
 
 				<TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
 				<TextBox x:Name="txtbox_Rerecords"
-						 Text="{Binding Path=Rerecords}"
+						 Text="{Binding Path=Competitor.Rerecords}"
 						 Grid.Row="3" 
 						 Grid.Column="1"
 						 VerticalAlignment="Center"
@@ -277,7 +278,7 @@
 
 				<CheckBox x:Name="chkbox_DQ" 
 						  Content="DQ?"
-						  IsChecked="{Binding Path=DQ}"
+						  IsChecked="{Binding Path=Competitor.DQ}"
 						  Grid.Row="4" 
 						  Grid.Column="0"
 						  VerticalAlignment="Center"
@@ -330,14 +331,14 @@
 							<!-- Textblock -->
 							<CheckBox x:Name="Chkbox_DQ_Other"
 									  Content="Other:"
-									  IsChecked="{Binding DQOther}"
+									  IsChecked="{Binding Competitor.DQOther}"
 									  Grid.Row="2" 
 									  Grid.Column="0"
 									  VerticalAlignment="Bottom"/>
 
 							<!-- "Other" reason textbox -->
 							<TextBox x:Name="txtBox_DQ_Other" 
-									 Text="{Binding DQOtherReason}"
+									 Text="{Binding Competitor.DQOtherReason}"
 									 IsEnabled="{Binding DQOther}"
 									 Grid.Row="3" 
 									 Grid.Column="0" 

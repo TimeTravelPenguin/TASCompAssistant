@@ -10,6 +10,10 @@ using System.Windows.Data;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.ComponentModel;
+using System.Collections.Specialized;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using System.Diagnostics;
+using System.Windows;
 
 namespace TASCompAssistant.ViewModels
 {
@@ -18,13 +22,15 @@ namespace TASCompAssistant.ViewModels
 		// This holds all the competitor data. This is used for ranking and scoring.
 		// TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
 		// and to allow for the scoring system to score all the points over all the previous competitions
-		public ObservableCollection<CompetitorModel> Competitors { get; } = new ObservableCollection<CompetitorModel>();
+		public ObservableCollection<CompetitorModel> _competitors = new ObservableCollection<CompetitorModel>();
+		public ObservableCollection<CompetitorModel> Competitors
+		{
+			get => _competitors;
+			set => SetValue(ref _competitors, value);
+		}
 
 		private ICollectionView _competitorCollection;
-		public ICollectionView CompetitorCollection
-		{
-			get { return _competitorCollection; }
-		}
+		public ICollectionView CompetitorCollection { get => _competitorCollection; }
 
 
 		//public ListCollectionView CompetitorsCollectionView { get; }
@@ -54,61 +60,16 @@ namespace TASCompAssistant.ViewModels
 		// Adds a new competitor to the datagrid
 		public ActionCommand AddCompetitorCommand { get; }
 		public ActionCommand AddTestDataCommand { get; }
+		public ActionCommand ClearDataGridCommand { get; }
 		public ActionCommand SortDataCommand { get; }
 		public ActionCommand ExitCommand { get; }
 
-		#region Properties for Adding Competitors
-
-		private string _username;
-		public string Username
+		private CompetitorModel _competitor = new CompetitorModel();
+		public CompetitorModel Competitor
 		{
-			get => _username;
-			set => SetValue(ref _username, value);
+			get => _competitor;
+			set => SetValue(ref _competitor, value);
 		}
-
-		private int _viStart;
-		public int VIStart
-		{
-			get => _viStart;
-			set => SetValue(ref _viStart, value);
-		}
-
-		private int _viEnd;
-		public int VIEnd
-		{
-			get => _viEnd;
-			set => SetValue(ref _viEnd, value);
-		}
-
-		private int _rerecords;
-		public int Rerecords
-		{
-			get => _rerecords;
-			set => SetValue(ref _rerecords, value);
-		}
-
-		public bool _dq;
-		public bool DQ
-		{
-			get => _dq;
-			set => SetValue(ref _dq, value);
-		}
-
-		public bool _dqOther;
-		public bool DQOther
-		{
-			get => _dqOther;
-			set => SetValue(ref _dqOther, value);
-		}
-
-		private string _dqOtherReason;
-		public string DQOtherReason
-		{
-			get => _dqOtherReason;
-			set => SetValue(ref _dqOtherReason, value);
-		}
-
-		#endregion
 
 		/*	TODO:
 				- Error handle & chack that textboxes contain numbers ONLY
@@ -131,30 +92,10 @@ namespace TASCompAssistant.ViewModels
 			DQProfiles.Add(DQReasons);
 
 			// Command to add data to the competitor datagrid
-			AddCompetitorCommand = new ActionCommand(() =>
-			{
-				Competitors.Add(new CompetitorModel
-				{
-					Username = Username,
-					VIStart = VIStart,
-					VIEnd = VIEnd,
-					Rerecords = Rerecords,
-					DQ = DQ,
-					DQReasons = new List<string>() { "Feature in development" } // How do I turn the selected check boxes + Other DQ Text textbox into a List<string>? How do I make it editable in the datagrid?
-																				// Should the datagrid have a combobox of DQ reasons or something?? How do I do this??
-				});
+			AddCompetitorCommand = new ActionCommand(() => AddCompetitor());
 
-				// Clear all fields
-				Username = "";
-				VIStart = 0;
-				VIEnd = 0;
-				Rerecords = 0;
-				DQ = false;
-				DQOther = false;
-				DQOtherReason = "";
-				// TODO: Reset all dq reasons to false
-
-			});
+			// Command to clear the datagrid
+			ClearDataGridCommand = new ActionCommand(() => ClearAll());
 
 			// Command to add random test data to datagrid
 			AddTestDataCommand = new ActionCommand(() =>
@@ -170,123 +111,121 @@ namespace TASCompAssistant.ViewModels
 						Username = $"User {i}",
 						VIStart = start,
 						VIEnd = start + r.Next(0, 1000),
-						DQ = Convert.ToBoolean(r.Next(0,2))
+						DQ = Convert.ToBoolean(r.Next(0, 2))
 					});
 				}
 			});
 
 			// Command to sort data
 			SortDataCommand = new ActionCommand(() => SortCompetition());
-			
+
 			// Command to Exit
 			ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
 			// Set up datagrid grouping
-			//CompetitorsCollectionView = new ListCollectionView(Competitors);
-			//CompetitorsCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 			_competitorCollection = CollectionViewSource.GetDefaultView(Competitors);
 			_competitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 
+			// Set up Competitor CollectionChanged
+			Competitors.CollectionChanged += OnCollectionChanged;
+		}
+
+		private void ClearAll()
+		{
+			ClearInputs();
+			Competitors.Clear();
+		}
+
+		// TODO: Reset all dq reasons to false
+		private void ClearInputs()
+		{
+			// Clear Competitor Data
+			Competitor.ClearCompetitor();
+		}
+
+		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			#region Debug code and add/ remove code
+			/*
+			Debug.WriteLine("Change type: " + e.Action);
+			if (e.NewItems != null)	// Occures if item added
+			{
+				Debug.WriteLine("Items added: ");
+				foreach (var item in e.NewItems)
+				{
+					Debug.WriteLine(item);
+				}
+			}
+
+			if (e.OldItems != null)	// Occures if item cleared
+			{
+				Debug.WriteLine("Items removed: ");
+				foreach (var item in e.OldItems)
+				{
+					Debug.WriteLine(item);
+				}
+			}
+			*/
+			#endregion
+
+			// On change, sort grid
+			//SortCompetition();
+			UpdateLiveChart();
+		}
+
+		private void UpdateLiveChart()
+		{
+			// Update graph data
 		}
 
 		// TODO: Code button to add competitor to datagrid
 		private void AddCompetitor()
 		{
-			#region Old code
-			/*
-			try // Do real error handling when you figure out how to
+			Competitors.Add(new CompetitorModel() // Can this be made simpler by copying from Competitor?
 			{
-				var competitor = new Competitor()
-				{
-					Username = txtbox_Username.Text,
-					VIStart = Convert.ToInt32(txtbox_VIStart.Text),
-					VIEnd = Convert.ToInt32(txtbox_VIEnd.Text),
-					Rerecords = Convert.ToInt32(txtbox_Rerecords.Text),
-					DQ = chkbox_DQ.IsChecked.Value,
-					DQReason = "coming soon...", // Fix this later
-				};
+				Username = Competitor.Username,
+				VIStart = Competitor.VIStart,
+				VIEnd = Competitor.VIEnd,
+				Rerecords = Competitor.Rerecords,
+				DQ = Competitor.DQ,
+				DQOther = Competitor.DQOther,
+				DQOtherReason = Competitor.DQOtherReason
+			});
 
-				Competitors.Add(competitor);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show($"There was an error:\n{ex.Message}");
-			}
-			*/
-			#endregion
+			ClearInputs();
+			//SortCompetition();
 
 		}
 
 		// TODO: On Competitors change, rank the contestants ==> Don't neccissarily auto sort by rank
 		private void SortCompetition()
 		{
-			// THIS CODE IS BAD BUT IT WORKS >:(
+			var collection = new ObservableCollection<CompetitorModel>(Competitors.OrderBy(i => i.VIs));
 
-			#region OLD CODE
-			/* Set all DQ's place to total competitors (aka, last place)
-			foreach (var item in Competitors)
+			int place = 1;
+			for (int i = 0; i < collection.Count; i++)
 			{
-				if (item.DQ)
+				if (collection[i].DQ)
 				{
-					item.Place = Competitors.Count;
+					collection[i].Place = collection.Count;
 				}
-			}
+				else if (i > 0 && (collection[i].VIEnd == collection[i - 1].VIs))
+				{
+					collection[i].Place = collection[i - 1].Place;
+				}
+				else
+				{
+					collection[i].Place = place;
+				}
 
-			// Sort by time in seconds
-			var Sorted = new ObservableCollection<CompetitorModel>(Competitors.OrderBy(i => i.TimeInSeconds));
-
-			// Set first place that isn't a dq
-			int place = 0;
-			foreach (var item in Sorted)
-			{
 				place++;
-				if (!item.DQ)
-				{
-					item.Place = 1;
-					break;
-				}
 			}
 
-			// Set the rest of the competitor's place, excluding DQ's competitors
-			for (int i = 1; i < Sorted.Count; i++)
-			{
-				if (!Sorted[i].DQ)
-				{
-					if (Sorted[i].TimeInSeconds > Sorted[i - 1].TimeInSeconds)
-					{
-						Sorted[i].Place = ++place;
-					}
-					else
-					{
-						Sorted[i].Place = place;
-					}
-				}
-			}*/
-			#endregion
-
-			// The following is bad. Look into this => https://stackoverflow.com/questions/19112922/sort-observablecollectionstring-through-c-sharp
-			// This is here because otherwise the event to update UI doesn't trigger. Idk why.
-			// Once a better datatype is chosen, the whole sorting method can be altered to be simpler, and more efficient. See above link.
-			//Competitors.Clear();
-			//foreach (var item in Sorted)
-			//{
-			//	Competitors.Add(item);
-			//}
+			collection = new ObservableCollection<CompetitorModel>(Competitors.OrderBy(i => i.Place));
+			Competitors = collection;
 		}
 
-		/* TODO: On checkbox change, enable/disable datagrid grouping
-		// Add DQ Grouping to Datagrid
-		private void Chkbox_SplitDQView_Checked(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		// Remove DQ Grouping to Datagrid
-		private void Chkbox_SplitDQView_Unchecked(object sender, RoutedEventArgs e)
-		{
-
-		}
-		*/
+		// TODO: On checkbox change, enable/disable datagrid grouping
 
 		//TODO: Set the graph to display rankings of the competition datagrid => plot VIs/Place
 		private SeriesCollection TestGraph()
@@ -311,13 +250,6 @@ namespace TASCompAssistant.ViewModels
 			return Graph.SeriesCollection;
 		}
 
-		/* TODO: Open the DQResonsProfileEditorView
-		private void DQReasonsProfileEditor_Open(object sender, RoutedEventArgs e)
-		{
-			var Editor = new DQReasonsEditor(DQReasonProfiles);
-			Editor.Show();
-			DQReasonProfiles = Editor.DQReasonProfiles;
-		}
-		*/
+		// TODO: Open the DQResonsProfileEditorView		
 	}
 }

@@ -3,10 +3,11 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System.Collections.Generic;
 using System.Windows.Media;
+using TASCompAssistant.ViewModels.Commands;
 
 namespace TASCompAssistant.Models
 {
-	class GraphModel
+	class GraphModel : PropertyChangedBase
 	{
 		public ChartValues<ObservablePoint> CompetitionData = new ChartValues<ObservablePoint>();
 		public ChartValues<ObservablePoint> DQData = new ChartValues<ObservablePoint>();
