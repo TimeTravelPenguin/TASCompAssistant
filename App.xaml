@@ -5,6 +5,8 @@
 			 StartupUri="Views/MainWindowView.xaml">
 	<Application.Resources>
 
+		<!-- Theme Style -->
+		
 		<!-- Font Style -->
 		<FontFamily x:Key="MarioOdyssey">pack://application:,,,/Fonts/#Super Mario Odyssey</FontFamily>
 
@@ -29,6 +31,8 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+
+
 
 	</Application.Resources>
 </Application>

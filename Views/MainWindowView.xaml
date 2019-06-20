@@ -8,6 +8,7 @@
 		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
 		xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 		mc:Ignorable="d"
 		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
 		ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
@@ -26,22 +27,22 @@
 	<Grid>
 		<!-- Column and Row Definitions to help keep shit neat -->
 		<Grid.ColumnDefinitions>
-			<!-- This is padding -->
+			<!--v This is padding v-->
 			<ColumnDefinition Width="10" />
 			<ColumnDefinition Width="200" />
 			<ColumnDefinition Width="1*" />
-			<!-- This is padding -->
+			<!--v This is padding v-->
 			<ColumnDefinition Width="10" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<!-- This is padding -->
+			<!--v This is padding v-->
 			<RowDefinition Height="20" />
-			<!-- This is padding -->
+			<!--v This is padding v-->
 			<RowDefinition Height="5" />
 			<RowDefinition Height="20" />
 			<RowDefinition Height="275" />
 			<RowDefinition Height="*" />
-			<!-- This is padding -->
+			<!--v This is padding v-->
 			<RowDefinition Height="30" />
 		</Grid.RowDefinitions>
 
@@ -108,7 +109,7 @@
 		<TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Margin="2,0,0,0">
 			<TabItem Header="Competition Leaderboard">
 				<Grid Background="#FFE5E5E5">
-					
+
 					<!-- Datagrid Competition -->
 					<DataGrid x:Name="Datagrid_Competition"
 							ItemsSource="{Binding CompetitorCollection}"
@@ -123,7 +124,7 @@
 							CanUserResizeColumns="True"
 							CanUserDeleteRows="True"
 							CanUserAddRows="False">
-						
+
 						<!-- Grouping Style -->
 						<DataGrid.GroupStyle>
 							<GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
@@ -134,7 +135,7 @@
 								</GroupStyle.Panel>
 							</GroupStyle>
 						</DataGrid.GroupStyle>
-						
+
 						<!-- Column Information -->
 						<DataGrid.Columns>
 							<DataGridTextColumn Header="Place"
@@ -173,7 +174,7 @@
 			</TabItem>
 			<TabItem Header="Score Leaderboard">
 				<Grid Background="#FFE5E5E5">
-					
+
 					<!-- Datagrid Score -->
 					<DataGrid x:Name="Datagrid_Score"
 							  ItemsSource="{Binding Path=Competitors}"
@@ -357,7 +358,7 @@
 		<!-- Row 5 -->
 
 		<!-- Toolbar -->
-		<!-- MAKE THIS FILE A PROPERTY -->
+		<!-- MAKE THIS FILE TEXT A PROPERTY AND BIND IT -->
 		<ToolBar Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5,0,0">
 			<TextBlock x:Name="txtBlock_OpenedFile" Text="No file opened..."
 					   FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
