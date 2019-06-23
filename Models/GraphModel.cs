@@ -3,7 +3,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System.Collections.Generic;
 using System.Windows.Media;
-using TASCompAssistant.ViewModels.Commands;
+using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
