@@ -100,7 +100,8 @@
     </Compile>
     <Compile Include="Models\CompetitorModel.cs" />
     <Compile Include="Models\DQReasonsProfileModel.cs" />
-    <Compile Include="ViewModels\Commands\PropertyChangedBase.cs" />
+    <Compile Include="Types\PropertyChangedBase.cs" />
+    <Compile Include="Types\CompetitorModelComparer.cs" />
     <Compile Include="ViewModels\DQReasonsEditorViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\DQReasonsEditorView.xaml.cs">

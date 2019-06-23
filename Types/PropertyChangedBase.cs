@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace TASCompAssistant.ViewModels.Commands
+namespace TASCompAssistant.Types
 {
 	public abstract class PropertyChangedBase : INotifyPropertyChanged
 	{

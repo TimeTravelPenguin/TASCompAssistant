@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TASCompAssistant.ViewModels.Commands;
+using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
