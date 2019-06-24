@@ -59,14 +59,6 @@ namespace TASCompAssistant.Models
             YFormatter = val => val.ToString() + " VIs";
         }
 
-        public GraphModel(List<CompetitorModel> competitionData, List<CompetitorModel> dqData)
-        {
-            ParseData(competitionData, dqData);
-
-            CreateSeriesCollection();
-            SetFormatters();
-        }
-
         private void CreateSeriesCollection()
         {
             SeriesCollection = new SeriesCollection
@@ -88,8 +80,11 @@ namespace TASCompAssistant.Models
             };
         }
 
-        private void ParseData(List<CompetitorModel> compData, List<CompetitorModel> dqData)
+        public void ParseNewData(List<CompetitorModel> compData, List<CompetitorModel> dqData)
         {
+            CompetitionData.Clear();
+            DQData.Clear();
+
             // Convert competitionData into observable points
             int count = 1;
             foreach (var item in compData)

@@ -241,7 +241,7 @@ namespace TASCompAssistant.ViewModels
                 }
             }
 
-            GraphData = new GraphModel(compdata, dqdata);
+            GraphData.ParseNewData(compdata, dqdata);
         }
 
         // TODO: Open the DQResonsProfileEditorView		
