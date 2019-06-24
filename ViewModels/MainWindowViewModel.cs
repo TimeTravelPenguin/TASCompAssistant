@@ -13,22 +13,48 @@ namespace TASCompAssistant.ViewModels
 {
     class MainWindowViewModel : PropertyChangedBase
     {
+        // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
-        // This holds all the competitor data. This is used for ranking and scoring.
-        // TODO: Add Competitions property to keep record of the competitions particular competitors have participated it,
-        // and to allow for the scoring system to score all the points over all the previous competitions
-        public ObservableCollection<CompetitorModel> _competitors = new ObservableCollection<CompetitorModel>();
-        public ObservableCollection<CompetitorModel> Competitors
+        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel(), new CompetitionModel() { CompetitionName = "Competition 2" } };
+        public ObservableCollection<CompetitionModel> Competitions
         {
-            get => _competitors;
-            set => SetValue(ref _competitors, value);
+            get => _competitions;
+            set => SetValue(ref _competitions, value);
+        }
+
+        private int _competitionValue = 0;
+        public int CompetitionValue
+        {
+            get => _competitionValue;
+            set
+            {
+                SetValue(ref _competitionValue, value);
+                SetDatagridGrouping();
+
+                SortCompetition();
+                UpdateLiveChart();
+            }
+        }
+
+        public ObservableCollection<CompetitorModel> CurrentCompetitors
+        {
+            get => Competitions[CompetitionValue].CompetitionData;
+            set => Competitions[CompetitionValue].CompetitionData = value;
+        }
+
+        // Modifyable competitor model used for on-screen objects
+        private CompetitorModel _competitor = new CompetitorModel();
+        public CompetitorModel Competitor
+        {
+            get => _competitor;
+            set => SetValue(ref _competitor, value);
         }
 
         private ICollectionView _competitorCollection;
         public ICollectionView CompetitorCollection { get => _competitorCollection; }
 
-        // SeriesCollection used to bind for livce charting
+        // SeriesCollection used to bind for live charting
         public GraphModel GraphData { get; set; } = new GraphModel();
 
         // Contains all the DQ Reasons
@@ -68,13 +94,7 @@ namespace TASCompAssistant.ViewModels
         // Exits the application
         public ActionCommand ExitCommand { get; }
 
-        // Modifyable competitor model used for on-screen objects
-        private CompetitorModel _competitor = new CompetitorModel();
-        public CompetitorModel Competitor
-        {
-            get => _competitor;
-            set => SetValue(ref _competitor, value);
-        }
+
 
         public string OpenFile { get; set; } = "No file opened..."; // This will be changed later when proper code for save/load is done
 
@@ -92,7 +112,6 @@ namespace TASCompAssistant.ViewModels
 
         public MainWindowViewModel()
         {
-
             // Initialize the default DQProfile
             DQReasons.SetProfileDefaults();
             DQProfiles.Add(DQReasons);
@@ -118,13 +137,13 @@ namespace TASCompAssistant.ViewModels
             // Command to add random test data to datagrid
             AddTestDataCommand = new ActionCommand(() =>
             {
-                Competitors.Clear();
+                CurrentCompetitors.Clear();
 
                 var r = new Random();
                 for (int i = 1; i <= 20; i++)
                 {
                     var start = r.Next(0, 1000);
-                    Competitors.Add(new CompetitorModel()
+                    CurrentCompetitors.Add(new CompetitorModel()
                     {
                         Username = $"User {i}",
                         VIStart = start,
@@ -141,19 +160,26 @@ namespace TASCompAssistant.ViewModels
             // Command to Exit
             ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
+            SetDatagridGrouping();
+
+        }
+
+        private void SetDatagridGrouping()
+        {
             // Set up datagrid grouping
-            _competitorCollection = CollectionViewSource.GetDefaultView(Competitors);
+            _competitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
+            _competitorCollection.GroupDescriptions.Clear();
             _competitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
-
-            // Set Graph datacontext
-
         }
 
         private void ClearAll()
         {
             // TODO: Reset all dq reasons to false
             ClearInputs();
-            Competitors.Clear();
+
+            CompetitionValue = 0;
+            //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
+
             UpdateLiveChart();
         }
 
@@ -165,7 +191,7 @@ namespace TASCompAssistant.ViewModels
 
         private void AddCompetitor()
         {
-            Competitors.Add(new CompetitorModel() // Can this be made simpler by copying from Competitor?
+            CurrentCompetitors.Add(new CompetitorModel() // Can this be made simpler by copying from Competitor?
             {
                 Username = Competitor.Username,
                 VIStart = Competitor.VIStart,
@@ -183,10 +209,10 @@ namespace TASCompAssistant.ViewModels
 
         private void SortCompetition()
         {
-            var items = new List<CompetitorModel>(Competitors);
+            var items = new List<CompetitorModel>(CurrentCompetitors);
             items.Sort(_competitorComparer);
 
-            Competitors.Clear();
+            CurrentCompetitors.Clear();
 
             int lastVIs = 0;
             bool lastDQ = false;
@@ -227,7 +253,7 @@ namespace TASCompAssistant.ViewModels
                 lastDQ = item.DQ;
                 lastPlace = item.Place;
 
-                Competitors.Add(item);
+                CurrentCompetitors.Add(item);
             }
         }
 
@@ -242,7 +268,7 @@ namespace TASCompAssistant.ViewModels
             var compdata = new List<CompetitorModel>();
             var dqdata = new List<CompetitorModel>();
 
-            foreach (var item in Competitors)
+            foreach (var item in CurrentCompetitors)
             {
                 if (!item.DQ)
                 {
