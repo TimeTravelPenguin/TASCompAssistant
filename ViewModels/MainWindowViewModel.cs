@@ -60,7 +60,7 @@ namespace TASCompAssistant.ViewModels
         public ActionCommand ClearAllCommand { get; }
 
         // Sorts competitors
-        public ActionCommand SortDataCommand { get; }
+        public ActionCommand UpdateDataCommand { get; }
 
         // Updates the graph
         public ActionCommand UpdateGraphCommand { get; }
@@ -98,10 +98,22 @@ namespace TASCompAssistant.ViewModels
             DQProfiles.Add(DQReasons);
 
             // Command to add data to the competitor datagrid
-            AddCompetitorCommand = new ActionCommand(() => AddCompetitor());
+            AddCompetitorCommand = new ActionCommand(() =>
+            {
+                AddCompetitor();
+                SortCompetition();
+                UpdateLiveChart();
+            });
 
             // Command to clear the datagrid
             ClearAllCommand = new ActionCommand(() => ClearAll());
+
+            // Command to sort data
+            UpdateDataCommand = new ActionCommand(() =>
+            {
+                SortCompetition();
+                UpdateLiveChart();
+            });
 
             // Command to add random test data to datagrid
             AddTestDataCommand = new ActionCommand(() =>
@@ -120,13 +132,11 @@ namespace TASCompAssistant.ViewModels
                         DQ = Convert.ToBoolean(r.Next(0, 2))
                     });
                 }
+
+
+                SortCompetition();
+                UpdateLiveChart();
             });
-
-            // Command to sort data
-            SortDataCommand = new ActionCommand(() => SortCompetition());
-
-            // Command to update graph
-            UpdateGraphCommand = new ActionCommand(() => UpdateLiveChart());
 
             // Command to Exit
             ExitCommand = new ActionCommand(() => Environment.Exit(0));
@@ -144,6 +154,7 @@ namespace TASCompAssistant.ViewModels
             // TODO: Reset all dq reasons to false
             ClearInputs();
             Competitors.Clear();
+            UpdateLiveChart();
         }
 
         private void ClearInputs()

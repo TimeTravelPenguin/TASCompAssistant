@@ -66,13 +66,9 @@
                         <MenuItem Header="Export DQ Reasons Profile"/>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Competition Data">
-                    <MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
-                    <MenuItem Header="Test Sort" Command="{Binding SortDataCommand}"/>
-                </MenuItem>
-                <!-- Debug options -->
+                <MenuItem Header="Rank Competition" Command="{Binding UpdateDataCommand}"/>
+                <MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
 
-                <MenuItem Header="Test Statistics" Command="{Binding UpdateGraphCommand}"/>
             </Menu>
             <StackPanel/>
         </DockPanel>
