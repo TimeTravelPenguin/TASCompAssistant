@@ -1,367 +1,400 @@
 ﻿<Window x:Class="TASCompAssistant.Views.MainWindowView"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:TASCompAssistant.Views"
-		xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-		xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
-		xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-		mc:Ignorable="d"
-		Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
-		ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TASCompAssistant.Views"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="TAS Competition Assistant" Height="385" Width="830" MinHeight="385" MinWidth="830" 
+        ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
 
-	<!--
-		TODO:
-			1. Add DQ Stuff
-			2. Add grouping to the competition datagrid to separate DQ submissions
-				- Source: https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control
-	-->
+    <!--
+        TODO:
+            1. Add DQ Stuff
+            2. Add grouping to the competition datagrid to separate DQ submissions
+                - Source: https://docs.microsoft.com/en-us/dotnet/framework/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control
+    -->
 
-	<Window.DataContext>
-		<viewmodels:MainWindowViewModel/>
-	</Window.DataContext>
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
 
-	<Grid>
-		<!-- Column and Row Definitions to help keep shit neat -->
-		<Grid.ColumnDefinitions>
-			<!--v This is padding v-->
-			<ColumnDefinition Width="10" />
-			<ColumnDefinition Width="200" />
-			<ColumnDefinition Width="1*" />
-			<!--v This is padding v-->
-			<ColumnDefinition Width="10" />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<!--v This is padding v-->
-			<RowDefinition Height="20" />
-			<!--v This is padding v-->
-			<RowDefinition Height="5" />
-			<RowDefinition Height="20" />
-			<RowDefinition Height="275" />
-			<RowDefinition Height="*" />
-			<!--v This is padding v-->
-			<RowDefinition Height="30" />
-		</Grid.RowDefinitions>
+    <Grid>
+        <!-- Column and Row Definitions to help keep shit neat -->
+        <Grid.ColumnDefinitions>
+            <!--v This is padding v-->
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="1*" />
+            <!--v This is padding v-->
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!--v This is padding v-->
+            <RowDefinition Height="20" />
+            <!--v This is padding v-->
+            <RowDefinition Height="5" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="275" />
+            <RowDefinition Height="*" />
+            <!--v This is padding v-->
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
 
-		<!-- Row 0 -->
+        <!-- Row 0 -->
 
-		<!-- Menu Bar -->
-		<DockPanel Grid.Row="0" Grid.ColumnSpan="5">
-			<Menu DockPanel.Dock="Top">
-				<!-- File -->
-				<MenuItem Header="_File">
-					<MenuItem Header="_New" Command="{Binding ClearAllCommand}"/>
-					<MenuItem Header="_Open"/>
-					<MenuItem Header="_Save"/>
-					<MenuItem Header="_Close" Command="{Binding ExitCommand}"/>
-				</MenuItem>
-				<!-- Settings -->
-				<MenuItem Header="_Settings">
-					<MenuItem Header="DQ Reasons Profiles...">
-						<MenuItem Header="Configure DQ Reasons Profile"/>
-						<MenuItem Header="Import DQ Reasons Profile"/>
-						<MenuItem Header="Export DQ Reasons Profile"/>
-					</MenuItem>
-				</MenuItem>
-				<!-- Debug options -->
-				<MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
-				<MenuItem Header="Test Sort" Command="{Binding SortDataCommand}"/>
-				<MenuItem Header="Test Statistics"/>
-			</Menu>
-			<StackPanel/>
-		</DockPanel>
+        <!-- Menu Bar -->
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="5">
+            <Menu DockPanel.Dock="Top">
+                <!-- File -->
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" Command="{Binding ClearAllCommand}"/>
+                    <MenuItem Header="_Open"/>
+                    <MenuItem Header="_Save"/>
+                    <MenuItem Header="_Close" Command="{Binding ExitCommand}"/>
+                </MenuItem>
+                <!-- Settings -->
+                <MenuItem Header="_Settings">
+                    <MenuItem Header="DQ Reasons Profiles...">
+                        <MenuItem Header="Configure DQ Reasons Profile"/>
+                        <MenuItem Header="Import DQ Reasons Profile"/>
+                        <MenuItem Header="Export DQ Reasons Profile"/>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Competition Data">
+                    <MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
+                    <MenuItem Header="Test Sort" Command="{Binding SortDataCommand}"/>
+                </MenuItem>
+                <!-- Debug options -->
 
-		<!-- Row 1 -->
+                <MenuItem Header="Test Statistics" Command="{Binding UpdateGraphCommand}"/>
+            </Menu>
+            <StackPanel/>
+        </DockPanel>
 
-		<!-- Row 2 -->
+        <!-- Row 1 -->
 
-		<!-- Competitor Text -->
-		<!-- Import font so users can see it -->
-		<TextBlock Grid.Row="2" Grid.Column="1"
-				   VerticalAlignment="Center"
-				   HorizontalAlignment="Center"
-				   FontFamily="{StaticResource MarioOdyssey}"
-				   FontSize="14">
-			TASComp Assistant
-		</TextBlock>
+        <!-- Row 2 -->
+
+        <!-- Competitor Text -->
+        <!-- Import font so users can see it -->
+        <TextBlock Grid.Row="2" Grid.Column="1"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontFamily="{StaticResource MarioOdyssey}"
+                   FontSize="14">
+            TASComp Assistant
+        </TextBlock>
 
 
-		<TextBlock Text="Competition:"
-				   Grid.Row="2"
-				   Grid.Column="2"
-				   HorizontalAlignment="Right"
-				   Panel.ZIndex="1"
-				   Margin="0,0,85,0"/>
+        <TextBlock Text="Competition:"
+                   Grid.Row="2"
+                   Grid.Column="2"
+                   HorizontalAlignment="Right"
+                   Panel.ZIndex="1"
+                   Margin="0,0,85,0"/>
 
-		<!-- ZIndex brings checkbox to front -->
-		<xctk:IntegerUpDown Name="myUpDownControl" 
-							Grid.Row="2" 
-							Grid.Column="2" 
-							HorizontalAlignment="Right"
-							Width="80"
-							Panel.ZIndex="1"
-							Minimum="1"/>
+        <!-- ZIndex brings checkbox to front -->
+        <xctk:IntegerUpDown Name="myUpDownControl" 
+                            Grid.Row="2" 
+                            Grid.Column="2" 
+                            HorizontalAlignment="Right"
+                            Width="80"
+                            Panel.ZIndex="1"
+                            Minimum="1"/>
 
-		<!-- Put in tabbed thingee -->
-		<TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Margin="2,0,0,0">
-			<TabItem Header="Competition Leaderboard">
-				<Grid Background="#FFE5E5E5">
+        <!-- Put in tabbed thingee -->
+        <TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Margin="2,0,0,0">
+            <TabItem Header="Competition Leaderboard">
+                <Grid Background="#FFE5E5E5">
 
-					<!-- Datagrid Competition -->
-					<DataGrid x:Name="Datagrid_Competition"
-							ItemsSource="{Binding CompetitorCollection}"
-							AutoGenerateColumns="False"
-							Grid.Column="2"
-							Grid.Row="3"
-							HorizontalGridLinesBrush="DarkGray"
-							VerticalGridLinesBrush="DarkGray"
-							IsReadOnly="False"
-							CanUserReorderColumns="False"
-							CanUserResizeRows="False"
-							CanUserResizeColumns="True"
-							CanUserDeleteRows="True"
-							CanUserAddRows="False">
+                    <!-- Datagrid Competition -->
+                    <DataGrid x:Name="Datagrid_Competition"
+                            ItemsSource="{Binding CompetitorCollection}"
+                            AutoGenerateColumns="False"
+                            Grid.Column="2"
+                            Grid.Row="3"
+                            HorizontalGridLinesBrush="DarkGray"
+                            VerticalGridLinesBrush="DarkGray"
+                            IsReadOnly="False"
+                            CanUserReorderColumns="False"
+                            CanUserResizeRows="False"
+                            CanUserResizeColumns="True"
+                            CanUserDeleteRows="True"
+                            CanUserAddRows="False">
 
-						<!-- Grouping Style -->
-						<DataGrid.GroupStyle>
-							<GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
-								<GroupStyle.Panel>
-									<ItemsPanelTemplate>
-										<DataGridRowsPresenter/>
-									</ItemsPanelTemplate>
-								</GroupStyle.Panel>
-							</GroupStyle>
-						</DataGrid.GroupStyle>
+                        <!-- Grouping Style -->
+                        <DataGrid.GroupStyle>
+                            <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                                <GroupStyle.Panel>
+                                    <ItemsPanelTemplate>
+                                        <DataGridRowsPresenter/>
+                                    </ItemsPanelTemplate>
+                                </GroupStyle.Panel>
+                            </GroupStyle>
+                        </DataGrid.GroupStyle>
 
-						<!-- Column Information -->
-						<DataGrid.Columns>
-							<DataGridTextColumn Header="Place"
-									Binding="{Binding Path=Place}"
-									Width="45"
-									IsReadOnly="True"/>
-							<DataGridTextColumn Header="Username"
-									Binding="{Binding Path=Username}"
-									Width="120"/>
-							<DataGridTextColumn Header="VIStart"
-									Binding="{Binding Path=VIStart}"
-									Width="Auto"/>
-							<DataGridTextColumn Header="VIEnd"
-									Binding="{Binding Path=VIEnd}"
-									Width="Auto"/>
-							<DataGridTextColumn Header="VIs"
-									Binding="{Binding Path=VIs}"
-									Width="Auto"
-									IsReadOnly="True"/>
-							<DataGridTextColumn Header="Time"
-									Binding="{Binding Path=TimeFormated}"
-									Width="Auto"
-									IsReadOnly="True"/>
-							<DataGridTextColumn Header="Rerecords"
-									Binding="{Binding Path=Rerecords}"
-									Width="Auto"/>
-							<DataGridCheckBoxColumn Header="DQ"
-									Binding="{Binding Path=DQ}"
-									Width="30"/>
-							<DataGridTextColumn Header="DQReason"
-									Binding="{Binding Path=DQReasons}"
-									Width="Auto"/>
-						</DataGrid.Columns>
-					</DataGrid>
-				</Grid>
-			</TabItem>
-			<TabItem Header="Score Leaderboard">
-				<Grid Background="#FFE5E5E5">
+                        <!-- Column Information -->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Place"
+                                    Binding="{Binding Path=Place}"
+                                    Width="45"
+                                    IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Username"
+                                    Binding="{Binding Path=Username}"
+                                    Width="120"/>
+                            <DataGridTextColumn Header="VIStart"
+                                    Binding="{Binding Path=VIStart}"
+                                    Width="Auto"/>
+                            <DataGridTextColumn Header="VIEnd"
+                                    Binding="{Binding Path=VIEnd}"
+                                    Width="Auto"/>
+                            <DataGridTextColumn Header="VIs"
+                                    Binding="{Binding Path=VIs}"
+                                    Width="Auto"
+                                    IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Time"
+                                    Binding="{Binding Path=TimeFormated}"
+                                    Width="Auto"
+                                    IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Rerecords"
+                                    Binding="{Binding Path=Rerecords}"
+                                    Width="Auto"/>
+                            <DataGridCheckBoxColumn Header="DQ"
+                                    Binding="{Binding Path=DQ}"
+                                    Width="30"/>
+                            <DataGridTextColumn Header="DQReason"
+                                    Binding="{Binding Path=DQReasons}"
+                                    Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Score Leaderboard">
+                <Grid Background="#FFE5E5E5">
 
-					<!-- Datagrid Score -->
-					<DataGrid x:Name="Datagrid_Score"
-							  ItemsSource="{Binding Path=Competitors}"
-							  AutoGenerateColumns="False"
-							  Grid.Column="2"
-							  Grid.Row="3"
-							  IsReadOnly="True"
-							  CanUserReorderColumns="False"
-							  CanUserResizeRows="False"
-							  CanUserResizeColumns="True"
-							  CanUserDeleteRows="True">
-						<DataGrid.Columns>
-							<DataGridTextColumn Header="Place"
-										Binding="{Binding Path=ScorePlace}"
-										Width="45"/>
-							<DataGridTextColumn Header="Username"
-										Binding="{Binding Path=Username}"
-										Width="*"/>
-							<DataGridTextColumn Header="Score"
-										Binding="{Binding Path=ScorePlace}"
-										Width="*"/>
-						</DataGrid.Columns>
-					</DataGrid>
-				</Grid>
-			</TabItem>
+                    <!-- Datagrid Score -->
+                    <DataGrid x:Name="Datagrid_Score"
+                              ItemsSource="{Binding Path=Competitors}"
+                              AutoGenerateColumns="False"
+                              Grid.Column="2"
+                              Grid.Row="3"
+                              IsReadOnly="True"
+                              CanUserReorderColumns="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"
+                              CanUserDeleteRows="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Place"
+                                        Binding="{Binding Path=ScorePlace}"
+                                        Width="45"/>
+                            <DataGridTextColumn Header="Username"
+                                        Binding="{Binding Path=Username}"
+                                        Width="*"/>
+                            <DataGridTextColumn Header="Score"
+                                        Binding="{Binding Path=ScorePlace}"
+                                        Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
 
-			<TabItem Header="Statistics">
-				<Grid>
-					<lvc:CartesianChart x:Name="StatisticsGraph"
-										Series="{Binding StatisticsGraph}"
-										LegendLocation="Top">
-						<lvc:CartesianChart.AxisY>
-							<lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
-						</lvc:CartesianChart.AxisY>
-						<lvc:CartesianChart.AxisX>
-							<lvc:Axis Title="" Labels="{Binding Labels}"></lvc:Axis>
-						</lvc:CartesianChart.AxisX>
-					</lvc:CartesianChart>
-				</Grid>
-			</TabItem>
+            <TabItem Header="Statistics">
+                <Grid>
+                    <lvc:CartesianChart IsEnabled="True" Visibility="Visible"
+                                        x:Name="lvc_CompetitionLiveChart"
+                                        Series="{Binding GraphData}"
+                                        LegendLocation="Top">
 
-		</TabControl>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis
+                                Title = "Submission"
+                                IsMerged = "False"
+                                Labels="{Binding GraphData.XLabels}">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator
+                                        StrokeThickness="1" 
+                                        StrokeDashArray="2"
+                                        Stroke="LightGray"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
 
-		<!-- Row 3 -->
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis
+                                Title = "VIs"
+                                IsMerged = "False"
+                                LabelFormatter="{Binding GraphData.YFormatter}">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator
+                                        StrokeThickness="1" 
+                                        StrokeDashArray="4"
+                                        Stroke="LightGray"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        
+                    </lvc:CartesianChart>
 
-		<!-- Group Box -->
-		<GroupBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,-2">
-			<GroupBox.Header>
-				<StackPanel Orientation="Horizontal">
-					<Image Source="/TASCompAssistant;component/Icons/Mushroom.ico" Margin="3,0" Height="15"/>
-					<TextBlock FontSize="13">Add Competitor</TextBlock>
-				</StackPanel>
-			</GroupBox.Header>
+                    <!-- Enable this if/when LiveChart isn't implemented -->
+                    <TextBlock Visibility="Hidden"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Text="Coming Soon!"/>
+                </Grid>
+            </TabItem>
 
-			<Grid>
+        </TabControl>
 
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="60" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
+        <!-- Row 3 -->
 
-				<Grid.RowDefinitions>
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
+        <!-- Group Box -->
+        <GroupBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,-2">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/TASCompAssistant;component/Icons/Mushroom.ico" Margin="3,0" Height="15"/>
+                    <TextBlock FontSize="13">Add Competitor</TextBlock>
+                </StackPanel>
+            </GroupBox.Header>
 
-				<TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
-				<TextBox x:Name="txtbox_Username"
-						 Text="{Binding Path=Competitor.Username}"
-						 Grid.Row="0" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4" Grid.ColumnSpan="2"/>
+            <Grid>
 
-				<TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
-				<TextBox x:Name="txtbox_VIStart"
-						 Text="{Binding Path=Competitor.VIStart}"
-						 Grid.Row="1" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4" Grid.ColumnSpan="2"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-				<TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
-				<TextBox x:Name="txtbox_VIEnd"
-						 Text="{Binding Path=Competitor.VIEnd}"
-						 Grid.Row="2" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4" Grid.ColumnSpan="2"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-				<TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
-				<TextBox x:Name="txtbox_Rerecords"
-						 Text="{Binding Path=Competitor.Rerecords}"
-						 Grid.Row="3" 
-						 Grid.Column="1"
-						 VerticalAlignment="Center"
-						 Margin="0,4" Grid.ColumnSpan="2"/>
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
+                <TextBox x:Name="txtbox_Username"
+                         Text="{Binding Path=Competitor.Username}"
+                         Grid.Row="0" 
+                         Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Margin="0,4" Grid.ColumnSpan="2"/>
 
-				<CheckBox x:Name="chkbox_DQ" 
-						  Content="DQ?"
-						  IsChecked="{Binding Path=Competitor.DQ}"
-						  Grid.Row="4" 
-						  Grid.Column="0"
-						  VerticalAlignment="Center"
-						  HorizontalAlignment="Center" 
-						  Margin="8,5"/>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
+                <TextBox x:Name="txtbox_VIStart"
+                         Text="{Binding Path=Competitor.VIStart}"
+                         Grid.Row="1" 
+                         Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Margin="0,4" Grid.ColumnSpan="2"/>
 
-				<Button x:Name="btn_AddCompetitor"
-						Grid.Row="4"
-						Grid.Column="1"
-						Grid.ColumnSpan="2"
-						Margin="5,3"
-						Content="Add Competitor"
-						Command="{Binding AddCompetitorCommand}"/>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
+                <TextBox x:Name="txtbox_VIEnd"
+                         Text="{Binding Path=Competitor.VIEnd}"
+                         Grid.Row="2" 
+                         Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Margin="0,4" Grid.ColumnSpan="2"/>
 
-				<!-- DQ Section -->
-				<GroupBox Grid.Row="5" Grid.ColumnSpan="3">
-					<GroupBox.Header>
-						<StackPanel Orientation="Horizontal">
-							<Image Source="/TASCompAssistant;component/Icons/Coin.ico" Margin="3,0" Height="15"/>
-							<TextBlock FontSize="13">DQ Reason</TextBlock>
-						</StackPanel>
-					</GroupBox.Header>
-					<StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding Path=Competitor.DQ}">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*"/>
-							</Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
+                <TextBox x:Name="txtbox_Rerecords"
+                         Text="{Binding Path=Competitor.Rerecords}"
+                         Grid.Row="3" 
+                         Grid.Column="1"
+                         VerticalAlignment="Center"
+                         Margin="0,4" Grid.ColumnSpan="2"/>
 
-							<Grid.RowDefinitions>
-								<RowDefinition Height="15" />
-								<RowDefinition Height="20" />
-								<RowDefinition Height="20" />
-								<RowDefinition Height="45" />
-								<RowDefinition Height="*" />
-							</Grid.RowDefinitions>
+                <CheckBox x:Name="chkbox_DQ" 
+                          Content="DQ?"
+                          IsChecked="{Binding Path=Competitor.DQ}"
+                          Grid.Row="4" 
+                          Grid.Column="0"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center" 
+                          Margin="8,5"/>
 
-							<!-- Textblock -->
-							<TextBlock Text="Reaons:" Grid.Row="0" Grid.Column="0"/>
+                <Button x:Name="btn_AddCompetitor"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="5,3"
+                        Content="Add Competitor"
+                        Command="{Binding AddCompetitorCommand}"/>
 
-							<!-- DQ Checklist combobox -->
-							<ComboBox Text="Please select DQ reason..."
-									  ItemsSource="{Binding DQCheckBoxes}"
-									  IsReadOnly="True"
-									  IsEditable="True"
-									  Grid.Row="1" 
-									  Grid.Column="0" 
-									  Grid.ColumnSpan="2"/>
+                <!-- DQ Section -->
+                <GroupBox Grid.Row="5" Grid.ColumnSpan="3">
+                    <GroupBox.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/TASCompAssistant;component/Icons/Coin.ico" Margin="3,0" Height="15"/>
+                            <TextBlock FontSize="13">DQ Reason</TextBlock>
+                        </StackPanel>
+                    </GroupBox.Header>
+                    <StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding Path=Competitor.DQ}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-							<!-- Textblock -->
-							<CheckBox x:Name="Chkbox_DQ_Other"
-									  Content="Other:"
-									  IsChecked="{Binding Competitor.DQOther}"
-									  Grid.Row="2" 
-									  Grid.Column="0"
-									  VerticalAlignment="Bottom"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="15" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="45" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-							<!-- "Other" reason textbox -->
-							<TextBox x:Name="txtBox_DQ_Other" 
-									 Text="{Binding Competitor.DQOtherReason}"
-									 IsEnabled="{Binding Competitor.DQOther}"
-									 Grid.Row="3" 
-									 Grid.Column="0" 
-									 Grid.RowSpan="2" 
-									 Grid.ColumnSpan="2"/>
+                            <!-- Textblock -->
+                            <TextBlock Text="Reaons:" Grid.Row="0" Grid.Column="0"/>
 
-						</Grid>
-					</StackPanel>
-				</GroupBox>
+                            <!-- DQ Checklist combobox -->
+                            <ComboBox Text="Please select DQ reason..."
+                                      ItemsSource="{Binding DQCheckBoxes}"
+                                      IsReadOnly="True"
+                                      IsEditable="True"
+                                      Grid.Row="1" 
+                                      Grid.Column="0" 
+                                      Grid.ColumnSpan="2"/>
 
-			</Grid>
-		</GroupBox>
+                            <!-- Textblock -->
+                            <CheckBox x:Name="Chkbox_DQ_Other"
+                                      Content="Other:"
+                                      IsChecked="{Binding Competitor.DQOther}"
+                                      Grid.Row="2" 
+                                      Grid.Column="0"
+                                      VerticalAlignment="Bottom"/>
 
-		<!-- Row 4 -->
+                            <!-- "Other" reason textbox -->
+                            <TextBox x:Name="txtBox_DQ_Other" 
+                                     Text="{Binding Competitor.DQOtherReason}"
+                                     IsEnabled="{Binding Competitor.DQOther}"
+                                     Grid.Row="3" 
+                                     Grid.Column="0" 
+                                     Grid.RowSpan="2" 
+                                     Grid.ColumnSpan="2"/>
 
-		<!-- Row 5 -->
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
 
-		<!-- Toolbar -->
-		<!-- MAKE THIS FILE TEXT A PROPERTY AND BIND IT -->
-		<ToolBar Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5,0,0">
-			<TextBlock x:Name="txtBlock_OpenedFile" Text="No file opened..."
-					   FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
-		</ToolBar>
-	</Grid>
+            </Grid>
+        </GroupBox>
+
+        <!-- Row 4 -->
+
+        <!-- Row 5 -->
+
+        <!-- Toolbar -->
+        <!-- MAKE THIS FILE TEXT A PROPERTY AND BIND IT -->
+        <ToolBar Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5,0,0">
+            <TextBlock x:Name="txtBlock_OpenedFile" Text="No file opened..."
+                       FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
+        </ToolBar>
+    </Grid>
 </Window>

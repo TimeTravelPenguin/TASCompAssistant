@@ -6,13 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
-using LiveCharts;
-using LiveCharts.Wpf;
 using System.ComponentModel;
-using System.Collections.Specialized;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
-using System.Diagnostics;
-using System.Windows;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.ViewModels
@@ -35,8 +29,7 @@ namespace TASCompAssistant.ViewModels
         public ICollectionView CompetitorCollection { get => _competitorCollection; }
 
         // SeriesCollection used to bind for livce charting
-        public SeriesCollection StatisticsGraph { get => TestGraph(); } // This is not right -- FIX IT
-
+        public GraphModel GraphData { get; set; } = new GraphModel();
 
         // Contains all the DQ Reasons
         public DQReasonsProfileModel DQReasons { get; } = new DQReasonsProfileModel();   // This is initialized as a default profile
@@ -59,11 +52,23 @@ namespace TASCompAssistant.ViewModels
 
         // Adds a new competitor to the datagrid
         public ActionCommand AddCompetitorCommand { get; }
+
+        // Add test data to datagrid
         public ActionCommand AddTestDataCommand { get; }
+
+        // Clears the window to be a clean slate
         public ActionCommand ClearAllCommand { get; }
+
+        // Sorts competitors
         public ActionCommand SortDataCommand { get; }
+
+        // Updates the graph
+        public ActionCommand UpdateGraphCommand { get; }
+
+        // Exits the application
         public ActionCommand ExitCommand { get; }
 
+        // Modifyable competitor model used for on-screen objects
         private CompetitorModel _competitor = new CompetitorModel();
         public CompetitorModel Competitor
         {
@@ -83,7 +88,6 @@ namespace TASCompAssistant.ViewModels
                 - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
         */
 
-        //TODO: Code initilization
         public MainWindowViewModel()
         {
 
@@ -119,6 +123,9 @@ namespace TASCompAssistant.ViewModels
             // Command to sort data
             SortDataCommand = new ActionCommand(() => SortCompetition());
 
+            // Command to update graph
+            UpdateGraphCommand = new ActionCommand(() => UpdateLiveChart());
+
             // Command to Exit
             ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
@@ -126,59 +133,23 @@ namespace TASCompAssistant.ViewModels
             _competitorCollection = CollectionViewSource.GetDefaultView(Competitors);
             _competitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
 
-            // Set up Competitor CollectionChanged
-            Competitors.CollectionChanged += OnCollectionChanged;
+            // Set Graph datacontext
+
         }
 
         private void ClearAll()
         {
+            // TODO: Reset all dq reasons to false
             ClearInputs();
             Competitors.Clear();
         }
 
-        // TODO: Reset all dq reasons to false
         private void ClearInputs()
         {
             // Clear Competitor Data
             Competitor.ClearCompetitor();
         }
 
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            #region Debug code and add/ remove code
-            /*
-            Debug.WriteLine("Change type: " + e.Action);
-            if (e.NewItems != null)	// Occures if item added
-            {
-                Debug.WriteLine("Items added: ");
-                foreach (var item in e.NewItems)
-                {
-                    Debug.WriteLine(item);
-                }
-            }
-
-            if (e.OldItems != null)	// Occures if item cleared
-            {
-                Debug.WriteLine("Items removed: ");
-                foreach (var item in e.OldItems)
-                {
-                    Debug.WriteLine(item);
-                }
-            }
-            */
-            #endregion
-
-            // On change, sort grid
-            //SortCompetition();
-            UpdateLiveChart();
-        }
-
-        private void UpdateLiveChart()
-        {
-            // Update graph data
-        }
-
-        // TODO: Code button to add competitor to datagrid
         private void AddCompetitor()
         {
             Competitors.Add(new CompetitorModel() // Can this be made simpler by copying from Competitor?
@@ -245,58 +216,32 @@ namespace TASCompAssistant.ViewModels
 
                 Competitors.Add(item);
             }
-
-
-
-
-            //var collection = new ObservableCollection<CompetitorModel>(Competitors.OrderBy(i => i.VIs));
-
-            //int place = 1;
-            //for (int i = 0; i < collection.Count; i++)
-            //{
-            //	if (collection[i].DQ)
-            //	{
-            //		collection[i].Place = collection.Count;
-            //	}
-            //	else if (i > 0 && (collection[i].VIEnd == collection[i - 1].VIs))
-            //	{
-            //		collection[i].Place = collection[i - 1].Place;
-            //	}
-            //	else
-            //	{
-            //		collection[i].Place = place;
-            //	}
-
-            //	place++;
-            //}
-
-            //collection = new ObservableCollection<CompetitorModel>(Competitors.OrderBy(i => i.Place));
-            //Competitors = collection;
         }
 
-        // TODO: On checkbox change, enable/disable datagrid grouping
-
-        //TODO: Set the graph to display rankings of the competition datagrid => plot VIs/Place
-        private SeriesCollection TestGraph()
+        private void UpdateLiveChart()
         {
-            var compdata = new List<double>();
-            var dqdata = new List<double>();
+            // Update graph data
+            UpdateGraphStatistics();
+        }
+
+        private void UpdateGraphStatistics()
+        {
+            var compdata = new List<CompetitorModel>();
+            var dqdata = new List<CompetitorModel>();
 
             foreach (var item in Competitors)
             {
                 if (!item.DQ)
                 {
-                    compdata.Add(item.VIs);
+                    compdata.Add(item);
                 }
                 else if (item.DQ)
                 {
-                    dqdata.Add(item.VIs);
+                    dqdata.Add(item);
                 }
             }
 
-            var Graph = new GraphModel(compdata, dqdata);
-
-            return Graph.SeriesCollection;
+            GraphData = new GraphModel(compdata, dqdata);
         }
 
         // TODO: Open the DQResonsProfileEditorView		
