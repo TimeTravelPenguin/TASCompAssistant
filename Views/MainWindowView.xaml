@@ -208,7 +208,7 @@
                 <Grid>
                     <lvc:CartesianChart IsEnabled="True" Visibility="Visible"
                                         x:Name="lvc_CompetitionLiveChart"
-                                        Series="{Binding GraphData}"
+                                        Series="{Binding GraphData.SeriesCollection}"
                                         LegendLocation="Top">
 
                         <lvc:CartesianChart.AxisX>
