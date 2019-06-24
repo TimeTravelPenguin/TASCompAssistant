@@ -86,11 +86,11 @@ namespace TASCompAssistant.Models
             DQData.Clear();
 
             // Convert competitionData into observable points
-            int count = 1;
+            int count = 0;
             foreach (var item in compData)
             {
-                CompetitionData.Add(new ObservablePoint(count, item.VIs));
-                XLabels.Add(Convert.ToString(count++));
+                CompetitionData.Add(new ObservablePoint(count++, item.VIs));
+                XLabels.Add(Convert.ToString(item.Place));
             }
 
 
@@ -98,8 +98,8 @@ namespace TASCompAssistant.Models
             int offsetX = compData.Count;
             foreach (var item in dqData)
             {
-                DQData.Add(new ObservablePoint(offsetX, item.VIs));
-                XLabels.Add(Convert.ToString(offsetX++));
+                DQData.Add(new ObservablePoint(offsetX++, item.VIs));
+                XLabels.Add(Convert.ToString(item.Place));
             }
         }
     }

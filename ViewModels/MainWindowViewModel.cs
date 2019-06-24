@@ -76,6 +76,8 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _competitor, value);
         }
 
+        public string OpenFile { get; set; } = "No file opened..."; // This will be changed later when proper code for save/load is done
+
         /*	TODO:
                 - Error handle & chack that textboxes contain numbers ONLY
                 - Add DQ Reasons
