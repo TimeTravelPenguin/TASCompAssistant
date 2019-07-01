@@ -80,7 +80,7 @@ namespace TASCompAssistant.Models
             };
         }
 
-        public void ParseNewData(List<CompetitorModel> compData, List<CompetitorModel> dqData)
+        public void ParseData(List<CompetitorModel> compData, List<CompetitorModel> dqData)
         {
             CompetitionData.Clear();
             DQData.Clear();

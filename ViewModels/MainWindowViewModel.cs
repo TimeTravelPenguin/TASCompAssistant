@@ -30,18 +30,16 @@ namespace TASCompAssistant.ViewModels
             set
             {
                 SetValue(ref _competitionValue, value);
-                SetDatagridGrouping();
+
+                RefreshDataGrid();
 
                 SortCompetition();
-                UpdateLiveChart();
+                UpdateLiveCharts();
             }
         }
 
-        public ObservableCollection<CompetitorModel> CurrentCompetitors
-        {
-            get => Competitions[CompetitionValue].CompetitionData;
-            set => Competitions[CompetitionValue].CompetitionData = value;
-        }
+        // I have no idea if this is correct
+        public ObservableCollection<CompetitorModel> CurrentCompetitors { get => Competitions[CompetitionValue].CompetitionData; }
 
         // Modifyable competitor model used for on-screen objects
         private CompetitorModel _competitor = new CompetitorModel();
@@ -51,6 +49,7 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _competitor, value);
         }
 
+        // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
         private ICollectionView _competitorCollection;
         public ICollectionView CompetitorCollection { get => _competitorCollection; }
 
@@ -94,8 +93,6 @@ namespace TASCompAssistant.ViewModels
         // Exits the application
         public ActionCommand ExitCommand { get; }
 
-
-
         public string OpenFile { get; set; } = "No file opened..."; // This will be changed later when proper code for save/load is done
 
         /*	TODO:
@@ -121,7 +118,7 @@ namespace TASCompAssistant.ViewModels
             {
                 AddCompetitor();
                 SortCompetition();
-                UpdateLiveChart();
+                UpdateLiveCharts();
             });
 
             // Command to clear the datagrid
@@ -131,7 +128,7 @@ namespace TASCompAssistant.ViewModels
             UpdateDataCommand = new ActionCommand(() =>
             {
                 SortCompetition();
-                UpdateLiveChart();
+                UpdateLiveCharts();
             });
 
             // Command to add random test data to datagrid
@@ -154,17 +151,17 @@ namespace TASCompAssistant.ViewModels
 
 
                 SortCompetition();
-                UpdateLiveChart();
+                UpdateLiveCharts();
             });
 
             // Command to Exit
             ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
-            SetDatagridGrouping();
+            RefreshDataGrid();
 
         }
 
-        private void SetDatagridGrouping()
+        private void RefreshDataGrid()
         {
             // Set up datagrid grouping
             _competitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
@@ -179,8 +176,9 @@ namespace TASCompAssistant.ViewModels
 
             CompetitionValue = 0;
             //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
+            // Aka, clear all competitions IF THE USER WANTS TO ==> Make a dialogue appear
 
-            UpdateLiveChart();
+            UpdateLiveCharts();
         }
 
         private void ClearInputs()
@@ -257,10 +255,12 @@ namespace TASCompAssistant.ViewModels
             }
         }
 
-        private void UpdateLiveChart()
+        private void UpdateLiveCharts()
         {
             // Update graph data
             UpdateGraphStatistics();
+
+            // TODO: Scoring
         }
 
         private void UpdateGraphStatistics()
@@ -280,7 +280,7 @@ namespace TASCompAssistant.ViewModels
                 }
             }
 
-            GraphData.ParseNewData(compdata, dqdata);
+            GraphData.ParseData(compdata, dqdata);
         }
 
         // TODO: Open the DQResonsProfileEditorView		
