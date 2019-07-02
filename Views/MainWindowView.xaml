@@ -140,35 +140,36 @@
                         <!-- Column Information -->
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Place"
-                                    Binding="{Binding Path=Place}"
-                                    Width="45"
-                                    IsReadOnly="True"/>
+                                                Binding="{Binding Path=Place}"
+                                                Width="45"
+                                                IsReadOnly="True"/>
                             <DataGridTextColumn Header="Username"
-                                    Binding="{Binding Path=Username}"
-                                    Width="120"/>
+                                                Binding="{Binding Path=Username}"
+                                                Width="120"/>
                             <DataGridTextColumn Header="VIStart"
-                                    Binding="{Binding Path=VIStart}"
-                                    Width="Auto"/>
+                                                Binding="{Binding Path=VIStart}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="VIEnd"
-                                    Binding="{Binding Path=VIEnd}"
-                                    Width="Auto"/>
+                                                Binding="{Binding Path=VIEnd}"
+                                                Width="Auto"/>
                             <DataGridTextColumn Header="VIs"
-                                    Binding="{Binding Path=VIs}"
-                                    Width="Auto"
-                                    IsReadOnly="True"/>
+                                                Binding="{Binding Path=VIs}"
+                                                Width="Auto"
+                                                IsReadOnly="True"/>
                             <DataGridTextColumn Header="Time"
-                                    Binding="{Binding Path=TimeFormated}"
-                                    Width="Auto"
-                                    IsReadOnly="True"/>
+                                                Binding="{Binding Path=TimeFormated}"
+                                                Width="Auto"
+                                                IsReadOnly="True"/>
                             <DataGridTextColumn Header="Rerecords"
-                                    Binding="{Binding Path=Rerecords}"
-                                    Width="Auto"/>
+                                                Binding="{Binding Path=Rerecords}"
+                                                Width="Auto"/>
                             <DataGridCheckBoxColumn Header="DQ"
-                                    Binding="{Binding Path=DQ}"
-                                    Width="30"/>
+                                                    Binding="{Binding Path=DQ}"
+                                                    Width="30"/>
                             <DataGridTextColumn Header="DQReason"
-                                    Binding="{Binding Path=DQReasons}"
-                                    Width="Auto"/>
+                                                Binding="{Binding Path=DQReasons}"
+                                                Width="Auto"/>
+
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -424,8 +425,8 @@
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <CheckBox Content="{Binding Reason}"
-                                                      IsChecked="{Binding IsSelected}"
-                                                      VerticalAlignment="Center"/>
+                                                  IsChecked="{Binding IsSelected}"
+                                                  VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>

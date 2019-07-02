@@ -159,6 +159,7 @@ namespace TASCompAssistant.ViewModels
             AddCompetitorCommand = new ActionCommand(() =>
             {
                 AddCompetitor();
+                ClearCompetitorInputs();
                 SortCompetition();
                 UpdateLiveCharts();
             });
@@ -166,7 +167,7 @@ namespace TASCompAssistant.ViewModels
             AddCompetitionCommand = new ActionCommand(() =>
             {
                 AddCompetition();
-                ClearCompetitionInputs();
+                SortCompetition();
             });
 
             // Command to clear the datagrid
@@ -255,6 +256,7 @@ namespace TASCompAssistant.ViewModels
             //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
             // Aka, clear all competitions IF THE USER WANTS TO ==> Make a dialogue appear
 
+            SortCompetition();
             UpdateLiveCharts();
         }
 
@@ -262,6 +264,12 @@ namespace TASCompAssistant.ViewModels
         {
             // Clear Competitor Data
             Competitor.ClearCompetitor();
+
+            // Uncheck all DQs:
+            foreach (var dq in DQReasonsProfile.DQReasons)
+            {
+                dq.IsSelected = false;
+            }
         }
 
         private void ClearCompetitionInputs()
@@ -272,20 +280,21 @@ namespace TASCompAssistant.ViewModels
 
         private void AddCompetitor()
         {
-            CurrentCompetitors.Add(new CompetitorModel() // Can this be made simpler by copying from Competitor?
+            var newCompetitor = new CompetitorModel()
             {
                 Username = Competitor.Username,
                 VIStart = Competitor.VIStart,
                 VIEnd = Competitor.VIEnd,
                 Rerecords = Competitor.Rerecords,
-                DQ = Competitor.DQ,
-                DQOther = Competitor.DQOther,
-                DQOtherReason = Competitor.DQOtherReason
-            });
+                DQ = Competitor.DQ
+            };
 
-            ClearCompetitorInputs();
-            SortCompetition();
+            if (Competitor.DQOther)
+            {
+                newCompetitor.DQReasons.Add(new DQReason() { Reason = Competitor.DQOtherReason, IsSelected = true });
+            }
 
+            CurrentCompetitors.Add(newCompetitor);
         }
 
         private void AddCompetition()
