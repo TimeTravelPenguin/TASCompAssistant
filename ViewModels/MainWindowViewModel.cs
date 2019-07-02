@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.ComponentModel;
 using TASCompAssistant.Types;
+using System.Windows;
 
 namespace TASCompAssistant.ViewModels
 {
@@ -23,25 +24,36 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _competitions, value);
         }
 
-        private int _competitionValue = 0;
-        public int CompetitionValue
+        private int _competitionIndex = 0;
+        public int CompetitionIndex
         {
-            get => _competitionValue;
+            get => _competitionIndex;
             set
             {
-                SetValue(ref _competitionValue, value);
+                // Do not touch this
+                SetValue(ref _competitionIndex, Competitions.Count > 0
+                    ? value > Competitions.Count
+                        ? value
+                        : 0
+                    : value);
 
-                RefreshCompetitorDataGrid();
-
-                SortCompetition();
-                UpdateLiveCharts();
+                if (CompetitionIndex > -1)
+                {
+                    RefreshCompetitorDataGrid();
+                    SortCompetition();
+                    UpdateLiveCharts();
+                }
+                else
+                {
+                    MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
+                }
             }
         }
 
         // Gets the competitors for the selected competition
         public ObservableCollection<CompetitorModel> CurrentCompetitors
         {
-            get => Competitions[CompetitionValue].CompetitionData;
+            get => Competitions[CompetitionIndex].CompetitionData;
         }
 
         // Modifyable competitor model used for on-screen objects
@@ -80,13 +92,13 @@ namespace TASCompAssistant.ViewModels
         public GraphModel GraphData { get; set; } = new GraphModel();
 
         // Contains all the DQ Reasons
-        public DQReasonsProfileModel DQReasons { get; } = new DQReasonsProfileModel();   // This is initialized as a default profile
-        public List<CheckBox> DQCheckBoxes
+        public DQReasonsProfileModel DQReasonsProfile { get; } = new DQReasonsProfileModel(true);   // This is initialized as a default profile
+        public ObservableCollection<CheckBox> DQCheckBoxes
         {
             get
             {
-                var dqs = new List<CheckBox>();
-                foreach (var dq in DQReasons.DQReasons)
+                var dqs = new ObservableCollection<CheckBox>();
+                foreach (var dq in DQReasonsProfile.DQReasons)
                 {
                     dqs.Add(new CheckBox() { Content = dq });
                 }
@@ -128,12 +140,10 @@ namespace TASCompAssistant.ViewModels
         public ActionCommand ExitCommand { get; }
 
         /*	TODO:
-                - Error handle & chack that textboxes contain numbers ONLY
                 - Add DQ Reasons
                 - Add check for Competitors for objects with equivilant Username values, to avoid duplicates
                     - On event there is duplicate upon entering via left feild, initiate a yes/no prompt
                       to determine if you should overwrite the values previously submitted for that username
-                - Look into using CollectionViewSource rather than ObservableCollection
                 - When doubleclicking a checkbox in the datagrid to edit the value, unles you click away, it doesn't commit the edit.
                   can we make it so that upon the value change of the text box, the commit occures?
                 - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
@@ -142,8 +152,8 @@ namespace TASCompAssistant.ViewModels
         public MainWindowViewModel()
         {
             // Initialize the default DQProfile
-            DQReasons.SetProfileDefaults();
-            DQProfiles.Add(DQReasons);
+            DQReasonsProfile.SetProfileDefaults();
+            DQProfiles.Add(DQReasonsProfile);
 
             // Command to add data to the competitor datagrid
             AddCompetitorCommand = new ActionCommand(() =>
@@ -202,6 +212,9 @@ namespace TASCompAssistant.ViewModels
                 {
                     Competitions.Add(item);
                 }
+
+                CompetitionIndex = 0;
+
             });
 
             // Saves File
@@ -238,7 +251,7 @@ namespace TASCompAssistant.ViewModels
             // TODO: Reset all dq reasons to false
             ClearCompetitorInputs();
 
-            CompetitionValue = 0;
+            CompetitionIndex = 0;
             //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
             // Aka, clear all competitions IF THE USER WANTS TO ==> Make a dialogue appear
 

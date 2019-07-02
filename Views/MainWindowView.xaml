@@ -97,7 +97,7 @@
         <ComboBox ItemsSource="{Binding Competitions}"
                   DisplayMemberPath="CompetitionName"
                   SelectedValuePath="CompetitionName"
-                  SelectedIndex="{Binding CompetitionValue}"
+                  SelectedIndex="{Binding CompetitionIndex, Mode=OneWay}"
                   Grid.Row="2" 
                   Grid.Column="3"
                   HorizontalAlignment="Left"
@@ -269,7 +269,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="Competition Name:" Grid.Row="0" VerticalAlignment="Center"/>
-                                
+
                                 <TextBox Text="{Binding Competition.CompetitionName}"
                                          Grid.Row="1"
                                          VerticalAlignment="Center"/>
@@ -302,7 +302,7 @@
                                     Binding="{Binding Path=CompetitionName}"
                                     Width="*"/>
                             </DataGrid.Columns>
-                            
+
                         </DataGrid>
                     </DockPanel>
                 </Grid>
@@ -414,12 +414,21 @@
 
                             <!-- DQ Checklist combobox -->
                             <ComboBox Text="Please select DQ reason..."
-                                      ItemsSource="{Binding DQCheckBoxes}"
+                                      ItemsSource="{Binding DQReasonsProfile.DQReasons}"
+                                      VerticalAlignment="Center"
                                       IsReadOnly="True"
                                       IsEditable="True"
                                       Grid.Row="1" 
                                       Grid.Column="0" 
-                                      Grid.ColumnSpan="2"/>
+                                      Grid.ColumnSpan="2">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Reason}"
+                                                      IsChecked="{Binding IsSelected}"
+                                                      VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
                             <!-- Textblock -->
                             <CheckBox x:Name="Chkbox_DQ_Other"

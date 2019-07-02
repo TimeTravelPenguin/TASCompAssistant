@@ -8,39 +8,37 @@ using System.Windows.Controls;
 
 namespace TASCompAssistant.Models
 {
-	public class DQReasonsProfileModel
-	{
-		public string ProfileName { get; set; } = string.Empty;
-		public ObservableCollection<string> DQReasons { get; set; } = new ObservableCollection<string>();
+    public class DQReasonsProfileModel
+    {
+        public string ProfileName { get; set; } = string.Empty;
+        public ObservableCollection<DQReason> DQReasons { get; set; } = new ObservableCollection<DQReason>();
 
-		public DQReasonsProfileModel()
-		{
+        private List<string> DefaultDQReasons = new List<string>()
+        {
+                "Illegal interaction",
+                "Strat talk",
+                "Failed task goal",
+                ".m64 ends early",
+                "Desync"
+        };
 
-		}
+        public DQReasonsProfileModel(bool setDefaults)
+        {
+            if (setDefaults)
+            {
+                SetProfileDefaults();
+            }
+        }
 
-		public void SetProfileDefaults()
-		{
-			ProfileName = "Default DQ Profile";
-			DQReasons = new ObservableCollection<string>()
-				{
-					"Illegal interaction",
-					"Strat talk",
-					"Failed task goal",
-					".m64 ends early",
-					"Desync"
-				};
-		}
+        public void SetProfileDefaults()
+        {
+            ProfileName = "Default DQ Profile";
+            DQReasons.Clear();
 
-		public List<CheckBox> DQReasonsCheckboxes()
-		{
-			var reasons = new List<CheckBox>();
-
-			foreach (var dq in DQReasons)
-			{
-				reasons.Add(new CheckBox() { Content = dq });
-			}
-
-			return reasons;
-		}
-	}
+            foreach (var dq in DefaultDQReasons)
+            {
+                DQReasons.Add(new DQReason() { Reason = dq });
+            }
+        }
+    }
 }
