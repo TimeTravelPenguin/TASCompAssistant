@@ -102,7 +102,9 @@
     </Compile>
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\CompetitorModel.cs" />
+    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\DQReasonsProfileModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Types\PropertyChangedBase.cs" />
     <Compile Include="Types\CompetitorModelComparer.cs" />
     <Compile Include="ViewModels\DQReasonsEditorViewModel.cs" />

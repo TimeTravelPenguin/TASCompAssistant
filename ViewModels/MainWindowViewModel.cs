@@ -98,6 +98,8 @@ namespace TASCompAssistant.ViewModels
         //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
         public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } = new ObservableCollection<DQReasonsProfileModel>();
 
+        public FileModel FileModel { get; } = new FileModel();
+
         // Adds a new competitor to the datagrid
         public ActionCommand AddCompetitorCommand { get; }
 
@@ -116,10 +118,14 @@ namespace TASCompAssistant.ViewModels
         // Updates the graph
         public ActionCommand UpdateGraphCommand { get; }
 
+        // Opens File
+        public ActionCommand FileOpen { get; }
+
+        // Saves File
+        public ActionCommand FileSave { get; }
+
         // Exits the application
         public ActionCommand ExitCommand { get; }
-
-        public string OpenFile { get; set; } = "No file opened..."; // This will be changed later when proper code for save/load is done
 
         /*	TODO:
                 - Error handle & chack that textboxes contain numbers ONLY
@@ -186,6 +192,22 @@ namespace TASCompAssistant.ViewModels
                 SortCompetition();
                 UpdateLiveCharts();
                 RefreshCompetitorDataGrid();
+            });
+
+            // Opens File
+            FileOpen = new ActionCommand(() =>
+            {
+                Competitions.Clear();
+                foreach (var item in FileModel.OpenFile())
+                {
+                    Competitions.Add(item);
+                }
+            });
+
+            // Saves File
+            FileSave = new ActionCommand(() =>
+            {
+                FileModel.SaveFile(Competitions);
             });
 
             // Command to Exit
@@ -315,8 +337,6 @@ namespace TASCompAssistant.ViewModels
         {
             // Update graph data
             UpdateGraphStatistics();
-
-            // TODO: Scoring
         }
 
         private void UpdateGraphStatistics()

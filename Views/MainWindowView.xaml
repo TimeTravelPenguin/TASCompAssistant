@@ -54,8 +54,8 @@
                 <!-- File -->
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="{Binding ClearAllCommand}"/>
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Save"/>
+                    <MenuItem Header="_Open" Command="{Binding FileOpen}"/>
+                    <MenuItem Header="_Save" Command="{Binding FileSave}"/>
                     <MenuItem Header="_Close" Command="{Binding ExitCommand}"/>
                 </MenuItem>
                 <!-- Settings -->
@@ -452,7 +452,7 @@
         <!-- Toolbar -->
         <!-- MAKE THIS FILE TEXT A PROPERTY AND BIND IT -->
         <ToolBar Grid.Row="5" Grid.ColumnSpan="5" Margin="0,5,0,0">
-            <TextBlock x:Name="txtBlock_OpenedFile" Text="{Binding OpenFile}"
+            <TextBlock x:Name="txtBlock_OpenedFile" Text="{Binding FileModel.FileName}"
                        FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
         </ToolBar>
     </Grid>
