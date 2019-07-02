@@ -51,7 +51,11 @@ namespace TASCompAssistant.ViewModels
 
         // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
         private ICollectionView _competitorCollection;
-        public ICollectionView CompetitorCollection { get => _competitorCollection; }
+        public ICollectionView CompetitorCollection
+        {
+            get => _competitorCollection;
+            set => SetValue(ref _competitorCollection, value);
+        }
 
         // SeriesCollection used to bind for live charting
         public GraphModel GraphData { get; set; } = new GraphModel();
@@ -164,9 +168,9 @@ namespace TASCompAssistant.ViewModels
         private void RefreshDataGrid()
         {
             // Set up datagrid grouping
-            _competitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
-            _competitorCollection.GroupDescriptions.Clear();
-            _competitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+            CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
+            CompetitorCollection.GroupDescriptions.Clear();
+            CompetitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
         }
 
         private void ClearAll()
