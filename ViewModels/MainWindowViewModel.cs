@@ -16,7 +16,7 @@ namespace TASCompAssistant.ViewModels
         // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
-        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel(), new CompetitionModel() { CompetitionName = "Competition 2" } };
+        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() { CompetitionName = "Competition 1" } };
         public ObservableCollection<CompetitionModel> Competitions
         {
             get => _competitions;
@@ -31,15 +31,18 @@ namespace TASCompAssistant.ViewModels
             {
                 SetValue(ref _competitionValue, value);
 
-                RefreshDataGrid();
+                RefreshCompetitorDataGrid();
 
                 SortCompetition();
                 UpdateLiveCharts();
             }
         }
 
-        // I have no idea if this is correct
-        public ObservableCollection<CompetitorModel> CurrentCompetitors { get => Competitions[CompetitionValue].CompetitionData; }
+        // Gets the competitors for the selected competition
+        public ObservableCollection<CompetitorModel> CurrentCompetitors
+        {
+            get => Competitions[CompetitionValue].CompetitionData;
+        }
 
         // Modifyable competitor model used for on-screen objects
         private CompetitorModel _competitor = new CompetitorModel();
@@ -49,12 +52,28 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _competitor, value);
         }
 
+        // Modifyable competition model used for on-screen objects
+        private CompetitionModel _competition = new CompetitionModel();
+        public CompetitionModel Competition
+        {
+            get => _competition;
+            set => SetValue(ref _competition, value);
+        }
+
         // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
         private ICollectionView _competitorCollection;
         public ICollectionView CompetitorCollection
         {
             get => _competitorCollection;
             set => SetValue(ref _competitorCollection, value);
+        }
+
+        // This is used to bind the DataGrid, to show the contents of Competitions
+        private ICollectionView _competitionCollection;
+        public ICollectionView CompetitionCollection
+        {
+            get => _competitionCollection;
+            set => SetValue(ref _competitionCollection, value);
         }
 
         // SeriesCollection used to bind for live charting
@@ -81,6 +100,9 @@ namespace TASCompAssistant.ViewModels
 
         // Adds a new competitor to the datagrid
         public ActionCommand AddCompetitorCommand { get; }
+
+        // Adds a new competition to the datagrid
+        public ActionCommand AddCompetitionCommand { get; }
 
         // Add test data to datagrid
         public ActionCommand AddTestDataCommand { get; }
@@ -125,6 +147,12 @@ namespace TASCompAssistant.ViewModels
                 UpdateLiveCharts();
             });
 
+            AddCompetitionCommand = new ActionCommand(() =>
+            {
+                AddCompetition();
+                ClearCompetitionInputs();
+            });
+
             // Command to clear the datagrid
             ClearAllCommand = new ActionCommand(() => ClearAll());
 
@@ -133,6 +161,7 @@ namespace TASCompAssistant.ViewModels
             {
                 SortCompetition();
                 UpdateLiveCharts();
+                RefreshCompetitionDataGrid();
             });
 
             // Command to add random test data to datagrid
@@ -156,16 +185,19 @@ namespace TASCompAssistant.ViewModels
 
                 SortCompetition();
                 UpdateLiveCharts();
+                RefreshCompetitorDataGrid();
             });
 
             // Command to Exit
             ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
-            RefreshDataGrid();
-
+            SortCompetition();
+            UpdateLiveCharts();
+            RefreshCompetitorDataGrid();
+            RefreshCompetitionDataGrid();
         }
 
-        private void RefreshDataGrid()
+        private void RefreshCompetitorDataGrid()
         {
             // Set up datagrid grouping
             CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
@@ -173,10 +205,16 @@ namespace TASCompAssistant.ViewModels
             CompetitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
         }
 
+        private void RefreshCompetitionDataGrid()
+        {
+            // Set up datagrid
+            CompetitionCollection = CollectionViewSource.GetDefaultView(Competitions);
+        }
+
         private void ClearAll()
         {
             // TODO: Reset all dq reasons to false
-            ClearInputs();
+            ClearCompetitorInputs();
 
             CompetitionValue = 0;
             //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
@@ -185,10 +223,16 @@ namespace TASCompAssistant.ViewModels
             UpdateLiveCharts();
         }
 
-        private void ClearInputs()
+        private void ClearCompetitorInputs()
         {
             // Clear Competitor Data
             Competitor.ClearCompetitor();
+        }
+
+        private void ClearCompetitionInputs()
+        {
+            // Clear Competitor Data
+            Competition.ClearCompetitor();
         }
 
         private void AddCompetitor()
@@ -204,9 +248,17 @@ namespace TASCompAssistant.ViewModels
                 DQOtherReason = Competitor.DQOtherReason
             });
 
-            ClearInputs();
+            ClearCompetitorInputs();
             SortCompetition();
 
+        }
+
+        private void AddCompetition()
+        {
+            Competitions.Add(new CompetitionModel()
+            {
+                CompetitionName = Competition.CompetitionName
+            });
         }
 
         private void SortCompetition()

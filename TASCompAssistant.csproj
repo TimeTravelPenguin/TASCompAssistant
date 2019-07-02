@@ -145,7 +145,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Mushroom.ico" />
+    <Resource Include="Icons\RedMushroom.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Coin.ico" />
@@ -153,6 +153,11 @@
   <ItemGroup>
     <Resource Include="Icons\QBlock.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\EBlock.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GreenMushroom.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
