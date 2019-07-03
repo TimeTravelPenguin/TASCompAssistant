@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
@@ -74,6 +75,27 @@ namespace TASCompAssistant.Models
         {
             get => _dqOtherReason;
             set => SetValue(ref _dqOtherReason, value);
+        }
+
+        public string DQReasonsAsString
+        {
+            get
+            {
+                var dqs = string.Empty;
+                foreach (var item in DQReasons)
+                {
+                    dqs += $"{item.Reason}, ";
+                }
+
+                if (DQReasons.Count > 0)
+                {
+                    return dqs.Remove(dqs.Length - 2);
+                }
+                else
+                {
+                    return dqs;
+                }
+            }
         }
 
         private double _score;

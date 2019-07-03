@@ -20,6 +20,20 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _competitionName, value);
         }
 
+        private DateTime? _startDate = DateTime.Now.Date;
+        public DateTime? StartDate
+        {
+            get => _startDate;
+            set => SetValue(ref _startDate, value);
+        }
+
+        private DateTime? _endDate = DateTime.Now.Date;
+        public DateTime? EndDate
+        {
+            get => _endDate;
+            set => SetValue(ref _endDate, value);
+        }
+
         public CompetitionModel()
         {
             ClearCompetition();
@@ -29,6 +43,8 @@ namespace TASCompAssistant.Models
         {
             CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
+            StartDate = DateTime.Now.Date;
+            EndDate = DateTime.Now.Date;
         }
     }
 }

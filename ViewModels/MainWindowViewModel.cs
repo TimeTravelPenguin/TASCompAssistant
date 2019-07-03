@@ -100,6 +100,14 @@ namespace TASCompAssistant.ViewModels
         // Adds a new competitor to the datagrid
         public ActionCommand AddCompetitorCommand { get; }
 
+        // Determine
+        private bool _addCompetitorEnabled;
+        public bool AddCompetitorEnabled
+        {
+            get => _addCompetitorEnabled;
+            set => SetValue(ref _addCompetitorEnabled, value);
+        }
+
         // Adds a new competition to the datagrid
         public ActionCommand AddCompetitionCommand { get; }
 
@@ -143,7 +151,10 @@ namespace TASCompAssistant.ViewModels
             // Command to add data to the competitor datagrid
             AddCompetitorCommand = new ActionCommand(() =>
             {
+                CheckMinimumCompetitions();
+
                 AddCompetitor();
+
                 ClearCompetitorInputs();
                 SortCompetition();
                 UpdateLiveCharts();
@@ -151,6 +162,8 @@ namespace TASCompAssistant.ViewModels
 
             AddCompetitionCommand = new ActionCommand(() =>
             {
+                CheckMinimumCompetitions();
+
                 AddCompetition();
                 SortCompetition();
                 ClearCompetitionInputs();
@@ -162,14 +175,14 @@ namespace TASCompAssistant.ViewModels
             // Command to sort data
             UpdateDataCommand = new ActionCommand(() =>
             {
-                SortCompetition();
-                UpdateLiveCharts();
-                RefreshCompetitionDataGrid();
+                RefreshAll();
             });
 
             // Command to add random test data to datagrid
             AddTestDataCommand = new ActionCommand(() =>
             {
+                CheckMinimumCompetitions();
+
                 CurrentCompetitors.Clear();
 
                 var r = new Random();
@@ -186,9 +199,7 @@ namespace TASCompAssistant.ViewModels
                 }
 
 
-                SortCompetition();
-                UpdateLiveCharts();
-                RefreshCompetitorDataGrid();
+                RefreshAll();
             });
 
             // Opens File
@@ -213,10 +224,26 @@ namespace TASCompAssistant.ViewModels
             // Command to Exit
             ExitCommand = new ActionCommand(() => Environment.Exit(0));
 
+            RefreshAll();
+        }
+
+        private void RefreshAll()
+        {
+            CheckMinimumCompetitions();
             SortCompetition();
-            UpdateLiveCharts();
             RefreshCompetitorDataGrid();
             RefreshCompetitionDataGrid();
+            UpdateLiveCharts();
+        }
+
+        private void CheckMinimumCompetitions()
+        {
+            if (Competitions.Count == 0)
+            {
+                Competitions.Add(new CompetitionModel());
+                CompetitionIndex = 0;
+            }
+
         }
 
         private void RefreshCompetitorDataGrid()
@@ -278,10 +305,20 @@ namespace TASCompAssistant.ViewModels
                 VIStart = Competitor.VIStart,
                 VIEnd = Competitor.VIEnd,
                 Rerecords = Competitor.Rerecords,
-                DQ = Competitor.DQ
+                DQ = Competitor.DQ,
+                DQOther = Competitor.DQOther
             };
 
-            if (Competitor.DQOther)
+            // Add DQs
+            foreach (var dq in DQReasonsProfile.DQReasons)
+            {
+                if (dq.IsSelected)
+                {
+                    newCompetitor.DQReasons.Add(dq);
+                }
+            }
+
+            if (Competitor.DQ && Competitor.DQOther)
             {
                 newCompetitor.DQReasons.Add(new DQReason() { Reason = Competitor.DQOtherReason, IsSelected = true });
             }
@@ -293,7 +330,9 @@ namespace TASCompAssistant.ViewModels
         {
             Competitions.Add(new CompetitionModel()
             {
-                CompetitionName = Competition.CompetitionName
+                CompetitionName = Competition.CompetitionName,
+                StartDate = Competition.StartDate,
+                EndDate = Competition.EndDate
             });
         }
 

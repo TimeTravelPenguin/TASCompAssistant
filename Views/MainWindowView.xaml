@@ -9,6 +9,7 @@
         xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="TAS Competition Assistant" Height="385" Width="870" MinHeight="385" MinWidth="870" 
         ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
@@ -169,6 +170,10 @@
                             <DataGridTextColumn Header="DQReason"
                                                 Binding="{Binding Path=DQReasons}"
                                                 Width="Auto"/>
+                            <DataGridTextColumn Header="DQReason (text)"
+                                                Binding="{Binding Path=DQReasonsAsString, Mode=OneWay}"
+                                                Width="Auto"
+                                                IsReadOnly="False"/>
 
                         </DataGrid.Columns>
                     </DataGrid>
@@ -263,7 +268,16 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="18" />
                                     <RowDefinition Height="18" />
+                                    <RowDefinition Height="5" />
                                     <RowDefinition Height="18" />
+                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="18" />
+                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="18" />
+                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="5" />
                                     <RowDefinition Height="18" />
                                     <RowDefinition Height="18" />
                                     <RowDefinition Height="*"/>
@@ -275,9 +289,34 @@
                                          Grid.Row="1"
                                          VerticalAlignment="Center"/>
 
+
+                                <!-- Date Pickers -->
+                                <TextBlock Text="Start Date:" Grid.Row="3"/>
+                                <DatePicker Grid.Row="4"
+                                            SelectedDate="{Binding Path=Competition.StartDate,
+                                                                   Mode=TwoWay,
+                                                                   TargetNullValue={x:Static System:DateTime.Now}}"
+                                            SelectedDateFormat="Long"/>
+
+                                <TextBlock Text="End Date:" Grid.Row="6"/>
+                                <DatePicker Grid.Row="7"
+                                            SelectedDate="{Binding Path=Competition.EndDate,
+                                                                   Mode=TwoWay,
+                                                                   TargetNullValue={x:Static System:DateTime.Now}}"
+                                            SelectedDateFormat="Long"/>
+
+                                <!-- Time Picker -->
+                                <TextBlock Text="Pick Due Time:" Grid.Row="9"/>
+                                <xctk:TimePicker Grid.Row="10" 
+                                                 ShowButtonSpinner="False"
+                                                 Kind="Local"
+                                                 Watermark="Please set a due time..."
+                                                 DataContext="{Binding Competition.EndDate}"/>
+
+                                <!-- Add Button -->
                                 <Button Command="{Binding AddCompetitionCommand}"
                                         Content="Add"
-                                        Grid.Row="3" 
+                                        Grid.Row="12" 
                                         VerticalAlignment="Center"/>
 
                             </Grid>
@@ -299,11 +338,40 @@
 
                             <!-- Column Information -->
                             <DataGrid.Columns>
+                                <!-- Competition Name -->
                                 <DataGridTextColumn Header="Competition Name"
                                     Binding="{Binding Path=CompetitionName}"
-                                    Width="*"/>
-                            </DataGrid.Columns>
+                                    Width="auto"/>
 
+                                <!-- Start Date -->
+                                <DataGridTemplateColumn Header="Start Date" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=StartDate, StringFormat={}{0:D}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding Path=StartDate}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- End Date -->
+                                <DataGridTemplateColumn Header="End Date" Width="1.25*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=EndDate, StringFormat={}{0:dddd, dd MMMM yyyy HH:mm}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding Path=EndDate}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                
+                            </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
                 </Grid>
@@ -314,7 +382,7 @@
         <!-- Row 3 -->
 
         <!-- Group Box -->
-        <GroupBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,-2">
+        <GroupBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,-2" IsEnabled="{Binding AddCompetitorEnabled}">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/TASCompAssistant;component/Icons/RedMushroom.ico" Margin="3,0" Height="15"/>
@@ -435,7 +503,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                            <!-- Textblock -->
+                            <!-- DQ Other Checkbox -->
                             <CheckBox x:Name="Chkbox_DQ_Other"
                                       Content="Other:"
                                       IsChecked="{Binding Competitor.DQOther}"
