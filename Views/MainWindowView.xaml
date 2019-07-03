@@ -97,7 +97,7 @@
         <ComboBox ItemsSource="{Binding Competitions}"
                   DisplayMemberPath="CompetitionName"
                   SelectedValuePath="CompetitionName"
-                  SelectedIndex="{Binding CompetitionIndex, Mode=OneWay}"
+                  SelectedIndex="{Binding CompetitionIndex}"
                   Grid.Row="2" 
                   Grid.Column="3"
                   HorizontalAlignment="Left"
@@ -179,7 +179,7 @@
 
                     <!-- Datagrid Score -->
                     <DataGrid x:Name="Datagrid_Score"
-                              ItemsSource="{Binding Path=Competitors}"
+                              ItemsSource="{Binding null}"
                               AutoGenerateColumns="False"
                               Grid.Column="2"
                               Grid.Row="3"
@@ -414,8 +414,10 @@
                             <TextBlock Text="Reaons:" Grid.Row="0" Grid.Column="0"/>
 
                             <!-- DQ Checklist combobox -->
+                            <!-- This needs to become something better - like an expander? -->
                             <ComboBox Text="Please select DQ reason..."
                                       ItemsSource="{Binding DQReasonsProfile.DQReasons}"
+                                      SelectedValuePath="Reason"
                                       VerticalAlignment="Center"
                                       IsReadOnly="True"
                                       IsEditable="True"
@@ -424,9 +426,11 @@
                                       Grid.ColumnSpan="2">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <CheckBox Content="{Binding Reason}"
-                                                  IsChecked="{Binding IsSelected}"
-                                                  VerticalAlignment="Center"/>
+                                        <StackPanel>
+                                            <CheckBox Content="{Binding Reason}"
+                                                      IsChecked="{Binding IsSelected}"
+                                                      VerticalAlignment="Center"/>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
@@ -460,9 +464,8 @@
         <!-- Row 5 -->
 
         <!-- Toolbar -->
-        <!-- MAKE THIS FILE TEXT A PROPERTY AND BIND IT -->
         <ToolBar Grid.Row="5" Grid.ColumnSpan="5" Margin="0,5,0,0">
-            <TextBlock x:Name="txtBlock_OpenedFile" Text="{Binding FileModel.FileName}"
+            <TextBlock x:Name="txtBlock_OpenedFile" Text="{Binding FileModel.FileName, Mode=OneWay}"
                        FontSize="11" VerticalAlignment="Center" Margin="0,0,0,3"/>
         </ToolBar>
     </Grid>

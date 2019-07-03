@@ -6,13 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
-    internal class FileModel
+    internal class FileModel : PropertyChangedBase
     {
         private DataModel Data = new DataModel();
-        public string FileName { get; private set; } = "No file opened...";
+
+        private string _fileName = "No file opened...";
+        public string FileName
+        {
+            get => _fileName;
+            private set => SetValue(ref _fileName, value);
+        }
 
         public FileModel()
         {
@@ -33,18 +40,23 @@ namespace TASCompAssistant.Models
 
                 if (extension == ".tascomp")
                 {
+                    FileName = filePath;
                     var fileData = File.ReadAllText(filePath);
                     var data = Data.OpenData(fileData);
                     return data;
                 }
                 else
                 {
-                    fileName = "No file opened...";
+                    FileClear();
                     MessageBox.Show("Please open a valid .tascomp file", "Error opening file...");
                     return new ObservableCollection<CompetitionModel>();
                 }
             }
-            catch { FileName = "No File Loaded..."; } // Put errorhandling here for invalid JSON?
+            catch   // Put errorhandling here for invalid JSON?
+            {
+                FileClear();
+            }
+
             return new ObservableCollection<CompetitionModel>();
         }
 
@@ -61,9 +73,19 @@ namespace TASCompAssistant.Models
             {
                 string path = Path.GetFullPath(sfd.FileName);
 
+                FileName = path;
+
                 File.WriteAllText(path, saveData);
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                FileName = "File failed to save...";
+            }
+        }
+
+        internal void FileClear()
+        {
+            FileName = "No file Opened...";
         }
     }
 }

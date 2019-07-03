@@ -32,10 +32,8 @@ namespace TASCompAssistant.ViewModels
             {
                 // Do not touch this
                 SetValue(ref _competitionIndex, Competitions.Count > 0
-                    ? value > Competitions.Count
-                        ? value
-                        : 0
-                    : value);
+                                                ? value > Competitions.Count ? value : 0
+                                                : value);
 
                 if (CompetitionIndex > -1)
                 {
@@ -93,19 +91,6 @@ namespace TASCompAssistant.ViewModels
 
         // Contains all the DQ Reasons
         public DQReasonsProfileModel DQReasonsProfile { get; } = new DQReasonsProfileModel(true);   // This is initialized as a default profile
-        public ObservableCollection<CheckBox> DQCheckBoxes
-        {
-            get
-            {
-                var dqs = new ObservableCollection<CheckBox>();
-                foreach (var dq in DQReasonsProfile.DQReasons)
-                {
-                    dqs.Add(new CheckBox() { Content = dq });
-                }
-
-                return dqs;
-            }
-        }
 
         //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
         public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } = new ObservableCollection<DQReasonsProfileModel>();
@@ -168,6 +153,7 @@ namespace TASCompAssistant.ViewModels
             {
                 AddCompetition();
                 SortCompetition();
+                ClearCompetitionInputs();
             });
 
             // Command to clear the datagrid
@@ -251,6 +237,10 @@ namespace TASCompAssistant.ViewModels
         {
             // TODO: Reset all dq reasons to false
             ClearCompetitorInputs();
+            ClearCompetitionInputs();
+
+            Competitions.Clear();
+            Competitions.Add(new CompetitionModel());
 
             CompetitionIndex = 0;
             //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
@@ -258,6 +248,8 @@ namespace TASCompAssistant.ViewModels
 
             SortCompetition();
             UpdateLiveCharts();
+
+            FileModel.FileClear();
         }
 
         private void ClearCompetitorInputs()
@@ -274,8 +266,8 @@ namespace TASCompAssistant.ViewModels
 
         private void ClearCompetitionInputs()
         {
-            // Clear Competitor Data
-            Competition.ClearCompetitor();
+            // Clear Competition Data
+            Competition.ClearCompetition();
         }
 
         private void AddCompetitor()

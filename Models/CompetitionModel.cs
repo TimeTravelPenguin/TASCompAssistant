@@ -22,10 +22,10 @@ namespace TASCompAssistant.Models
 
         public CompetitionModel()
         {
-            ClearCompetitor();
+            ClearCompetition();
         }
 
-        internal void ClearCompetitor()
+        internal void ClearCompetition()
         {
             CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
