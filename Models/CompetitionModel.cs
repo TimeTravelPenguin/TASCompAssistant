@@ -6,6 +6,7 @@ namespace TASCompAssistant.Models
 {
     internal class CompetitionModel : PropertyChangedBase
     {
+        // Competitors in competition
         private ObservableCollection<CompetitorModel> _competitionData = new ObservableCollection<CompetitorModel>();
         public ObservableCollection<CompetitorModel> CompetitionData
         {
@@ -18,6 +19,13 @@ namespace TASCompAssistant.Models
         {
             get => _competitionName;
             set => SetValue(ref _competitionName, value);
+        }
+
+        private CompetitionMetadata _metadata = new CompetitionMetadata();
+        public CompetitionMetadata Metadata
+        {
+            get => _metadata;
+            set => SetValue(ref _metadata, value);
         }
 
         private DateTime? _startDate = DateTime.Now.Date;
@@ -43,6 +51,7 @@ namespace TASCompAssistant.Models
         {
             CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
+            Metadata.ClearData();
             StartDate = DateTime.Now.Date;
             EndDate = DateTime.Now.Date;
         }

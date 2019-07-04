@@ -4,11 +4,11 @@ using TASCompAssistant.Models;
 using Microsoft.Expression.Interactivity.Core;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.ComponentModel;
 using TASCompAssistant.Types;
 using System.Windows;
+using TASCompAssistant.Views;
 
 namespace TASCompAssistant.ViewModels
 {
@@ -45,6 +45,8 @@ namespace TASCompAssistant.ViewModels
                 {
                     MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
                 }
+
+                MessageBox.Show(CompetitionIndex.ToString());
             }
         }
 
@@ -128,6 +130,9 @@ namespace TASCompAssistant.ViewModels
 
         // Saves File
         public ActionCommand FileSave { get; }
+
+        // Opens window to manage competition ruleset
+        public ActionCommand ModifyCompetitionMetadata { get; }
 
         // Exits the application
         public ActionCommand ExitCommand { get; }
@@ -219,6 +224,16 @@ namespace TASCompAssistant.ViewModels
             FileSave = new ActionCommand(() =>
             {
                 FileModel.SaveFile(Competitions);
+            });
+
+            // Opens window to modify competition metadata
+            ModifyCompetitionMetadata = new ActionCommand(() =>
+            {
+                var MetadataManger = new CompetitionMetadataManagerView();
+                
+                MetadataManger.ShowDialog();
+
+                // Competitions[CompetitionIndex].Metadata = ???
             });
 
             // Command to Exit

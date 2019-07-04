@@ -69,7 +69,12 @@
                 </MenuItem>
                 <MenuItem Header="Rank Competition" Command="{Binding UpdateDataCommand}"/>
                 <MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
-
+                <!-- Plain text results -->
+                <MenuItem Header="_Results Output">
+                    <MenuItem Header="Copy Competition Description"/>
+                    <MenuItem Header="Copy Competition Leaderboard"/>
+                    <MenuItem Header="Copy Competition Score"/>
+                </MenuItem>
             </Menu>
             <StackPanel/>
         </DockPanel>
@@ -280,6 +285,7 @@
                                     <RowDefinition Height="5" />
                                     <RowDefinition Height="18" />
                                     <RowDefinition Height="18" />
+                                    <RowDefinition Height="18" />
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
@@ -313,10 +319,16 @@
                                                  Watermark="Please set a due time..."
                                                  DataContext="{Binding Competition.EndDate}"/>
 
+                                <!-- Description Button -->
+                                <Button Command="{Binding ModifyCompetitionMetadata}"
+                                        Content="Modify Metadata"
+                                        Grid.Row="12" 
+                                        VerticalAlignment="Center"/>
+                                
                                 <!-- Add Button -->
                                 <Button Command="{Binding AddCompetitionCommand}"
                                         Content="Add"
-                                        Grid.Row="12" 
+                                        Grid.Row="14" 
                                         VerticalAlignment="Center"/>
 
                             </Grid>
@@ -370,7 +382,7 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
-                                
+
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
