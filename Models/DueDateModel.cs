@@ -9,29 +9,28 @@ namespace TASCompAssistant.Models
 {
     class DueDateModel : PropertyChangedBase
     {
-        private DateTime? _startDate = DateTime.Now;
+        private DateTime? _startDate = new DateTime();
         public DateTime? StartDate
         {
             get => _startDate;
             set => SetValue(ref _startDate, value);
         }
 
-        private DateTime? _endDate = DateTime.Now;
+        private DateTime? _endDate = new DateTime();
         public DateTime? EndDate
         {
             get => _endDate;
             set => SetValue(ref _endDate, value);
         }
 
-
-        private DateTime? _dueTime = DateTime.Now;
+        private DateTime? _dueTime = new DateTime();
         public DateTime? DueTime
         {
             get => _dueTime;
             set => SetValue(ref _dueTime, value);
         }
 
-        public void ClearDates()
+        public void ClearDueDates()
         {
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;

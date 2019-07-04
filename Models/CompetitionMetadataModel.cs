@@ -8,7 +8,7 @@ using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
-    class CompetitionMetadata : PropertyChangedBase
+    class CompetitionMetadataModel : PropertyChangedBase
     {
         public string _competitionDescription = string.Empty;
         public string CompetitionDescription
@@ -38,7 +38,7 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _mandatorySaveState, value);
         }
 
-        public CompetitionMetadata()
+        public CompetitionMetadataModel()
         {
             DefaultData();
         }

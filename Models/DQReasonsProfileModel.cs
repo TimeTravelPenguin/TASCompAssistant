@@ -11,7 +11,7 @@ namespace TASCompAssistant.Models
     public class DQReasonsProfileModel
     {
         public string ProfileName { get; set; } = string.Empty;
-        public ObservableCollection<DQReason> DQReasons { get; set; } = new ObservableCollection<DQReason>();
+        public ObservableCollection<DQReasonModel> DQReasons { get; set; } = new ObservableCollection<DQReasonModel>();
 
         private List<string> DefaultDQReasons = new List<string>()
         {
@@ -37,7 +37,7 @@ namespace TASCompAssistant.Models
 
             foreach (var dq in DefaultDQReasons)
             {
-                DQReasons.Add(new DQReason() { Reason = dq });
+                DQReasons.Add(new DQReasonModel() { Reason = dq });
             }
         }
     }

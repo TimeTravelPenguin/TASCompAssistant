@@ -28,8 +28,8 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _dueDates, value);
         }
         
-        private CompetitionMetadata _metadata = new CompetitionMetadata();
-        public CompetitionMetadata Metadata
+        private CompetitionMetadataModel _metadata = new CompetitionMetadataModel();
+        public CompetitionMetadataModel Metadata
         {
             get => _metadata;
             set => SetValue(ref _metadata, value);
@@ -40,12 +40,12 @@ namespace TASCompAssistant.Models
             ClearCompetition();
         }
 
-        internal void ClearCompetition()
+        public void ClearCompetition()
         {
             CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
             Metadata.ClearData();
-            DueDates.ClearDates();
+            DueDates.ClearDueDates();
         }
     }
 }

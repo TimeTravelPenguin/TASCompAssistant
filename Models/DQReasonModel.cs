@@ -7,7 +7,7 @@ using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
-    public class DQReason : PropertyChangedBase
+    public class DQReasonModel : PropertyChangedBase
     {
         private string _reason;
         public string Reason
@@ -23,7 +23,7 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _isSelected, value);
         }
 
-        public DQReason()
+        public DQReasonModel()
         {
             IsSelected = false;
         }

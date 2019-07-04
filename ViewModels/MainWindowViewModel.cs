@@ -31,9 +31,13 @@ namespace TASCompAssistant.ViewModels
             set
             {
                 // Do not touch this
+                /*
                 SetValue(ref _competitionIndex, Competitions.Count > 0
                                                 ? value > Competitions.Count ? value : 0
                                                 : value);
+                                                */
+
+                SetValue(ref _competitionIndex, value);
 
                 if (CompetitionIndex > -1)
                 {
@@ -46,7 +50,7 @@ namespace TASCompAssistant.ViewModels
                     MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
                 }
 
-                MessageBox.Show(CompetitionIndex.ToString());
+                MessageBox.Show("Current Competition index: " + CompetitionIndex.ToString(), "Debug Popup");
             }
         }
 
@@ -57,19 +61,19 @@ namespace TASCompAssistant.ViewModels
         }
 
         // Modifyable competitor model used for on-screen objects
-        private CompetitorModel _competitor = new CompetitorModel();
-        public CompetitorModel Competitor
+        private CompetitorModel _editableCompetitor = new CompetitorModel();
+        public CompetitorModel EditableCompetitor
         {
-            get => _competitor;
-            set => SetValue(ref _competitor, value);
+            get => _editableCompetitor;
+            set => SetValue(ref _editableCompetitor, value);
         }
 
         // Modifyable competition model used for on-screen objects
-        private CompetitionModel _competition = new CompetitionModel();
-        public CompetitionModel Competition
+        private CompetitionModel _editableCompetition = new CompetitionModel();
+        public CompetitionModel EditableCompetition
         {
-            get => _competition;
-            set => SetValue(ref _competition, value);
+            get => _editableCompetition;
+            set => SetValue(ref _editableCompetition, value);
         }
 
         // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
@@ -231,7 +235,7 @@ namespace TASCompAssistant.ViewModels
             ModifyCompetitionMetadata = new ActionCommand(() =>
             {
                 var MetadataManger = new CompetitionMetadataManagerView();
-                
+
                 MetadataManger.ShowDialog();
 
                 // Competitions[CompetitionIndex].Metadata = ???
@@ -298,7 +302,7 @@ namespace TASCompAssistant.ViewModels
         private void ClearCompetitorInputs()
         {
             // Clear Competitor Data
-            Competitor.ClearCompetitor();
+            EditableCompetitor.ClearCompetitor();
 
             // Uncheck all DQs:
             foreach (var dq in DQReasonsProfile.DQReasons)
@@ -310,19 +314,19 @@ namespace TASCompAssistant.ViewModels
         private void ClearCompetitionInputs()
         {
             // Clear Competition Data
-            Competition.ClearCompetition();
+            EditableCompetition.ClearCompetition();
         }
 
         private void AddCompetitor()
         {
             var newCompetitor = new CompetitorModel()
             {
-                Username = Competitor.Username,
-                VIStart = Competitor.VIStart,
-                VIEnd = Competitor.VIEnd,
-                Rerecords = Competitor.Rerecords,
-                DQ = Competitor.DQ,
-                DQOther = Competitor.DQOther
+                Username = EditableCompetitor.Username,
+                VIStart = EditableCompetitor.VIStart,
+                VIEnd = EditableCompetitor.VIEnd,
+                Rerecords = EditableCompetitor.Rerecords,
+                DQ = EditableCompetitor.DQ,
+                DQOther = EditableCompetitor.DQOther
             };
 
             // Add DQs
@@ -334,9 +338,9 @@ namespace TASCompAssistant.ViewModels
                 }
             }
 
-            if (Competitor.DQ && Competitor.DQOther)
+            if (EditableCompetitor.DQ && EditableCompetitor.DQOther)
             {
-                newCompetitor.DQReasons.Add(new DQReason() { Reason = Competitor.DQOtherReason, IsSelected = true });
+                newCompetitor.DQReasons.Add(new DQReasonModel() { Reason = EditableCompetitor.DQOtherReason, IsSelected = true });
             }
 
             CurrentCompetitors.Add(newCompetitor);
@@ -346,8 +350,13 @@ namespace TASCompAssistant.ViewModels
         {
             Competitions.Add(new CompetitionModel()
             {
-                CompetitionName = Competition.CompetitionName,
-                DueDates = Competition.DueDates
+                CompetitionName = EditableCompetition.CompetitionName,
+                DueDates = new DueDateModel()
+                {
+                    StartDate = EditableCompetition.DueDates.StartDate,
+                    EndDate = EditableCompetition.DueDates.EndDate,
+                    DueTime = EditableCompetition.DueDates.DueTime
+                }
             });
         }
 

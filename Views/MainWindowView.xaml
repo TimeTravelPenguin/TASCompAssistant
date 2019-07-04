@@ -146,37 +146,37 @@
                         <!-- Column Information -->
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Place"
-                                                Binding="{Binding Path=Place}"
+                                                Binding="{Binding Place}"
                                                 Width="45"
                                                 IsReadOnly="True"/>
                             <DataGridTextColumn Header="Username"
-                                                Binding="{Binding Path=Username}"
+                                                Binding="{Binding Username}"
                                                 Width="120"/>
                             <DataGridTextColumn Header="VIStart"
-                                                Binding="{Binding Path=VIStart}"
+                                                Binding="{Binding VIStart}"
                                                 Width="Auto"/>
                             <DataGridTextColumn Header="VIEnd"
-                                                Binding="{Binding Path=VIEnd}"
+                                                Binding="{Binding VIEnd}"
                                                 Width="Auto"/>
                             <DataGridTextColumn Header="VIs"
-                                                Binding="{Binding Path=VIs}"
+                                                Binding="{Binding VIs}"
                                                 Width="Auto"
                                                 IsReadOnly="True"/>
                             <DataGridTextColumn Header="Time"
-                                                Binding="{Binding Path=TimeFormated}"
+                                                Binding="{Binding TimeFormated}"
                                                 Width="Auto"
                                                 IsReadOnly="True"/>
                             <DataGridTextColumn Header="Rerecords"
-                                                Binding="{Binding Path=Rerecords}"
+                                                Binding="{Binding Rerecords}"
                                                 Width="Auto"/>
                             <DataGridCheckBoxColumn Header="DQ"
-                                                    Binding="{Binding Path=DQ}"
+                                                    Binding="{Binding DQ}"
                                                     Width="30"/>
                             <DataGridTextColumn Header="DQReason"
-                                                Binding="{Binding Path=DQReasons}"
+                                                Binding="{Binding DQReasons}"
                                                 Width="Auto"/>
                             <DataGridTextColumn Header="DQReason (text)"
-                                                Binding="{Binding Path=DQReasonsAsString, Mode=OneWay}"
+                                                Binding="{Binding DQReasonsAsString, Mode=OneWay}"
                                                 Width="Auto"
                                                 IsReadOnly="False"/>
 
@@ -200,13 +200,13 @@
                               CanUserDeleteRows="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Place"
-                                        Binding="{Binding Path=ScorePlace}"
+                                        Binding="{Binding ScorePlace}"
                                         Width="45"/>
                             <DataGridTextColumn Header="Username"
-                                        Binding="{Binding Path=Username}"
+                                        Binding="{Binding Username}"
                                         Width="*"/>
                             <DataGridTextColumn Header="Score"
-                                        Binding="{Binding Path=ScorePlace}"
+                                        Binding="{Binding ScorePlace}"
                                         Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -291,7 +291,7 @@
 
                                 <TextBlock Text="Competition Name:" Grid.Row="0" VerticalAlignment="Center"/>
 
-                                <TextBox Text="{Binding Competition.CompetitionName}"
+                                <TextBox Text="{Binding EditableCompetition.CompetitionName}"
                                          Grid.Row="1"
                                          VerticalAlignment="Center"/>
 
@@ -299,14 +299,14 @@
                                 <!-- Date Pickers -->
                                 <TextBlock Text="Start Date:" Grid.Row="3"/>
                                 <DatePicker Grid.Row="4"
-                                            SelectedDate="{Binding Path=Competition.DueDates.StartDate,
+                                            SelectedDate="{Binding EditableCompetition.DueDates.StartDate,
                                                                    Mode=TwoWay,
                                                                    TargetNullValue={x:Static System:DateTime.Now}}"
                                             SelectedDateFormat="Long"/>
 
                                 <TextBlock Text="End Date:" Grid.Row="6"/>
                                 <DatePicker Grid.Row="7"
-                                            SelectedDate="{Binding Path=Competition.DueDates.EndDate,
+                                            SelectedDate="{Binding EditableCompetition.DueDates.EndDate,
                                                                    Mode=TwoWay,
                                                                    TargetNullValue={x:Static System:DateTime.Now}}"
                                             SelectedDateFormat="Long"/>
@@ -317,7 +317,7 @@
                                                  ShowButtonSpinner="False"
                                                  Kind="Local"
                                                  Watermark="Please set a due time..."
-                                                 Value="{Binding Competition.DueDates.DueTime}"/>
+                                                 Value="{Binding EditableCompetition.DueDates.DueTime}"/>
 
                                 <!-- Description Button -->
                                 <Button Command="{Binding ModifyCompetitionMetadata}"
@@ -352,19 +352,20 @@
                             <DataGrid.Columns>
                                 <!-- Competition Name -->
                                 <DataGridTextColumn Header="Competition Name"
-                                    Binding="{Binding Path=CompetitionName}"
+                                    Binding="{Binding CompetitionName}"
                                     Width="auto"/>
 
                                 <!-- Start Date -->
                                 <DataGridTemplateColumn Header="Start Date" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Path=DueDates.StartDate, StringFormat={}{0:D}}" />
+                                            <TextBlock Text="{Binding DueDates.StartDate, StringFormat={}{0:D}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
+                                    
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding Path=DueDates.StartDate}" />
+                                            <DatePicker SelectedDate="{Binding DueDates.StartDate}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
@@ -373,12 +374,13 @@
                                 <DataGridTemplateColumn Header="End Date" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Path=DueDates.EndDate, StringFormat={}{0:D}}" />
+                                            <TextBlock Text="{Binding DueDates.EndDate, StringFormat={}{0:D}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
+                                    
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding Path=DueDates.EndDate}" />
+                                            <DatePicker SelectedDate="{Binding DueDates.EndDate}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
@@ -387,12 +389,13 @@
                                 <DataGridTemplateColumn Header="Due Time" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Path=DueDates.DueTime, StringFormat={}{0:hh:mm tt}}" />
+                                            <TextBlock Text="{Binding DueDates.DueTime, StringFormat={}{0:hh:mm tt}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
+                                    
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <xctk:TimePicker Value="{Binding Path=DueDates.DueTime}" />
+                                            <xctk:TimePicker Value="{Binding DueDates.DueTime}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
@@ -434,7 +437,7 @@
 
                 <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
                 <TextBox x:Name="txtbox_Username"
-                         Text="{Binding Path=Competitor.Username}"
+                         Text="{Binding EditableCompetitor.Username}"
                          Grid.Row="0" 
                          Grid.Column="1"
                          VerticalAlignment="Center"
@@ -442,7 +445,7 @@
 
                 <TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
                 <TextBox x:Name="txtbox_VIStart"
-                         Text="{Binding Path=Competitor.VIStart}"
+                         Text="{Binding EditableCompetitor.VIStart}"
                          Grid.Row="1" 
                          Grid.Column="1"
                          VerticalAlignment="Center"
@@ -450,7 +453,7 @@
 
                 <TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
                 <TextBox x:Name="txtbox_VIEnd"
-                         Text="{Binding Path=Competitor.VIEnd}"
+                         Text="{Binding EditableCompetitor.VIEnd}"
                          Grid.Row="2" 
                          Grid.Column="1"
                          VerticalAlignment="Center"
@@ -458,7 +461,7 @@
 
                 <TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
                 <TextBox x:Name="txtbox_Rerecords"
-                         Text="{Binding Path=Competitor.Rerecords}"
+                         Text="{Binding EditableCompetitor.Rerecords}"
                          Grid.Row="3" 
                          Grid.Column="1"
                          VerticalAlignment="Center"
@@ -466,7 +469,7 @@
 
                 <CheckBox x:Name="chkbox_DQ" 
                           Content="DQ?"
-                          IsChecked="{Binding Path=Competitor.DQ}"
+                          IsChecked="{Binding EditableCompetitor.DQ}"
                           Grid.Row="4" 
                           Grid.Column="0"
                           VerticalAlignment="Center"
@@ -489,7 +492,7 @@
                             <TextBlock FontSize="13">DQ Reason</TextBlock>
                         </StackPanel>
                     </GroupBox.Header>
-                    <StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding Path=Competitor.DQ}">
+                    <StackPanel x:Name="stackPanel_DQReason" IsEnabled="{Binding EditableCompetitor.DQ}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -532,15 +535,15 @@
                             <!-- DQ Other Checkbox -->
                             <CheckBox x:Name="Chkbox_DQ_Other"
                                       Content="Other:"
-                                      IsChecked="{Binding Competitor.DQOther}"
+                                      IsChecked="{Binding EditableCompetitor.DQOther}"
                                       Grid.Row="2" 
                                       Grid.Column="0"
                                       VerticalAlignment="Bottom"/>
 
                             <!-- "Other" reason textbox -->
                             <TextBox x:Name="txtBox_DQ_Other" 
-                                     Text="{Binding Competitor.DQOtherReason}"
-                                     IsEnabled="{Binding Competitor.DQOther}"
+                                     Text="{Binding EditableCompetitor.DQOtherReason}"
+                                     IsEnabled="{Binding EditableCompetitor.DQOther}"
                                      Grid.Row="3" 
                                      Grid.Column="0" 
                                      Grid.RowSpan="2" 

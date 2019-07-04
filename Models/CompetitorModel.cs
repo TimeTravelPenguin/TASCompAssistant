@@ -63,8 +63,8 @@ namespace TASCompAssistant.Models
 
         public string Qualification { get => GetQualification(); }
 
-        public ObservableCollection<DQReason> _dQReasons = new ObservableCollection<DQReason>();
-        public ObservableCollection<DQReason> DQReasons
+        public ObservableCollection<DQReasonModel> _dQReasons = new ObservableCollection<DQReasonModel>();
+        public ObservableCollection<DQReasonModel> DQReasons
         {
             get => _dQReasons;
             set => SetValue(ref _dQReasons, value);

@@ -88,7 +88,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\CompetitionMetadata.cs" />
+    <Compile Include="Models\CompetitionMetadataModel.cs" />
     <Compile Include="Models\DueDateModel.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
@@ -109,7 +109,7 @@
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\CompetitorModel.cs" />
     <Compile Include="Models\DataModel.cs" />
-    <Compile Include="Models\DQReason.cs" />
+    <Compile Include="Models\DQReasonModel.cs" />
     <Compile Include="Models\DQReasonsProfileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
     <Compile Include="Types\PropertyChangedBase.cs" />
