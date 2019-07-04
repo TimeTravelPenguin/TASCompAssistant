@@ -10,14 +10,14 @@ namespace TASCompAssistant.Models
 {
     class CompetitionMetadataModel : PropertyChangedBase
     {
-        public string _competitionDescription = string.Empty;
+        private string _competitionDescription = string.Empty;
         public string CompetitionDescription
         {
             get => _competitionDescription;
             set => SetValue(ref _competitionDescription, value);
         }
 
-        public string _currentRule = string.Empty;
+        private string _currentRule = string.Empty;
         public string CurrentRule
         {
             get => _currentRule;

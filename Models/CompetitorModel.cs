@@ -63,7 +63,7 @@ namespace TASCompAssistant.Models
 
         public string Qualification { get => GetQualification(); }
 
-        public ObservableCollection<DQReasonModel> _dQReasons = new ObservableCollection<DQReasonModel>();
+        private ObservableCollection<DQReasonModel> _dQReasons = new ObservableCollection<DQReasonModel>();
         public ObservableCollection<DQReasonModel> DQReasons
         {
             get => _dQReasons;
