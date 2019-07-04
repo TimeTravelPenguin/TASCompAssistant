@@ -89,6 +89,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\CompetitionMetadata.cs" />
+    <Compile Include="Models\DueDateModel.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>

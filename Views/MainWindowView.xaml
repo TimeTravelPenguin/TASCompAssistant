@@ -11,7 +11,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="TAS Competition Assistant" Height="385" Width="870" MinHeight="385" MinWidth="870" 
+        Title="TAS Competition Assistant" Height="385" Width="925" MinHeight="385" MinWidth="925" 
         ResizeMode="CanResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
 
     <!--
@@ -299,14 +299,14 @@
                                 <!-- Date Pickers -->
                                 <TextBlock Text="Start Date:" Grid.Row="3"/>
                                 <DatePicker Grid.Row="4"
-                                            SelectedDate="{Binding Path=Competition.StartDate,
+                                            SelectedDate="{Binding Path=Competition.DueDates.StartDate,
                                                                    Mode=TwoWay,
                                                                    TargetNullValue={x:Static System:DateTime.Now}}"
                                             SelectedDateFormat="Long"/>
 
                                 <TextBlock Text="End Date:" Grid.Row="6"/>
                                 <DatePicker Grid.Row="7"
-                                            SelectedDate="{Binding Path=Competition.EndDate,
+                                            SelectedDate="{Binding Path=Competition.DueDates.EndDate,
                                                                    Mode=TwoWay,
                                                                    TargetNullValue={x:Static System:DateTime.Now}}"
                                             SelectedDateFormat="Long"/>
@@ -317,7 +317,7 @@
                                                  ShowButtonSpinner="False"
                                                  Kind="Local"
                                                  Watermark="Please set a due time..."
-                                                 DataContext="{Binding Competition.EndDate}"/>
+                                                 Value="{Binding Competition.DueDates.DueTime}"/>
 
                                 <!-- Description Button -->
                                 <Button Command="{Binding ModifyCompetitionMetadata}"
@@ -359,26 +359,40 @@
                                 <DataGridTemplateColumn Header="Start Date" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Path=StartDate, StringFormat={}{0:D}}" />
+                                            <TextBlock Text="{Binding Path=DueDates.StartDate, StringFormat={}{0:D}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding Path=StartDate}" />
+                                            <DatePicker SelectedDate="{Binding Path=DueDates.StartDate}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
 
                                 <!-- End Date -->
-                                <DataGridTemplateColumn Header="End Date" Width="1.25*">
+                                <DataGridTemplateColumn Header="End Date" Width="*">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Path=EndDate, StringFormat={}{0:dddd, dd MMMM yyyy HH:mm}}" />
+                                            <TextBlock Text="{Binding Path=DueDates.EndDate, StringFormat={}{0:D}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding Path=EndDate}" />
+                                            <DatePicker SelectedDate="{Binding Path=DueDates.EndDate}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                
+                                <!-- Due Time -->
+                                <DataGridTemplateColumn Header="Due Time" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=DueDates.DueTime, StringFormat={}{0:hh:mm tt}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <xctk:TimePicker Value="{Binding Path=DueDates.DueTime}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>

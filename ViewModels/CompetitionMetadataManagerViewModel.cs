@@ -18,7 +18,6 @@ namespace TASCompAssistant.ViewModels
             get => _metadata;
             set => SetValue(ref _metadata, value);
         }
-        
 
         public CompetitionMetadataManagerViewModel()
         {

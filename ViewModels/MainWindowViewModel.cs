@@ -106,7 +106,8 @@ namespace TASCompAssistant.ViewModels
         private bool _addCompetitorEnabled;
         public bool AddCompetitorEnabled
         {
-            get => _addCompetitorEnabled;
+            //get => _addCompetitorEnabled;                     TODO: FIX THIS
+            get => true;
             set => SetValue(ref _addCompetitorEnabled, value);
         }
 
@@ -346,8 +347,7 @@ namespace TASCompAssistant.ViewModels
             Competitions.Add(new CompetitionModel()
             {
                 CompetitionName = Competition.CompetitionName,
-                StartDate = Competition.StartDate,
-                EndDate = Competition.EndDate
+                DueDates = Competition.DueDates
             });
         }
 

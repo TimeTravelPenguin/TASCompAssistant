@@ -21,27 +21,20 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _competitionName, value);
         }
 
+        private DueDateModel _dueDates = new DueDateModel();
+        public DueDateModel DueDates
+        {
+            get => _dueDates;
+            set => SetValue(ref _dueDates, value);
+        }
+        
         private CompetitionMetadata _metadata = new CompetitionMetadata();
         public CompetitionMetadata Metadata
         {
             get => _metadata;
             set => SetValue(ref _metadata, value);
         }
-
-        private DateTime? _startDate = DateTime.Now.Date;
-        public DateTime? StartDate
-        {
-            get => _startDate;
-            set => SetValue(ref _startDate, value);
-        }
-
-        private DateTime? _endDate = DateTime.Now.Date;
-        public DateTime? EndDate
-        {
-            get => _endDate;
-            set => SetValue(ref _endDate, value);
-        }
-
+             
         public CompetitionModel()
         {
             ClearCompetition();
@@ -52,8 +45,7 @@ namespace TASCompAssistant.Models
             CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
             Metadata.ClearData();
-            StartDate = DateTime.Now.Date;
-            EndDate = DateTime.Now.Date;
+            DueDates.ClearDates();
         }
     }
 }
