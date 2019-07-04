@@ -81,7 +81,7 @@
                              VerticalScrollBarVisibility="Auto"
                              Grid.Row="2"
                              Grid.Column="1"
-                             Grid.ColumnSpan="4"/>
+                             Grid.ColumnSpan="2"/>
 
                 <!-- Task rules -->
                 <TextBlock Text="Task Rules:"
