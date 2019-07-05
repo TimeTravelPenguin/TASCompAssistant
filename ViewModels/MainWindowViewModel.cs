@@ -25,7 +25,7 @@ namespace TASCompAssistant.ViewModels
         // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
-        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() { CompetitionName = "Competition 1", Metadata = new CompetitionMetadataModel() } };
+        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() { CompetitionName = "Competition 1" } };
         public ObservableCollection<CompetitionModel> Competitions
         {
             get => _competitions;
@@ -212,7 +212,7 @@ namespace TASCompAssistant.ViewModels
                         Username = $"User {i}",
                         VIStart = start,
                         VIEnd = start + r.Next(0, 1000),
-                        DQ = r.Next(13) == 0 ? true: false  // simulates random DQ
+                        DQ = r.Next(13) == 0 ? true : false  // simulates random DQ
                     });
                 }
 

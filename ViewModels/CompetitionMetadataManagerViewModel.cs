@@ -35,6 +35,7 @@ namespace TASCompAssistant.ViewModels
         }
 
         public ActionCommand CommandAddRule { get; }
+        public ActionCommand CommandRemoveRule { get; }
         public ActionCommand CommandMoveUp { get; }
         public ActionCommand CommandMoveDown { get; }
 
@@ -43,6 +44,7 @@ namespace TASCompAssistant.ViewModels
             // TODO: Set description defaults
 
             CommandAddRule = new ActionCommand(() => AddRule());
+            CommandRemoveRule = new ActionCommand(() => RemoveRule());
             CommandMoveUp = new ActionCommand(() => MoveItemUp());
             CommandMoveDown = new ActionCommand(() => MoveItemDown());
         }
@@ -51,6 +53,16 @@ namespace TASCompAssistant.ViewModels
         {
             Metadata.Rules.Add(CurrentRule);
             CurrentRule = string.Empty;
+        }
+
+        private void RemoveRule()
+        {
+            int SelectedIndex = RuleIndex;
+
+            if (SelectedIndex > -1 && SelectedIndex < Metadata.Rules.Count)
+            {
+                Metadata.Rules.RemoveAt(SelectedIndex);
+            }
         }
 
         private void MoveItemUp()

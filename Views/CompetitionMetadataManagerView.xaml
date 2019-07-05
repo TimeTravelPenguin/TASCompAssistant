@@ -119,6 +119,7 @@
                         Margin="15,0,20,0"/>
 
                 <Button Content="Remove Rule"
+                        Command="{Binding CommandRemoveRule}"
                         Grid.Row="7" 
                         Grid.Column="2"
                         VerticalAlignment="Center"
