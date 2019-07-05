@@ -31,24 +31,26 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _mandatorySaveState, value);
         }
 
+        private bool _cooperativeCompetition = false;
+        public bool CooperativeCompetition
+        {
+            get => _cooperativeCompetition;
+            set => SetValue(ref _cooperativeCompetition, value);
+        }
+
         public CompetitionMetadataModel()
         {
-            DefaultData();
-        }
-
-        public void DefaultData()
-        {
             ClearData();
-
-            CompetitionDescription = "In {level}, {do stuff}. Time starts when {reason}, and end when {reason}.";
-            Rules.Add("You may **NOT** interact with enemies");
-            MandatorySaveState = true;
         }
+
 
         public void ClearData()
         {
-            CompetitionDescription = string.Empty;
+            CompetitionDescription = "In {level}, {do stuff}. Time starts when {reason}, and end when {reason}.";
             Rules.Clear();
+            Rules.Add("You may **NOT** interact with enemies");
+            MandatorySaveState = true;
+            CooperativeCompetition = false;
         }
     }
 }

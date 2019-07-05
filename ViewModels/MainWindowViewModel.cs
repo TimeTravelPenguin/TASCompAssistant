@@ -374,7 +374,7 @@ namespace TASCompAssistant.ViewModels
                 }
             });
 
-            MetadataViewModel.Metadata.DefaultData();
+            MetadataViewModel.Metadata.ClearData();
         }
 
         private void SortCompetition()

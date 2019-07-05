@@ -58,7 +58,7 @@ namespace TASCompAssistant.Models
         {
             CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
-            Metadata.DefaultData();
+            Metadata.ClearData();
             DueDates.ClearDueDates();
         }
     }
