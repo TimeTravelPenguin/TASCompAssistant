@@ -14,6 +14,14 @@ namespace TASCompAssistant.ViewModels
 {
     class MainWindowViewModel : PropertyChangedBase
     {
+        // Competition Metadata ViewModel Datacontext
+        private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
+        public CompetitionMetadataManagerViewModel MetadataViewModel
+        {
+            get => _metadataViewModel;
+            set => SetValue(ref _metadataViewModel, value);
+        }
+
         // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
@@ -196,7 +204,7 @@ namespace TASCompAssistant.ViewModels
                 CurrentCompetitors.Clear();
 
                 var r = new Random();
-                for (int i = 1; i <= 20; i++)
+                for (int i = 1; i <= 30; i++)
                 {
                     var start = r.Next(0, 1000);
                     CurrentCompetitors.Add(new CompetitorModel()
@@ -204,7 +212,7 @@ namespace TASCompAssistant.ViewModels
                         Username = $"User {i}",
                         VIStart = start,
                         VIEnd = start + r.Next(0, 1000),
-                        DQ = Convert.ToBoolean(r.Next(0, 2))
+                        DQ = r.Next(13) == 0 ? true: false  // simulates random DQ
                     });
                 }
 
@@ -234,11 +242,13 @@ namespace TASCompAssistant.ViewModels
             // Opens window to modify competition metadata
             ModifyCompetitionMetadata = new ActionCommand(() =>
             {
+                MetadataViewModel.Metadata = Competitions[CompetitionIndex].Metadata;
+
                 var MetadataManger = new CompetitionMetadataManagerView();
+                MetadataManger.DataContext = MetadataViewModel;
 
                 MetadataManger.ShowDialog();
-
-                // Competitions[CompetitionIndex].Metadata = ???
+                MetadataViewModel.Metadata.DefaultData();
             });
 
             // Command to Exit
@@ -356,6 +366,12 @@ namespace TASCompAssistant.ViewModels
                     StartDate = EditableCompetition.DueDates.StartDate,
                     EndDate = EditableCompetition.DueDates.EndDate,
                     DueTime = EditableCompetition.DueDates.DueTime
+                },
+                Metadata = new CompetitionMetadataModel
+                {
+                    CompetitionDescription = MetadataViewModel.Metadata.CompetitionDescription,
+                    Rules = MetadataViewModel.Metadata.Rules,
+                    MandatorySaveState = MetadataViewModel.Metadata.MandatorySaveState
                 }
             });
         }

@@ -10,18 +10,11 @@ namespace TASCompAssistant.Models
 {
     class CompetitionMetadataModel : PropertyChangedBase
     {
-        private string _competitionDescription = string.Empty;
+        private string _competitionDescription;
         public string CompetitionDescription
         {
             get => _competitionDescription;
             set => SetValue(ref _competitionDescription, value);
-        }
-
-        private string _currentRule = string.Empty;
-        public string CurrentRule
-        {
-            get => _currentRule;
-            set => SetValue(ref _currentRule, value);
         }
 
         private ObservableCollection<string> _rules = new ObservableCollection<string>();
@@ -43,15 +36,18 @@ namespace TASCompAssistant.Models
             DefaultData();
         }
 
-        private void DefaultData()
+        public void DefaultData()
         {
-            CompetitionDescription = "Test...";
+            ClearData();
+
+            CompetitionDescription = "In {level}, {do stuff}. Time starts when {reason}, and end when {reason}.";
+            Rules.Add("You may **NOT** interact with enemies");
+            MandatorySaveState = true;
         }
 
         public void ClearData()
         {
             CompetitionDescription = string.Empty;
-            CurrentRule = string.Empty;
             Rules.Clear();
         }
     }

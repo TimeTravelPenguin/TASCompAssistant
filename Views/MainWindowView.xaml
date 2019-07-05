@@ -348,6 +348,16 @@
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False">
 
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate>
+                                    <TextBlock Background="LightGray" 
+                                               Text="{Binding ToolTip}" 
+                                               TextWrapping="Wrap"
+                                               HorizontalAlignment="Stretch" 
+                                               VerticalAlignment="Stretch" />
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
+
                             <!-- Column Information -->
                             <DataGrid.Columns>
                                 <!-- Competition Name -->
