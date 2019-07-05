@@ -25,7 +25,7 @@ namespace TASCompAssistant.ViewModels
         // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
-        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() { CompetitionName = "Competition 1" } };
+        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() { CompetitionName = "Competition 1", Metadata = new CompetitionMetadataModel() } };
         public ObservableCollection<CompetitionModel> Competitions
         {
             get => _competitions;
@@ -248,7 +248,6 @@ namespace TASCompAssistant.ViewModels
                 MetadataManger.DataContext = MetadataViewModel;
 
                 MetadataManger.ShowDialog();
-                MetadataViewModel.Metadata.DefaultData();
             });
 
             // Command to Exit
@@ -374,6 +373,8 @@ namespace TASCompAssistant.ViewModels
                     MandatorySaveState = MetadataViewModel.Metadata.MandatorySaveState
                 }
             });
+
+            MetadataViewModel.Metadata.DefaultData();
         }
 
         private void SortCompetition()

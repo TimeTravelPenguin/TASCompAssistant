@@ -13,7 +13,7 @@ namespace TASCompAssistant.ViewModels
     {
 
         // All the metadata for the current competition
-        private CompetitionMetadataModel _metadata;
+        private CompetitionMetadataModel _metadata = new CompetitionMetadataModel();
         public CompetitionMetadataModel Metadata
         {
             get => _metadata;
