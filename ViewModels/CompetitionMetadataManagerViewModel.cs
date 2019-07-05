@@ -27,7 +27,7 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _ruleIndex, value);
         }
 
-        private string _currentRule = "This is a test";
+        private string _currentRule;
         public string CurrentRule
         {
             get => _currentRule;

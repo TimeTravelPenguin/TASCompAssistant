@@ -10,7 +10,7 @@ namespace TASCompAssistant.Models
 {
     class CompetitionMetadataModel : PropertyChangedBase
     {
-        private string _competitionDescription = "No description has been set";
+        private string _competitionDescription;
         public string CompetitionDescription
         {
             get => _competitionDescription;
