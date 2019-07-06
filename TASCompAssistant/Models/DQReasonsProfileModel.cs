@@ -14,6 +14,10 @@ namespace TASCompAssistant.Models
             "Desync"
         };
 
+        public string ProfileName { get; set; } = string.Empty;
+
+        public ObservableCollection<DQReasonModel> DQReasons { get; set; } = new ObservableCollection<DQReasonModel>();
+
         public DQReasonsProfileModel(bool setDefaults)
         {
             if (setDefaults)
@@ -21,9 +25,6 @@ namespace TASCompAssistant.Models
                 SetProfileDefaults();
             }
         }
-
-        public string ProfileName { get; set; } = string.Empty;
-        public ObservableCollection<DQReasonModel> DQReasons { get; set; } = new ObservableCollection<DQReasonModel>();
 
         public void SetProfileDefaults()
         {

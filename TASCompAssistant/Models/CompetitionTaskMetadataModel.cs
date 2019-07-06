@@ -10,12 +10,8 @@ namespace TASCompAssistant.Models
         private bool _mandatorySaveState;
 
         private ObservableCollection<string> _rules = new ObservableCollection<string>();
-        private string _taskDescription;
 
-        public CompetitionTaskMetadataModel()
-        {
-            ClearData();
-        }
+        private string _taskDescription;
 
         public string TaskDescription
         {
@@ -39,6 +35,11 @@ namespace TASCompAssistant.Models
         {
             get => _cooperativeTask;
             set => SetValue(ref _cooperativeTask, value);
+        }
+
+        public CompetitionTaskMetadataModel()
+        {
+            ClearData();
         }
 
 

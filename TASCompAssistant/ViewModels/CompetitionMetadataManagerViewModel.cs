@@ -19,14 +19,6 @@ namespace TASCompAssistant.ViewModels
         public ActionCommand CommandMoveUp { get; }
         public ActionCommand CommandMoveDown { get; }
 
-        public CompetitionMetadataManagerViewModel()
-        {
-            CommandAddRule = new ActionCommand(() => AddRule());
-            CommandRemoveRule = new ActionCommand(() => RemoveRule());
-            CommandMoveUp = new ActionCommand(() => MoveItemUp());
-            CommandMoveDown = new ActionCommand(() => MoveItemDown());
-        }
-
         public CompetitionTaskMetadataModel Metadata
         {
             get => _metadata;
@@ -45,6 +37,15 @@ namespace TASCompAssistant.ViewModels
             get => _currentRule;
             set => SetValue(ref _currentRule, value);
         }
+
+        public CompetitionMetadataManagerViewModel()
+        {
+            CommandAddRule = new ActionCommand(() => AddRule());
+            CommandRemoveRule = new ActionCommand(() => RemoveRule());
+            CommandMoveUp = new ActionCommand(() => MoveItemUp());
+            CommandMoveDown = new ActionCommand(() => MoveItemDown());
+        }
+
         private void AddRule()
         {
             Metadata.Rules.Add(CurrentRule);

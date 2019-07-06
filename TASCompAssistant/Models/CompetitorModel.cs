@@ -28,11 +28,6 @@ namespace TASCompAssistant.Models
 
         private int _viStart;
 
-        public CompetitorModel()
-        {
-            ClearCompetitor();
-        }
-
         public int Place
         {
             get => _place;
@@ -58,7 +53,9 @@ namespace TASCompAssistant.Models
         }
 
         public int VICount => VIEnd - VIStart;
+
         public double TimeInSeconds => GetTime();
+
         public string TimeFormatted => GetFormatTime();
 
         public int Rerecords
@@ -125,6 +122,11 @@ namespace TASCompAssistant.Models
         {
             get => _scorePlace;
             set => SetValue(ref _scorePlace, value);
+        }
+
+        public CompetitorModel()
+        {
+            ClearCompetitor();
         }
 
         public void ClearCompetitor()

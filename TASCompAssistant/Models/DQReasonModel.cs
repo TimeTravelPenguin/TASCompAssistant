@@ -7,11 +7,6 @@ namespace TASCompAssistant.Models
         private bool _isSelected;
         private string _reason;
 
-        public DQReasonModel()
-        {
-            IsSelected = false;
-        }
-
         public string Reason
         {
             get => _reason;
@@ -22,6 +17,11 @@ namespace TASCompAssistant.Models
         {
             get => _isSelected;
             set => SetValue(ref _isSelected, value);
+        }
+
+        public DQReasonModel()
+        {
+            IsSelected = false;
         }
     }
 }

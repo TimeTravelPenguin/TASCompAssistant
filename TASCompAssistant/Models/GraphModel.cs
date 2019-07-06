@@ -15,12 +15,6 @@ namespace TASCompAssistant.Models
         private List<string> _xLabels = new List<string>();
         private Func<double, string> _yFormatter;
 
-        public GraphModel()
-        {
-            CreateSeriesCollection();
-            SetFormatters();
-        }
-
         private ChartValues<ObservablePoint> CompetitionData { get; } = new ChartValues<ObservablePoint>();
         private ChartValues<ObservablePoint> DQData { get; } = new ChartValues<ObservablePoint>();
 
@@ -54,6 +48,12 @@ namespace TASCompAssistant.Models
                 _yFormatter = value;
                 OnPropertyChanged("YFormatter");
             }
+        }
+
+        public GraphModel()
+        {
+            CreateSeriesCollection();
+            SetFormatters();
         }
 
         private void SetFormatters()

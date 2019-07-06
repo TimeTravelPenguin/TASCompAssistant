@@ -30,22 +30,141 @@ namespace TASCompAssistant.ViewModels
         // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
         private ICollectionView _competitorCollection;
 
-        // Modifyable competition model used for on-screen objects
+        // Modifiable competition model used for on-screen objects
         private CompetitionTaskModel _editableCompetitionTask = new CompetitionTaskModel();
 
-        // Modifyable competitor model used for on-screen objects
+        // Modifiable competitor model used for on-screen objects
         private CompetitorModel _editableCompetitor = new CompetitorModel();
 
         // Competition Metadata ViewModel Datacontext
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
 
+        public CompetitionMetadataManagerViewModel MetadataViewModel
+        {
+            get => _metadataViewModel;
+            set => SetValue(ref _metadataViewModel, value);
+        }
+
+        public ObservableCollection<CompetitionTaskModel> CompetitionTasks
+        {
+            get => _competitionTasks;
+            set => SetValue(ref _competitionTasks, value);
+        }
+
+        public int CompetitionTaskIndex
+        {
+            get => _competitionTaskIndex;
+            set
+            {
+                // Do not touch this
+                /*
+                SetValue(ref _competitionIndex, Competitions.Count > 0
+                                                ? value > Competitions.Count ? value : 0
+                                                : value);
+                                                */
+
+                SetValue(ref _competitionTaskIndex, value);
+
+                if (CompetitionTaskIndex > -1)
+                {
+                    RefreshCompetitorDataGrid();
+                    SortCompetition();
+                    UpdateLiveCharts();
+                }
+                else
+                {
+                    MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
+                }
+
+                MessageBox.Show("Current Competition index: " + CompetitionTaskIndex, "Debug Popup");
+            }
+        }
+
+        // Gets the competitors for the selected competition
+        private ObservableCollection<CompetitorModel> CurrentCompetitors =>
+            CompetitionTasks[CompetitionTaskIndex].CompetitorData;
+
+        public CompetitorModel EditableCompetitor
+        {
+            get => _editableCompetitor;
+            set => SetValue(ref _editableCompetitor, value);
+        }
+
+        public CompetitionTaskModel EditableCompetitionTask
+        {
+            get => _editableCompetitionTask;
+            set => SetValue(ref _editableCompetitionTask, value);
+        }
+
+        public ICollectionView CompetitorCollection
+        {
+            get => _competitorCollection;
+            set => SetValue(ref _competitorCollection, value);
+        }
+
+        public ICollectionView CompetitionCollection
+        {
+            get => _competitionCollection;
+            set => SetValue(ref _competitionCollection, value);
+        }
+
+        // SeriesCollection used to bind for live charting
+        public GraphModel GraphData { get; set; } = new GraphModel();
+
+        // Contains all the DQ Reasons
+        public DQReasonsProfileModel DQReasonsProfile { get; } =
+            new DQReasonsProfileModel(true); // This is initialized as a default profile
+
+        //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
+        public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } =
+            new ObservableCollection<DQReasonsProfileModel>();
+
+        public FileModel FileModel { get; } = new FileModel();
+
+        public bool AddCompetitorEnabled
+        {
+            //get => _addCompetitorEnabled;                     TODO: FIX THIS
+            get => true;
+            set => SetValue(ref _addCompetitorEnabled, value);
+        }
+
+        // Adds a new competitor to the datagrid
+        public ActionCommand CommandAddCompetitor { get; }
+
+        // Adds a new competition to the datagrid
+        public ActionCommand CommandAddCompetitionTask { get; }
+
+        // Add test data to datagrid
+        public ActionCommand CommandAddTestData { get; }
+
+        // Clears the window to be a clean slate
+        public ActionCommand CommandClearAll { get; }
+
+        // Sorts competitors
+        public ActionCommand CommandUpdateData { get; }
+
+        // Opens File
+        public ActionCommand CommandFileOpen { get; }
+
+        // Saves File
+        public ActionCommand CommandFileSave { get; }
+
+        // Opens window to manage competition ruleset
+        public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
+
+        // Opens window to modify global settings
+        public ActionCommand CommandOpenGlobalSettings { get; }
+
+        // Exits the application
+        public ActionCommand CommandExit { get; }
+
         /*	TODO:
                 - Add DQ Reasons
-                - Add check for Competitors for objects with equivilant Username values, to avoid duplicates
+                - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
                     - On event there is duplicate upon entering via left feild, initiate a yes/no prompt
                       to determine if you should overwrite the values previously submitted for that username
-                - When doubleclicking a checkbox in the datagrid to edit the value, unles you click away, it doesn't commit the edit.
-                  can we make it so that upon the value change of the text box, the commit occures?
+                - When double-clicking a checkbox in the datagrid to edit the value, unless you click away, it doesn't commit the edit.
+                  can we make it so that upon the value change of the text box, the commit occurs?
                 - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
         */
 
@@ -139,125 +258,6 @@ namespace TASCompAssistant.ViewModels
 
             RefreshAll();
         }
-
-        public CompetitionMetadataManagerViewModel MetadataViewModel
-        {
-            get => _metadataViewModel;
-            set => SetValue(ref _metadataViewModel, value);
-        }
-
-        public ObservableCollection<CompetitionTaskModel> CompetitionTasks
-        {
-            get => _competitionTasks;
-            set => SetValue(ref _competitionTasks, value);
-        }
-
-        public int CompetitionTaskIndex
-        {
-            get => _competitionTaskIndex;
-            set
-            {
-                // Do not touch this
-                /*
-                SetValue(ref _competitionIndex, Competitions.Count > 0
-                                                ? value > Competitions.Count ? value : 0
-                                                : value);
-                                                */
-
-                SetValue(ref _competitionTaskIndex, value);
-
-                if (CompetitionTaskIndex > -1)
-                {
-                    RefreshCompetitorDataGrid();
-                    SortCompetition();
-                    UpdateLiveCharts();
-                }
-                else
-                {
-                    MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
-                }
-
-                MessageBox.Show("Current Competition index: " + CompetitionTaskIndex, "Debug Popup");
-            }
-        }
-
-        // Gets the competitors for the selected competition
-        public ObservableCollection<CompetitorModel> CurrentCompetitors =>
-            CompetitionTasks[CompetitionTaskIndex].CompetitorData;
-
-        public CompetitorModel EditableCompetitor
-        {
-            get => _editableCompetitor;
-            set => SetValue(ref _editableCompetitor, value);
-        }
-
-        public CompetitionTaskModel EditableCompetitionTask
-        {
-            get => _editableCompetitionTask;
-            set => SetValue(ref _editableCompetitionTask, value);
-        }
-
-        public ICollectionView CompetitorCollection
-        {
-            get => _competitorCollection;
-            set => SetValue(ref _competitorCollection, value);
-        }
-
-        public ICollectionView CompetitionCollection
-        {
-            get => _competitionCollection;
-            set => SetValue(ref _competitionCollection, value);
-        }
-
-        // SeriesCollection used to bind for live charting
-        public GraphModel GraphData { get; set; } = new GraphModel();
-
-        // Contains all the DQ Reasons
-        public DQReasonsProfileModel DQReasonsProfile { get; } =
-            new DQReasonsProfileModel(true); // This is initialized as a default profile
-
-        //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
-        public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } =
-            new ObservableCollection<DQReasonsProfileModel>();
-
-        public FileModel FileModel { get; } = new FileModel();
-
-        public bool AddCompetitorEnabled
-        {
-            //get => _addCompetitorEnabled;                     TODO: FIX THIS
-            get => true;
-            set => SetValue(ref _addCompetitorEnabled, value);
-        }
-
-        // Adds a new competitor to the datagrid
-        public ActionCommand CommandAddCompetitor { get; }
-
-        // Adds a new competition to the datagrid
-        public ActionCommand CommandAddCompetitionTask { get; }
-
-        // Add test data to datagrid
-        public ActionCommand CommandAddTestData { get; }
-
-        // Clears the window to be a clean slate
-        public ActionCommand CommandClearAll { get; }
-
-        // Sorts competitors
-        public ActionCommand CommandUpdateData { get; }
-
-        // Opens File
-        public ActionCommand CommandFileOpen { get; }
-
-        // Saves File
-        public ActionCommand CommandFileSave { get; }
-
-        // Opens window to manage competition ruleset
-        public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
-
-        // Opens window to modify global settings
-        public ActionCommand CommandOpenGlobalSettings { get; }
-
-        // Exits the application
-        public ActionCommand CommandExit { get; }
 
         private void RefreshAll()
         {
@@ -460,6 +460,6 @@ namespace TASCompAssistant.ViewModels
             GraphData.ParseData(compdata, dqdata);
         }
 
-        // TODO: Open the DQResonsProfileEditorView		
+        // TODO: Open the DQReasonsProfileEditorView		
     }
 }

@@ -10,11 +10,6 @@ namespace TASCompAssistant.Models
         private DateTime? _endDate = new DateTime();
         private DateTime? _startDate = new DateTime();
 
-        public DueDateModel()
-        {
-            ClearDueDates();
-        }
-
         public DateTime? StartDate
         {
             get => _startDate;
@@ -35,6 +30,11 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _dueTime,
                 new DateTime(EndDate.Value.Year, EndDate.Value.Month, EndDate.Value.Day, value.Value.Hour,
                     value.Value.Minute, value.Value.Second, 0));
+        }
+
+        public DueDateModel()
+        {
+            ClearDueDates();
         }
 
         public void ClearDueDates()
