@@ -62,7 +62,7 @@ A competition is serialized into the following JSON structure (an example compet
 To elaborate on the properties:
 - `CompetitionName` is the name of the current competition.
 - `Metadata` contains descriptive guidelines for the competition:
-    - `CompetitionDescription` details the competition goal, i.e. the outline of that particular task.
+    - `CompetitionDescription` details the competition goal, i.e. the outline of that particular competition.
     - `Rules` is a list of rules that competitors must abide by.
     - `MandatorySaveState` is a Boolean representing whether or not that competition provides a compulsory savestate file that competitors must use.
     - `CooperativeCompetition` is a Boolean representing whether or not competitors may or may not work together.
@@ -71,7 +71,7 @@ To elaborate on the properties:
     - `EndDate` is a `DateTime` object representing the day the competition ends.
     - `DueTime` is a `DateTime` object representing the time the competition is due on `EndDate`.
 - `CompetitionData` contains information about each competitor's entry:
-    - `Place` is the competitor's rank in the task.
+    - `Place` is the competitor's rank in the competition.
     - `Username` is the name or alias the competitor goes by.
     - `VIStart` is the VI the TAS begins on.
     - `VIEnd` is the VI the TAS ends on.
@@ -84,5 +84,5 @@ To elaborate on the properties:
     - `DQReasons` is a list of reasons why the competitor could be disqualified.
         - `Reason` is a string summarising the reason for disqualification.
         - `IsSelected` is a Boolean that describes whether the competitor was disqualified for this reason. If none of the `IsSelected` values in `DQReasons` are `true`, the competitor is not disqualified.
-    - `Score` is the current score of the competitor (up until and including the current task).
+    - `Score` is the current score of the competitor (up until and including the current competition).
     - `ScorePlace` is the competitor's rank on the score boards.
