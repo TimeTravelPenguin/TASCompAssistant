@@ -3,35 +3,35 @@ This document details the format of the save files that TASCompAssistant (TCA) o
 Because TCA uses objects heavily, all the data is serialized into JSON. It is then saved in plain text in a `*.tascomp` file.
 
 Currently, the save files store:
-* Competition Data, including:
-    - Competition metadata (name, descriptions, rules, etc.)
+* Competition task data, including:
+    - Task metadata (name, descriptions, rules, etc.)
     - Competitor information
     - Deadline information
     - etc.
 * (Coming soon) DQReasonProfiles
 
 ## JSON Structure
-### Competition Structure
-A competition is serialized into the following JSON structure (an example competition is used here for reference):
+### Competition Task Structure
+A task is serialized into the following JSON structure (an example competition task is used here for reference):
 ```JSON
 {
-	"CompetitionName": "Competition 1",
+	"TaskName": "TimeTravelPenguin's Competition - Task 1",
 	"Metadata": {
-		"CompetitionDescription": "Competitors must collect 10 coins and then kill 2 enemies",
+		"TaskDescription": "Competitors must collect 10 coins and then kill 2 enemies",
 		"Rules": [
 			"Rule One",
 			"Rule Two",
 			"Rule Three"
 		],
 		"MandatorySaveState": true,
-		"CooperativeCompetition": false
+		"CooperativeTask": false
 	},
 	"DueDates": {
 		"StartDate": "2019-07-05T00:48:15.5889106+10:00",
 		"EndDate": "2019-07-12T00:00:00",
 		"DueTime": "2019-07-05T01:00:15.592+10:00"
 	},
-	"CompetitionData": [
+	"CompetitorData": [
 		{
 			"Place": 1,
 			"Username": "TimeTravelPenguin",
@@ -60,18 +60,18 @@ A competition is serialized into the following JSON structure (an example compet
 }
 ```
 To elaborate on the properties:
-- `CompetitionName` is the name of the current competition.
-- `Metadata` contains descriptive guidelines for the competition:
-    - `CompetitionDescription` details the competition goal, i.e. the outline of that particular competition.
+- `TaskName` is the name of the current task.
+- `Metadata` contains descriptive guidelines for the task:
+    - `TaskDescription` details the task goal, i.e. the outline of that particular task.
     - `Rules` is a list of rules that competitors must abide by.
-    - `MandatorySaveState` is a Boolean representing whether or not that competition provides a compulsory savestate file that competitors must use.
-    - `CooperativeCompetition` is a Boolean representing whether or not competitors may or may not work together.
-- `DueDates` contains information about the timing of the competition:
-    - `StartDate` is a `DateTime` object representing the time the competition begins.
-    - `EndDate` is a `DateTime` object representing the day the competition ends.
-    - `DueTime` is a `DateTime` object representing the time the competition is due on `EndDate`.
-- `CompetitionData` contains information about each competitor's entry:
-    - `Place` is the competitor's rank in the competition.
+    - `MandatorySaveState` is a Boolean representing whether or not that task provides a compulsory savestate file that competitors must use.
+    - `CooperativeTask` is a Boolean representing whether or not competitors may or may not work together.
+- `DueDates` contains information about the timing of the task:
+    - `StartDate` is a `DateTime` object representing the time the task begins.
+    - `EndDate` is a `DateTime` object representing the day the task ends.
+    - `DueTime` is a `DateTime` object representing the time the task is due on `EndDate`.
+- `CompetitorData` contains information about each competitor's entry:
+    - `Place` is the competitor's rank in the task.
     - `Username` is the name or alias the competitor goes by.
     - `VIStart` is the VI the TAS begins on.
     - `VIEnd` is the VI the TAS ends on.
@@ -84,5 +84,5 @@ To elaborate on the properties:
     - `DQReasons` is a list of reasons why the competitor could be disqualified.
         - `Reason` is a string summarising the reason for disqualification.
         - `IsSelected` is a Boolean that describes whether the competitor was disqualified for this reason. If none of the `IsSelected` values in `DQReasons` are `true`, the competitor is not disqualified.
-    - `Score` is the current score of the competitor (up until and including the current competition).
+    - `Score` is the current score of the competitor (up until and including the current task of the competition).
     - `ScorePlace` is the competitor's rank on the score boards.
