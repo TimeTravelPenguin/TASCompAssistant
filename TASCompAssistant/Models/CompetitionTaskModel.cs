@@ -9,7 +9,7 @@ namespace TASCompAssistant.Models
     {
         
         // The name of the current competition
-        private string _taskName = "Unnamed Competition";
+        private string _taskName = "Unnamed Competition Task";
         public string TaskName
         {
             get => _taskName;

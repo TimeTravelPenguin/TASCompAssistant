@@ -253,7 +253,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Edit Competitions">
+            <TabItem Header="Edit Tasks">
                 <Grid>
                     <DockPanel>
 
@@ -289,7 +289,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Text="Competition Name:" Grid.Row="0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Task Name:" Grid.Row="0" VerticalAlignment="Center"/>
 
                                 <TextBox Text="{Binding EditableCompetitionTask.TaskName}"
                                          Grid.Row="1"
@@ -396,7 +396,7 @@
                                 </DataGridTemplateColumn>
                                 
                                 <!-- Due Time -->
-                                <DataGridTemplateColumn Header="Due Time" Width="*">
+                                <DataGridTemplateColumn Header="Due Time" Width="100">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding DueDates.DueTime, StringFormat={}{0:hh:mm tt}}" />
