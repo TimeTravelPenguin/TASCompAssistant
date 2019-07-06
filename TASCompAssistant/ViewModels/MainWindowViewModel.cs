@@ -25,17 +25,17 @@ namespace TASCompAssistant.ViewModels
         // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
-        private ObservableCollection<CompetitionModel> _competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() { CompetitionName = "Competition 1" } };
-        public ObservableCollection<CompetitionModel> Competitions
+        private ObservableCollection<CompetitionTaskModel> _competitionTasks = new ObservableCollection<CompetitionTaskModel>() { new CompetitionTaskModel() { TaskName = "Competition 1" } };
+        public ObservableCollection<CompetitionTaskModel> CompetitionTasks
         {
-            get => _competitions;
-            set => SetValue(ref _competitions, value);
+            get => _competitionTasks;
+            set => SetValue(ref _competitionTasks, value);
         }
 
-        private int _competitionIndex = 0;
-        public int CompetitionIndex
+        private int _competitionTaskIndex = 0;
+        public int CompetitionTaskIndex
         {
-            get => _competitionIndex;
+            get => _competitionTaskIndex;
             set
             {
                 // Do not touch this
@@ -45,9 +45,9 @@ namespace TASCompAssistant.ViewModels
                                                 : value);
                                                 */
 
-                SetValue(ref _competitionIndex, value);
+                SetValue(ref _competitionTaskIndex, value);
 
-                if (CompetitionIndex > -1)
+                if (CompetitionTaskIndex > -1)
                 {
                     RefreshCompetitorDataGrid();
                     SortCompetition();
@@ -58,14 +58,14 @@ namespace TASCompAssistant.ViewModels
                     MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
                 }
 
-                MessageBox.Show("Current Competition index: " + CompetitionIndex.ToString(), "Debug Popup");
+                MessageBox.Show("Current Competition index: " + CompetitionTaskIndex.ToString(), "Debug Popup");
             }
         }
 
         // Gets the competitors for the selected competition
         public ObservableCollection<CompetitorModel> CurrentCompetitors
         {
-            get => Competitions[CompetitionIndex].CompetitionData;
+            get => CompetitionTasks[CompetitionTaskIndex].CompetitorData;
         }
 
         // Modifyable competitor model used for on-screen objects
@@ -77,11 +77,11 @@ namespace TASCompAssistant.ViewModels
         }
 
         // Modifyable competition model used for on-screen objects
-        private CompetitionModel _editableCompetition = new CompetitionModel();
-        public CompetitionModel EditableCompetition
+        private CompetitionTaskModel _editableCompetitionTask = new CompetitionTaskModel();
+        public CompetitionTaskModel EditableCompetitionTask
         {
-            get => _editableCompetition;
-            set => SetValue(ref _editableCompetition, value);
+            get => _editableCompetitionTask;
+            set => SetValue(ref _editableCompetitionTask, value);
         }
 
         // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
@@ -124,7 +124,7 @@ namespace TASCompAssistant.ViewModels
         }
 
         // Adds a new competition to the datagrid
-        public ActionCommand AddCompetitionCommand { get; }
+        public ActionCommand AddCompetitionTaskCommand { get; }
 
         // Add test data to datagrid
         public ActionCommand AddTestDataCommand { get; }
@@ -145,7 +145,7 @@ namespace TASCompAssistant.ViewModels
         public ActionCommand FileSave { get; }
 
         // Opens window to manage competition ruleset
-        public ActionCommand ModifyCompetitionMetadata { get; }
+        public ActionCommand ModifyCompetitionTaskMetadata { get; }
 
         // Exits the application
         public ActionCommand ExitCommand { get; }
@@ -178,7 +178,7 @@ namespace TASCompAssistant.ViewModels
                 UpdateLiveCharts();
             });
 
-            AddCompetitionCommand = new ActionCommand(() =>
+            AddCompetitionTaskCommand = new ActionCommand(() =>
             {
                 CheckMinimumCompetitions();
 
@@ -223,26 +223,26 @@ namespace TASCompAssistant.ViewModels
             // Opens File
             FileOpen = new ActionCommand(() =>
             {
-                Competitions.Clear();
+                CompetitionTasks.Clear();
                 foreach (var item in FileModel.OpenFile())
                 {
-                    Competitions.Add(item);
+                    CompetitionTasks.Add(item);
                 }
 
-                CompetitionIndex = 0;
+                CompetitionTaskIndex = 0;
 
             });
 
             // Saves File
             FileSave = new ActionCommand(() =>
             {
-                FileModel.SaveFile(Competitions);
+                FileModel.SaveFile(CompetitionTasks);
             });
 
             // Opens window to modify competition metadata
-            ModifyCompetitionMetadata = new ActionCommand(() =>
+            ModifyCompetitionTaskMetadata = new ActionCommand(() =>
             {
-                MetadataViewModel.Metadata = EditableCompetition.Metadata;
+                MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
 
                 var MetadataManger = new CompetitionMetadataManagerView();
                 MetadataManger.DataContext = MetadataViewModel;
@@ -267,10 +267,10 @@ namespace TASCompAssistant.ViewModels
 
         private void CheckMinimumCompetitions()
         {
-            if (Competitions.Count == 0)
+            if (CompetitionTasks.Count == 0)
             {
-                Competitions.Add(new CompetitionModel());
-                CompetitionIndex = 0;
+                CompetitionTasks.Add(new CompetitionTaskModel());
+                CompetitionTaskIndex = 0;
             }
 
         }
@@ -286,7 +286,7 @@ namespace TASCompAssistant.ViewModels
         private void RefreshCompetitionDataGrid()
         {
             // Set up datagrid
-            CompetitionCollection = CollectionViewSource.GetDefaultView(Competitions);
+            CompetitionCollection = CollectionViewSource.GetDefaultView(CompetitionTasks);
         }
 
         private void ClearAll()
@@ -295,10 +295,10 @@ namespace TASCompAssistant.ViewModels
             ClearCompetitorInputs();
             ClearCompetitionInputs();
 
-            Competitions.Clear();
-            Competitions.Add(new CompetitionModel());
+            CompetitionTasks.Clear();
+            CompetitionTasks.Add(new CompetitionTaskModel());
 
-            CompetitionIndex = 0;
+            CompetitionTaskIndex = 0;
             //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
             // Aka, clear all competitions IF THE USER WANTS TO ==> Make a dialogue appear
 
@@ -323,7 +323,7 @@ namespace TASCompAssistant.ViewModels
         private void ClearCompetitionInputs()
         {
             // Clear Competition Data
-            EditableCompetition.ClearCompetition();
+            EditableCompetitionTask.ClearCompetition();
         }
 
         private void AddCompetitor()
@@ -357,23 +357,23 @@ namespace TASCompAssistant.ViewModels
 
         private void AddCompetition()
         {
-            Competitions.Add(new CompetitionModel()
+            CompetitionTasks.Add(new CompetitionTaskModel()
             {
-                CompetitionName = EditableCompetition.CompetitionName,
+                TaskName = EditableCompetitionTask.TaskName,
                 DueDates = new DueDateModel()
                 {
-                    StartDate = EditableCompetition.DueDates.StartDate,
-                    EndDate = EditableCompetition.DueDates.EndDate,
-                    DueTime = EditableCompetition.DueDates.DueTime
+                    StartDate = EditableCompetitionTask.DueDates.StartDate,
+                    EndDate = EditableCompetitionTask.DueDates.EndDate,
+                    DueTime = EditableCompetitionTask.DueDates.DueTime
                 },
-                Metadata = new CompetitionMetadataModel()
+                Metadata = new CompetitionTaskMetadataModel()
                 {
-                    CompetitionDescription = EditableCompetition.Metadata.CompetitionDescription,
-                    Rules = new ObservableCollection<string>(EditableCompetition.Metadata.Rules),
-                    MandatorySaveState = EditableCompetition.Metadata.MandatorySaveState,
-                    CooperativeCompetition = EditableCompetition.Metadata.CooperativeCompetition
+                    CompetitionDescription = EditableCompetitionTask.Metadata.CompetitionDescription,
+                    Rules = new ObservableCollection<string>(EditableCompetitionTask.Metadata.Rules),
+                    MandatorySaveState = EditableCompetitionTask.Metadata.MandatorySaveState,
+                    CooperativeCompetition = EditableCompetitionTask.Metadata.CooperativeCompetition
                 },
-                CompetitionData = EditableCompetition.CompetitionData
+                CompetitorData = EditableCompetitionTask.CompetitorData
             });
         }
 
@@ -398,7 +398,7 @@ namespace TASCompAssistant.ViewModels
                 }
                 else
                 {
-                    if (lastVIs == item.VIs && lastDQ == item.DQ)
+                    if (lastVIs == item.VICount && lastDQ == item.DQ)
                     {
                         item.Place = lastPlace;
                         skipCounter++;
@@ -419,7 +419,7 @@ namespace TASCompAssistant.ViewModels
                     }
                 }
 
-                lastVIs = item.VIs;
+                lastVIs = item.VICount;
                 lastDQ = item.DQ;
                 lastPlace = item.Place;
 

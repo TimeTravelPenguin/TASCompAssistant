@@ -37,9 +37,9 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _viEnd, value);
         }
 
-        public int VIs { get => VIEnd - VIStart; }
+        public int VICount { get => VIEnd - VIStart; }
         public double TimeInSeconds { get => GetTime(); }
-        public string TimeFormated { get => GetFormatTime(); }
+        public string TimeFormatted { get => GetFormatTime(); }
 
         private int _rerecords;
         public int Rerecords
@@ -56,6 +56,7 @@ namespace TASCompAssistant.Models
         }
 
         private bool _dqOther;
+        [JsonIgnore]
         public bool DQOther
         {
             get => _dqOther;
@@ -149,7 +150,7 @@ namespace TASCompAssistant.Models
 
         private double GetTime()
         {
-            return Math.Round((double)VIs / 60, 3);
+            return Math.Round((double)VICount / 60, 3);
         }
 
         private string GetFormatTime()

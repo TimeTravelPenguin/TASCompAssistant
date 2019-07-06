@@ -5,20 +5,20 @@ using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
-    internal class CompetitionModel : PropertyChangedBase
+    internal class CompetitionTaskModel : PropertyChangedBase
     {
         
         // The name of the current competition
-        private string _competitionName = "Unnamed Competition";
-        public string CompetitionName
+        private string _taskName = "Unnamed Competition";
+        public string TaskName
         {
-            get => _competitionName;
-            set => SetValue(ref _competitionName, value);
+            get => _taskName;
+            set => SetValue(ref _taskName, value);
         }
 
         // Metadata containg rules and compeition description
-        private CompetitionMetadataModel _metadata = new CompetitionMetadataModel();
-        public CompetitionMetadataModel Metadata
+        private CompetitionTaskMetadataModel _metadata = new CompetitionTaskMetadataModel();
+        public CompetitionTaskMetadataModel Metadata
         {
             get => _metadata;
             set => SetValue(ref _metadata, value);
@@ -33,11 +33,11 @@ namespace TASCompAssistant.Models
         }
 
         // Collection of Competitors in competition
-        private ObservableCollection<CompetitorModel> _competitionData = new ObservableCollection<CompetitorModel>();
-        public ObservableCollection<CompetitorModel> CompetitionData
+        private ObservableCollection<CompetitorModel> _competitorData = new ObservableCollection<CompetitorModel>();
+        public ObservableCollection<CompetitorModel> CompetitorData
         {
-            get => _competitionData;
-            set => SetValue(ref _competitionData, value);
+            get => _competitorData;
+            set => SetValue(ref _competitorData, value);
         }
 
         [JsonIgnore]
@@ -51,17 +51,17 @@ namespace TASCompAssistant.Models
             }
         }
 
-        public CompetitionModel()
+        public CompetitionTaskModel()
         {
 
         }
 
         public void ClearCompetition()
         {
-            CompetitionName = "Unnamed Competition";
+            TaskName = "Unnamed Competition";
             Metadata.ClearData();
             DueDates.ClearDueDates();
-            CompetitionData.Clear();
+            CompetitorData.Clear();
         }
     }
 }

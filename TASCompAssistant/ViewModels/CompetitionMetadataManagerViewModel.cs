@@ -14,8 +14,8 @@ namespace TASCompAssistant.ViewModels
     {
 
         // All the metadata for the current competition
-        private CompetitionMetadataModel _metadata = new CompetitionMetadataModel();
-        public CompetitionMetadataModel Metadata
+        private CompetitionTaskMetadataModel _metadata = new CompetitionTaskMetadataModel();
+        public CompetitionTaskMetadataModel Metadata
         {
             get => _metadata;
             set => SetValue(ref _metadata, value);

@@ -15,15 +15,15 @@ namespace TASCompAssistant.Models
 
         }
 
-        public string SaveData(ObservableCollection<CompetitionModel> data)
+        public string SaveData(ObservableCollection<CompetitionTaskModel> data)
         {
             return JsonConvert.SerializeObject(data);
         }
 
-        public ObservableCollection<CompetitionModel> OpenData(string serializedData)
+        public ObservableCollection<CompetitionTaskModel> OpenData(string serializedData)
         {
             // This needs error handling
-            return JsonConvert.DeserializeObject<ObservableCollection<CompetitionModel>>(serializedData);
+            return JsonConvert.DeserializeObject<ObservableCollection<CompetitionTaskModel>>(serializedData);
         }
     }
 }

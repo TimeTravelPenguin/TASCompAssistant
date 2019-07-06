@@ -100,10 +100,10 @@
                    VerticalAlignment="Bottom"
                    Panel.ZIndex="1"/>
 
-        <ComboBox ItemsSource="{Binding Competitions}"
-                  DisplayMemberPath="CompetitionName"
-                  SelectedValuePath="CompetitionName"
-                  SelectedIndex="{Binding CompetitionIndex}"
+        <ComboBox ItemsSource="{Binding CompetitionTasks}"
+                  DisplayMemberPath="TaskName"
+                  SelectedValuePath="TaskName"
+                  SelectedIndex="{Binding CompetitionTaskIndex}"
                   Grid.Row="2" 
                   Grid.Column="3"
                   HorizontalAlignment="Left"
@@ -159,11 +159,11 @@
                                                 Binding="{Binding VIEnd}"
                                                 Width="Auto"/>
                             <DataGridTextColumn Header="VIs"
-                                                Binding="{Binding VIs}"
+                                                Binding="{Binding VICount}"
                                                 Width="Auto"
                                                 IsReadOnly="True"/>
                             <DataGridTextColumn Header="Time"
-                                                Binding="{Binding TimeFormated}"
+                                                Binding="{Binding TimeFormatted}"
                                                 Width="Auto"
                                                 IsReadOnly="True"/>
                             <DataGridTextColumn Header="Rerecords"
@@ -291,7 +291,7 @@
 
                                 <TextBlock Text="Competition Name:" Grid.Row="0" VerticalAlignment="Center"/>
 
-                                <TextBox Text="{Binding EditableCompetition.CompetitionName}"
+                                <TextBox Text="{Binding EditableCompetitionTask.TaskName}"
                                          Grid.Row="1"
                                          VerticalAlignment="Center"/>
 
@@ -299,14 +299,14 @@
                                 <!-- Date Pickers -->
                                 <TextBlock Text="Start Date:" Grid.Row="3"/>
                                 <DatePicker Grid.Row="4"
-                                            SelectedDate="{Binding EditableCompetition.DueDates.StartDate,
+                                            SelectedDate="{Binding EditableCompetitionTask.DueDates.StartDate,
                                                                    Mode=TwoWay,
                                                                    TargetNullValue={x:Static System:DateTime.Now}}"
                                             SelectedDateFormat="Long"/>
 
                                 <TextBlock Text="End Date:" Grid.Row="6"/>
                                 <DatePicker Grid.Row="7"
-                                            SelectedDate="{Binding EditableCompetition.DueDates.EndDate,
+                                            SelectedDate="{Binding EditableCompetitionTask.DueDates.EndDate,
                                                                    Mode=TwoWay,
                                                                    TargetNullValue={x:Static System:DateTime.Now}}"
                                             SelectedDateFormat="Long"/>
@@ -317,16 +317,16 @@
                                                  ShowButtonSpinner="False"
                                                  Kind="Local"
                                                  Watermark="Please set a due time..."
-                                                 Value="{Binding EditableCompetition.DueDates.DueTime}"/>
+                                                 Value="{Binding EditableCompetitionTask.DueDates.DueTime}"/>
 
                                 <!-- Description Button -->
-                                <Button Command="{Binding ModifyCompetitionMetadata}"
+                                <Button Command="{Binding ModifyCompetitionTaskMetadata}"
                                         Content="Modify Metadata"
                                         Grid.Row="12" 
                                         VerticalAlignment="Center"/>
                                 
                                 <!-- Add Button -->
-                                <Button Command="{Binding AddCompetitionCommand}"
+                                <Button Command="{Binding AddCompetitionTaskCommand}"
                                         Content="Add"
                                         Grid.Row="14" 
                                         VerticalAlignment="Center"/>
@@ -362,7 +362,7 @@
                             <DataGrid.Columns>
                                 <!-- Competition Name -->
                                 <DataGridTextColumn Header="Competition Name"
-                                    Binding="{Binding CompetitionName}"
+                                    Binding="{Binding TaskName}"
                                     Width="auto"/>
 
                                 <!-- Start Date -->

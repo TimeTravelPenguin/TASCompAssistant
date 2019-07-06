@@ -26,7 +26,7 @@ namespace TASCompAssistant.Models
 
         }
 
-        public ObservableCollection<CompetitionModel> OpenFile()
+        public ObservableCollection<CompetitionTaskModel> OpenFile()
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "TAS Comp File (*.tascomp)|*.tascomp";
@@ -49,7 +49,7 @@ namespace TASCompAssistant.Models
                 {
                     FileClear();
                     MessageBox.Show("Please open a valid .tascomp file", "Error opening file...");
-                    return new ObservableCollection<CompetitionModel>();
+                    return new ObservableCollection<CompetitionTaskModel>();
                 }
             }
             catch   // Put errorhandling here for invalid JSON?
@@ -57,10 +57,10 @@ namespace TASCompAssistant.Models
                 FileClear();
             }
 
-            return new ObservableCollection<CompetitionModel>();
+            return new ObservableCollection<CompetitionTaskModel>();
         }
 
-        public void SaveFile(ObservableCollection<CompetitionModel> data)
+        public void SaveFile(ObservableCollection<CompetitionTaskModel> data)
         {
             var saveData = Data.SaveData(data);
 

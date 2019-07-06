@@ -89,7 +89,7 @@ namespace TASCompAssistant.Models
             int count = 0;
             foreach (var item in compData)
             {
-                CompetitionData.Add(new ObservablePoint(count++, item.VIs));
+                CompetitionData.Add(new ObservablePoint(count++, item.VICount));
                 XLabels.Add(Convert.ToString(item.Place));
             }
 
@@ -98,7 +98,7 @@ namespace TASCompAssistant.Models
             int offsetX = compData.Count;
             foreach (var item in dqData)
             {
-                DQData.Add(new ObservablePoint(offsetX++, item.VIs));
+                DQData.Add(new ObservablePoint(offsetX++, item.VICount));
                 XLabels.Add(Convert.ToString(item.Place));
             }
         }
