@@ -1,34 +1,88 @@
 # Save File Format Documentation
-This document serves the purpose of detailing the archetecture of the save files that the TASCompAssistant (TCA) tool outputs.
-Because TCA uses heavy amounts ob objects to house data within the tool, the save files serialize the data into a JSON format, saved in plain text in a `*.tascomp` file.
+This document details the format of the save files that TASCompAssistant (TCA) outputs.
+Because TCA uses objects heavily, all the data is serialized into JSON. It is then saved in plain text in a `*.tascomp` file.
 
-Currently, the save files house the data for the following things:
-* The collection of competition data
-    - Competition Name
-    - Competition metadata (descriptions, rules, etc.)
-    - Due date and time information
+Currently, the save files store:
+* Competition Data, including:
+    - Competition metadata (name, descriptions, rules, etc.)
+    - Competitor information
+    - Deadline information
+    - etc.
 * (Coming soon) DQReasonProfiles
 
-## Competition Data
+## JSON Structure
+### Competition Structure
+A competition is serialized into the following JSON structure (an example competition is used here for reference):
 ```JSON
-[
-    {
-        "CompetitionName": "Competition 1",
-        "Metadata": {
-            "CompetitionDescription": "Competitors must collect 10 coins and then kill 2 enemies",
-            "Rules": [""],
-            "MandatorySaveState": false
-        },
-        "DueDates": {
-            "StartDate": "2019-07-05T00:48:15.5889106+10:00",
-            "EndDate": "2019-07-12T00:00:00",
-            "DueTime": "2019-07-05T01:00:15.592+10:00"
-        },
-        "CompetitionData": [
-            { ... }
-        ]
-    }
-]
+{
+	"CompetitionName": "Competition 1",
+	"Metadata": {
+		"CompetitionDescription": "Competitors must collect 10 coins and then kill 2 enemies",
+		"Rules": [
+			"Rule One",
+			"Rule Two",
+			"Rule Three"
+		],
+		"MandatorySaveState": true,
+		"CooperativeCompetition": false
+	},
+	"DueDates": {
+		"StartDate": "2019-07-05T00:48:15.5889106+10:00",
+		"EndDate": "2019-07-12T00:00:00",
+		"DueTime": "2019-07-05T01:00:15.592+10:00"
+	},
+	"CompetitionData": [
+		{
+			"Place": 1,
+			"Username": "TimeTravelPenguin",
+			"VIStart": 10,
+			"VIEnd": 1000,
+			"VIs": 990,
+			"TimeInSeconds": 16.5,
+			"TimeFormated": "16s 500ms",
+			"Rerecords": 1234,
+			"DQ": true,
+			"Qualification": "Disqualified",
+			"DQReasons": [
+				{
+					"Reason": "Strat talk",
+					"IsSelected": true
+				},
+				{
+					"Reason": "Failed task goal",
+					"IsSelected": true
+				}
+			],
+			"Score": 50.0,
+			"ScorePlace": 1
+		}
+	]
+}
 ```
-
-# UNDER CONSTRUCTION
+To elaborate on the properties:
+- `CompetitionName` is the name of the current competition.
+- `Metadata` contains descriptive guidelines for the competition:
+    - `CompetitionDescription` details the competition goal, i.e. the outline of that particular competition.
+    - `Rules` is a list of rules that competitors must abide by.
+    - `MandatorySaveState` is a Boolean representing whether or not that competition provides a compulsory savestate file that competitors must use.
+    - `CooperativeCompetition` is a Boolean representing whether or not competitors may or may not work together.
+- `DueDates` contains information about the timing of the competition:
+    - `StartDate` is a `DateTime` object representing the time the competition begins.
+    - `EndDate` is a `DateTime` object representing the day the competition ends.
+    - `DueTime` is a `DateTime` object representing the time the competition is due on `EndDate`.
+- `CompetitionData` contains information about each competitor's entry:
+    - `Place` is the competitor's rank in the competition.
+    - `Username` is the name or alias the competitor goes by.
+    - `VIStart` is the VI the TAS begins on.
+    - `VIEnd` is the VI the TAS ends on.
+    - `VIs` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`.
+    - `TimeInSeconds` is `VIs` converted to seconds. This is done by dividing it by 60; in other words, `TimeInSeconds = VIs / 60`.
+    - `TimeFormated` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
+    - `Rerecords` is the rerecord count of the competitor's TAS.
+    - `DQ` is a Boolean representing whether or not the current competitor is disqualified.
+    - `Qualification` is a string which is `"Qualified"` if `DQ` is `false` and `"Disqualified` if `DQ` is `true`.
+    - `DQReasons` is a list of reasons why the competitor could be disqualified.
+        - `Reason` is a string summarising the reason for disqualification.
+        - `IsSelected` is a Boolean that describes whether the competitor was disqualified for this reason. If none of the `IsSelected` values in `DQReasons` are `true`, the competitor is not disqualified.
+    - `Score` is the current score of the competitor (up until and including the current competition).
+    - `ScorePlace` is the competitor's rank on the score boards.
