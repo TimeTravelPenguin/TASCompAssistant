@@ -27,9 +27,9 @@ A task is serialized into the following JSON structure (an example competition t
 		"CooperativeTask": false
 	},
 	"DueDates": {
-		"StartDate": "2019-07-05T00:48:15.5889106+10:00",
+		"StartDate": "2019-07-05T00:00:00",
 		"EndDate": "2019-07-12T00:00:00",
-		"DueTime": "2019-07-05T01:00:15.592+10:00"
+		"DueTime": "2019-07-12T15:30:00"
 	},
 	"CompetitorData": [
 		{
