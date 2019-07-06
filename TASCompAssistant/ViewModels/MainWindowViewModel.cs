@@ -111,9 +111,6 @@ namespace TASCompAssistant.ViewModels
 
         public FileModel FileModel { get; } = new FileModel();
 
-        // Adds a new competitor to the datagrid
-        public ActionCommand AddCompetitorCommand { get; }
-
         // Determine
         private bool _addCompetitorEnabled;
         public bool AddCompetitorEnabled
@@ -123,32 +120,38 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _addCompetitorEnabled, value);
         }
 
+        // Adds a new competitor to the datagrid
+        public ActionCommand CommandAddCompetitor { get; }
+
         // Adds a new competition to the datagrid
-        public ActionCommand AddCompetitionTaskCommand { get; }
+        public ActionCommand CommandAddCompetitionTask { get; }
 
         // Add test data to datagrid
-        public ActionCommand AddTestDataCommand { get; }
+        public ActionCommand CommandAddTestData { get; }
 
         // Clears the window to be a clean slate
-        public ActionCommand ClearAllCommand { get; }
+        public ActionCommand CommandClearAll { get; }
 
         // Sorts competitors
-        public ActionCommand UpdateDataCommand { get; }
+        public ActionCommand CommandUpdateData { get; }
 
         // Updates the graph
-        public ActionCommand UpdateGraphCommand { get; }
+        public ActionCommand CommandUpdateGraph { get; }
 
         // Opens File
-        public ActionCommand FileOpen { get; }
+        public ActionCommand CommandFileOpen { get; }
 
         // Saves File
-        public ActionCommand FileSave { get; }
+        public ActionCommand CommandFileSave { get; }
 
         // Opens window to manage competition ruleset
-        public ActionCommand ModifyCompetitionTaskMetadata { get; }
+        public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
+
+        // Opens window to modify global settings
+        public ActionCommand CommandOpenGlobalSettings { get; }
 
         // Exits the application
-        public ActionCommand ExitCommand { get; }
+        public ActionCommand CommandExit { get; }
 
         /*	TODO:
                 - Add DQ Reasons
@@ -167,7 +170,7 @@ namespace TASCompAssistant.ViewModels
             DQProfiles.Add(DQReasonsProfile);
 
             // Command to add data to the competitor datagrid
-            AddCompetitorCommand = new ActionCommand(() =>
+            CommandAddCompetitor = new ActionCommand(() =>
             {
                 CheckMinimumCompetitions();
 
@@ -178,7 +181,7 @@ namespace TASCompAssistant.ViewModels
                 UpdateLiveCharts();
             });
 
-            AddCompetitionTaskCommand = new ActionCommand(() =>
+            CommandAddCompetitionTask = new ActionCommand(() =>
             {
                 CheckMinimumCompetitions();
 
@@ -188,16 +191,16 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Command to clear the datagrid
-            ClearAllCommand = new ActionCommand(() => ClearAll());
+            CommandClearAll = new ActionCommand(() => ClearAll());
 
             // Command to sort data
-            UpdateDataCommand = new ActionCommand(() =>
+            CommandUpdateData = new ActionCommand(() =>
             {
                 RefreshAll();
             });
 
             // Command to add random test data to datagrid
-            AddTestDataCommand = new ActionCommand(() =>
+            CommandAddTestData = new ActionCommand(() =>
             {
                 CheckMinimumCompetitions();
 
@@ -221,7 +224,7 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Opens File
-            FileOpen = new ActionCommand(() =>
+            CommandFileOpen = new ActionCommand(() =>
             {
                 CompetitionTasks.Clear();
                 foreach (var item in FileModel.OpenFile())
@@ -234,13 +237,13 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Saves File
-            FileSave = new ActionCommand(() =>
+            CommandFileSave = new ActionCommand(() =>
             {
                 FileModel.SaveFile(CompetitionTasks);
             });
 
             // Opens window to modify competition metadata
-            ModifyCompetitionTaskMetadata = new ActionCommand(() =>
+            CommandModifyCompetitionTaskMetadata = new ActionCommand(() =>
             {
                 MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
 
@@ -251,7 +254,7 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Command to Exit
-            ExitCommand = new ActionCommand(() => Environment.Exit(0));
+            CommandExit = new ActionCommand(() => Environment.Exit(0));
 
             RefreshAll();
         }

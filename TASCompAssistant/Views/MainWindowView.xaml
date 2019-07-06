@@ -54,21 +54,22 @@
             <Menu DockPanel.Dock="Top">
                 <!-- File -->
                 <MenuItem Header="_File">
-                    <MenuItem Header="_New" Command="{Binding ClearAllCommand}"/>
-                    <MenuItem Header="_Open" Command="{Binding FileOpen}"/>
-                    <MenuItem Header="_Save" Command="{Binding FileSave}"/>
-                    <MenuItem Header="_Close" Command="{Binding ExitCommand}"/>
+                    <MenuItem Header="_New" Command="{Binding CommandClearAll}"/>
+                    <MenuItem Header="_Open" Command="{Binding CommandFileOpen}"/>
+                    <MenuItem Header="_Save" Command="{Binding CommandFileSave}"/>
+                    <MenuItem Header="_Close" Command="{Binding CommandExit}"/>
                 </MenuItem>
                 <!-- Settings -->
                 <MenuItem Header="_Settings">
+                    <MenuItem Header="Global Settings" Command="{Binding CommandOpenGlobalSettings}"/>
                     <MenuItem Header="DQ Reasons Profiles...">
                         <MenuItem Header="Configure DQ Reasons Profile"/>
                         <MenuItem Header="Import DQ Reasons Profile"/>
                         <MenuItem Header="Export DQ Reasons Profile"/>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Rank Competition" Command="{Binding UpdateDataCommand}"/>
-                <MenuItem Header="Add Test Data" Command="{Binding AddTestDataCommand}"/>
+                <MenuItem Header="Rank Competition" Command="{Binding CommandUpdateData}"/>
+                <MenuItem Header="Add Test Data" Command="{Binding CommandAddTestData}"/>
                 <!-- Plain text results -->
                 <MenuItem Header="_Results Output">
                     <MenuItem Header="Copy Competition Description"/>
@@ -320,13 +321,13 @@
                                                  Value="{Binding EditableCompetitionTask.DueDates.DueTime}"/>
 
                                 <!-- Description Button -->
-                                <Button Command="{Binding ModifyCompetitionTaskMetadata}"
+                                <Button Command="{Binding CommandModifyCompetitionTaskMetadata}"
                                         Content="Modify Metadata"
                                         Grid.Row="12" 
                                         VerticalAlignment="Center"/>
 
                                 <!-- Add Button -->
-                                <Button Command="{Binding AddCompetitionTaskCommand}"
+                                <Button Command="{Binding CommandAddCompetitionTask}"
                                         Content="Add"
                                         Grid.Row="14" 
                                         VerticalAlignment="Center"/>
@@ -492,7 +493,7 @@
                         Grid.ColumnSpan="2"
                         Margin="5,3"
                         Content="Add Competitor"
-                        Command="{Binding AddCompetitorCommand}"/>
+                        Command="{Binding CommandAddCompetitor}"/>
 
                 <!-- DQ Section -->
                 <GroupBox Grid.Row="5" Grid.ColumnSpan="3">
