@@ -369,7 +369,7 @@ namespace TASCompAssistant.ViewModels
                 Metadata = new CompetitionMetadataModel()
                 {
                     CompetitionDescription = EditableCompetition.Metadata.CompetitionDescription,
-                    Rules = EditableCompetition.Metadata.Rules,
+                    Rules = new ObservableCollection<string>(EditableCompetition.Metadata.Rules),
                     MandatorySaveState = EditableCompetition.Metadata.MandatorySaveState,
                     CooperativeCompetition = EditableCompetition.Metadata.CooperativeCompetition
                 },
