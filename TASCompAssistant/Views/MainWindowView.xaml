@@ -253,7 +253,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Edit Tasks">
+            <TabItem Header="Edit Competition Tasks">
                 <Grid>
                     <DockPanel>
 
@@ -324,7 +324,7 @@
                                         Content="Modify Metadata"
                                         Grid.Row="12" 
                                         VerticalAlignment="Center"/>
-                                
+
                                 <!-- Add Button -->
                                 <Button Command="{Binding AddCompetitionTaskCommand}"
                                         Content="Add"
@@ -372,7 +372,7 @@
                                             <TextBlock Text="{Binding DueDates.StartDate, StringFormat={}{0:D}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
-                                    
+
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <DatePicker SelectedDate="{Binding DueDates.StartDate}" />
@@ -387,14 +387,14 @@
                                             <TextBlock Text="{Binding DueDates.EndDate, StringFormat={}{0:D}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
-                                    
+
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <DatePicker SelectedDate="{Binding DueDates.EndDate}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellEditingTemplate>
                                 </DataGridTemplateColumn>
-                                
+
                                 <!-- Due Time -->
                                 <DataGridTemplateColumn Header="Due Time" Width="100">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -402,7 +402,7 @@
                                             <TextBlock Text="{Binding DueDates.DueTime, StringFormat={}{0:hh:mm tt}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
-                                    
+
                                     <DataGridTemplateColumn.CellEditingTemplate>
                                         <DataTemplate>
                                             <xctk:TimePicker Value="{Binding DueDates.DueTime}" />

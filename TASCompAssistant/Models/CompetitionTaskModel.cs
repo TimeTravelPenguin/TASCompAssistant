@@ -46,7 +46,7 @@ namespace TASCompAssistant.Models
             get
             {
                 // string tip = $"Name: {CompetitionName}\nStart: {DueDates.StartDate, 0:D}\nEnd: {DueDates.EndDate, 0:D}\nDue Time: {DueDates.DueTime, 0:hh:mm tt}";
-                string tip = $"Description: {Metadata.TaskDescription}\nRule Count: {Metadata.Rules.Count}";
+                string tip = $"Description:\n{Metadata.TaskDescription}\n\nNumber of Rules: {Metadata.Rules.Count}";
                 return tip;
             }
         }
