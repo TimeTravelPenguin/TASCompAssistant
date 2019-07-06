@@ -5,7 +5,7 @@ namespace TASCompAssistant.ViewModels
 {
     public class DQReasonsEditorViewModel
     {
-        public ObservableCollection<DQReasonsProfileModel> DQReasonProfiles { get; } =
+        public ObservableCollection<DQReasonsProfileModel> DqReasonProfiles { get; } =
             new ObservableCollection<DQReasonsProfileModel>();
 
         /*	TODO:

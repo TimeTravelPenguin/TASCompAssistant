@@ -16,7 +16,7 @@ namespace TASCompAssistant.Models
         private Func<double, string> _yFormatter;
 
         private ChartValues<ObservablePoint> CompetitionData { get; } = new ChartValues<ObservablePoint>();
-        private ChartValues<ObservablePoint> DQData { get; } = new ChartValues<ObservablePoint>();
+        private ChartValues<ObservablePoint> DqData { get; } = new ChartValues<ObservablePoint>();
 
         public SeriesCollection SeriesCollection { get; set; }
 
@@ -76,7 +76,7 @@ namespace TASCompAssistant.Models
                 new LineSeries
                 {
                     Title = "DQ Data (VIs/Player Number)",
-                    Values = DQData,
+                    Values = DqData,
                     LineSmoothness = 1,
                     PointForeground = Brushes.Red
                 }
@@ -86,7 +86,7 @@ namespace TASCompAssistant.Models
         public void ParseData(List<CompetitorModel> compData, List<CompetitorModel> dqData)
         {
             CompetitionData.Clear();
-            DQData.Clear();
+            DqData.Clear();
 
             // Convert competitionData into observable points
             var count = 0;
@@ -101,7 +101,7 @@ namespace TASCompAssistant.Models
             var offsetX = compData.Count;
             foreach (var item in dqData)
             {
-                DQData.Add(new ObservablePoint(offsetX++, item.VICount));
+                DqData.Add(new ObservablePoint(offsetX++, item.VICount));
                 XLabels.Add(Convert.ToString(item.Place));
             }
         }

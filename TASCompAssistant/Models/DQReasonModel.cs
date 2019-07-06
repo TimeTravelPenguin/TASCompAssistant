@@ -2,7 +2,7 @@
 
 namespace TASCompAssistant.Models
 {
-    public class DQReasonModel : PropertyChangedBase
+    public class DqReasonModel : PropertyChangedBase
     {
         private bool _isSelected;
         private string _reason;
@@ -19,7 +19,7 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _isSelected, value);
         }
 
-        public DQReasonModel()
+        public DqReasonModel()
         {
             IsSelected = false;
         }

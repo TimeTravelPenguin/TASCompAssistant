@@ -112,11 +112,11 @@ namespace TASCompAssistant.ViewModels
         public GraphModel GraphData { get; set; } = new GraphModel();
 
         // Contains all the DQ Reasons
-        public DQReasonsProfileModel DQReasonsProfile { get; } =
+        public DQReasonsProfileModel DqReasonsProfileModel { get; } =
             new DQReasonsProfileModel(true); // This is initialized as a default profile
 
         //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
-        public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } =
+        public ObservableCollection<DQReasonsProfileModel> DqProfilesCollection { get; set; } =
             new ObservableCollection<DQReasonsProfileModel>();
 
         public FileModel FileModel { get; } = new FileModel();
@@ -149,7 +149,7 @@ namespace TASCompAssistant.ViewModels
         // Saves File
         public ActionCommand CommandFileSave { get; }
 
-        // Opens window to manage competition ruleset
+        // Opens window to manage competition rule-set
         public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
 
         // Opens window to modify global settings
@@ -171,8 +171,8 @@ namespace TASCompAssistant.ViewModels
         public MainWindowViewModel()
         {
             // Initialize the default DQProfile
-            DQReasonsProfile.SetProfileDefaults();
-            DQProfiles.Add(DQReasonsProfile);
+            DqReasonsProfileModel.SetProfileDefaults();
+            DqProfilesCollection.Add(DqReasonsProfileModel);
 
             // Command to add data to the competitor datagrid
             CommandAddCompetitor = new ActionCommand(() =>
@@ -245,12 +245,12 @@ namespace TASCompAssistant.ViewModels
             {
                 MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
 
-                var MetadataManger = new CompetitionMetadataManagerView
+                var metadataManger = new CompetitionMetadataManagerView
                 {
                     DataContext = MetadataViewModel
                 };
 
-                MetadataManger.ShowDialog();
+                metadataManger.ShowDialog();
             });
 
             // Command to Exit
@@ -317,7 +317,7 @@ namespace TASCompAssistant.ViewModels
             EditableCompetitor.ClearCompetitor();
 
             // Uncheck all DQs:
-            foreach (var dq in DQReasonsProfile.DQReasons)
+            foreach (var dq in DqReasonsProfileModel.DqReasons)
             {
                 dq.IsSelected = false;
             }
@@ -338,23 +338,23 @@ namespace TASCompAssistant.ViewModels
                 VIEnd = EditableCompetitor.VIEnd,
                 Rerecords = EditableCompetitor.Rerecords,
                 DQ = EditableCompetitor.DQ,
-                DQOther = EditableCompetitor.DQOther
+                DqOther = EditableCompetitor.DqOther
             };
 
             // Add DQs
-            foreach (var dq in DQReasonsProfile.DQReasons)
+            foreach (var dq in DqReasonsProfileModel.DqReasons)
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DQReasons.Add(new DQReasonModel {Reason = dq.Reason, IsSelected = true});
+                    newCompetitor.DqReasons.Add(new DqReasonModel {Reason = dq.Reason, IsSelected = true});
                 }
             }
 
-            if (EditableCompetitor.DQ && EditableCompetitor.DQOther)
+            if (EditableCompetitor.DQ && EditableCompetitor.DqOther)
             {
-                newCompetitor.DQReasons.Add(new DQReasonModel
+                newCompetitor.DqReasons.Add(new DqReasonModel
                 {
-                    Reason = EditableCompetitor.DQOtherReason,
+                    Reason = EditableCompetitor.DqOtherReason,
                     IsSelected = true
                 });
             }
@@ -392,7 +392,7 @@ namespace TASCompAssistant.ViewModels
             CurrentCompetitors.Clear();
 
             var lastVIs = 0;
-            var lastDQ = false;
+            var lastDq = false;
             var lastPlace = 0;
             var skipCounter = 0;
             var isDisqualified = false;
@@ -405,7 +405,7 @@ namespace TASCompAssistant.ViewModels
                 }
                 else
                 {
-                    if (lastVIs == item.VICount && lastDQ == item.DQ)
+                    if (lastVIs == item.VICount && lastDq == item.DQ)
                     {
                         item.Place = lastPlace;
                         skipCounter++;
@@ -427,7 +427,7 @@ namespace TASCompAssistant.ViewModels
                 }
 
                 lastVIs = item.VICount;
-                lastDQ = item.DQ;
+                lastDq = item.DQ;
                 lastPlace = item.Place;
 
                 CurrentCompetitors.Add(item);

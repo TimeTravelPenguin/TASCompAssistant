@@ -13,7 +13,7 @@ namespace TASCompAssistant.Models
 
         private string _dqOtherReason;
 
-        private ObservableCollection<DQReasonModel> _dQReasons = new ObservableCollection<DQReasonModel>();
+        private ObservableCollection<DqReasonModel> _dQReasons = new ObservableCollection<DqReasonModel>();
         private int _place;
 
         private int _rerecords;
@@ -71,7 +71,7 @@ namespace TASCompAssistant.Models
         }
 
         [JsonIgnore]
-        public bool DQOther
+        public bool DqOther
         {
             get => _dqOther;
             set => SetValue(ref _dqOther, value);
@@ -79,31 +79,31 @@ namespace TASCompAssistant.Models
 
         public string Qualification => GetQualification();
 
-        public ObservableCollection<DQReasonModel> DQReasons
+        public ObservableCollection<DqReasonModel> DqReasons
         {
             get => _dQReasons;
             set => SetValue(ref _dQReasons, value);
         }
 
         [JsonIgnore]
-        public string DQOtherReason
+        public string DqOtherReason
         {
             get => _dqOtherReason;
             set => SetValue(ref _dqOtherReason, value);
         }
 
         [JsonIgnore]
-        public string DQReasonsAsString
+        public string DqReasonsAsString
         {
             get
             {
                 var dqs = string.Empty;
-                foreach (var item in DQReasons)
+                foreach (var item in DqReasons)
                 {
                     dqs += $"{item.Reason}, ";
                 }
 
-                if (DQReasons.Count > 0)
+                if (DqReasons.Count > 0)
                 {
                     return dqs.Remove(dqs.Length - 2);
                 }
@@ -137,9 +137,9 @@ namespace TASCompAssistant.Models
             VIEnd = 0;
             Rerecords = 0;
             DQ = false;
-            DQReasons.Clear();
-            DQOtherReason = "";
-            DQOther = false;
+            DqReasons.Clear();
+            DqOtherReason = "";
+            DqOther = false;
             Score = 0;
             ScorePlace = 0;
         }

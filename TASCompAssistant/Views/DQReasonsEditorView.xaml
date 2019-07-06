@@ -52,7 +52,7 @@
 		<DockPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
 			<DataGrid x:Name="datagrid_DQProfile"
 					  ItemsSource="{Binding Path=DQReasonProfiles}"
-					  DisplayMemberPath="DQReasons"
+					  DisplayMemberPath="DqReasons"
 					  AutoGenerateColumns="False"
 					  HorizontalGridLinesBrush="DarkGray"
 					  VerticalGridLinesBrush="DarkGray"

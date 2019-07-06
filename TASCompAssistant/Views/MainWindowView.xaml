@@ -524,7 +524,7 @@
                             <!-- DQ Checklist combobox -->
                             <!-- This needs to become something better - like an expander? -->
                             <ComboBox Text="Please select DQ reason..."
-                                      ItemsSource="{Binding DQReasonsProfile.DQReasons}"
+                                      ItemsSource="{Binding DqReasonsProfileModel.DqReasons}"
                                       SelectedValuePath="Reason"
                                       VerticalAlignment="Center"
                                       IsReadOnly="True"
@@ -546,15 +546,15 @@
                             <!-- DQ Other Checkbox -->
                             <CheckBox x:Name="Chkbox_DQ_Other"
                                       Content="Other:"
-                                      IsChecked="{Binding EditableCompetitor.DQOther}"
+                                      IsChecked="{Binding EditableCompetitor.DqOther}"
                                       Grid.Row="2" 
                                       Grid.Column="0"
                                       VerticalAlignment="Bottom"/>
 
                             <!-- "Other" reason textbox -->
                             <TextBox x:Name="txtBox_DQ_Other" 
-                                     Text="{Binding EditableCompetitor.DQOtherReason}"
-                                     IsEnabled="{Binding EditableCompetitor.DQOther}"
+                                     Text="{Binding EditableCompetitor.DqOtherReason}"
+                                     IsEnabled="{Binding EditableCompetitor.DqOther}"
                                      Grid.Row="3" 
                                      Grid.Column="0" 
                                      Grid.RowSpan="2" 

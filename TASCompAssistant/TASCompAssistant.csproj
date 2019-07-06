@@ -109,7 +109,7 @@
     <Compile Include="Models\CompetitionTaskModel.cs" />
     <Compile Include="Models\CompetitorModel.cs" />
     <Compile Include="Models\DataModel.cs" />
-    <Compile Include="Models\DQReasonModel.cs" />
+    <Compile Include="Models\DqReasonModel.cs" />
     <Compile Include="Models\DQReasonsProfileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
     <Compile Include="Types\PropertyChangedBase.cs" />

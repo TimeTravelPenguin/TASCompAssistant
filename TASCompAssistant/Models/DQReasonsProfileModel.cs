@@ -5,7 +5,7 @@ namespace TASCompAssistant.Models
 {
     public class DQReasonsProfileModel
     {
-        private readonly List<string> _defaultDQReasons = new List<string>
+        private readonly List<string> _defaultDqReasons = new List<string>
         {
             "Illegal interaction",
             "Strat talk",
@@ -16,7 +16,7 @@ namespace TASCompAssistant.Models
 
         public string ProfileName { get; set; } = string.Empty;
 
-        public ObservableCollection<DQReasonModel> DQReasons { get; set; } = new ObservableCollection<DQReasonModel>();
+        public ObservableCollection<DqReasonModel> DqReasons { get; set; } = new ObservableCollection<DqReasonModel>();
 
         public DQReasonsProfileModel(bool setDefaults)
         {
@@ -29,11 +29,11 @@ namespace TASCompAssistant.Models
         public void SetProfileDefaults()
         {
             ProfileName = "Default DQ Profile";
-            DQReasons.Clear();
+            DqReasons.Clear();
 
-            foreach (var dq in _defaultDQReasons)
+            foreach (var dq in _defaultDqReasons)
             {
-                DQReasons.Add(new DQReasonModel {Reason = dq});
+                DqReasons.Add(new DqReasonModel {Reason = dq});
             }
         }
     }

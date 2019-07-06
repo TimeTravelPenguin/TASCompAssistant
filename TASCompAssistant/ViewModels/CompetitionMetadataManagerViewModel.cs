@@ -54,11 +54,11 @@ namespace TASCompAssistant.ViewModels
 
         private void RemoveRule()
         {
-            var SelectedIndex = RuleIndex;
+            var selectedIndex = RuleIndex;
 
-            if (SelectedIndex > -1 && SelectedIndex < Metadata.Rules.Count)
+            if (selectedIndex > -1 && selectedIndex < Metadata.Rules.Count)
             {
-                Metadata.Rules.RemoveAt(SelectedIndex);
+                Metadata.Rules.RemoveAt(selectedIndex);
             }
         }
 

@@ -8,7 +8,7 @@ namespace TASCompAssistant.Models
 {
     internal class FileModel : PropertyChangedBase
     {
-        private readonly DataModel Data = new DataModel();
+        private readonly DataModel _dataModel = new DataModel();
         private string _fileName = "No file opened...";
 
         public string FileName
@@ -35,7 +35,7 @@ namespace TASCompAssistant.Models
                 {
                     FileName = filePath;
                     var fileData = File.ReadAllText(filePath);
-                    var data = Data.OpenData(fileData);
+                    var data = _dataModel.OpenData(fileData);
                     return data;
                 }
 
@@ -53,7 +53,7 @@ namespace TASCompAssistant.Models
 
         public void SaveFile(ObservableCollection<CompetitionTaskModel> data)
         {
-            var saveData = Data.SaveData(data);
+            var saveData = _dataModel.SaveData(data);
 
             var sfd = new SaveFileDialog
             {
