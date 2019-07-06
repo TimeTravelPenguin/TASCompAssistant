@@ -1,4 +1,5 @@
 ﻿using Microsoft.Expression.Interactivity.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace TASCompAssistant.ViewModels
         }
 
         private string _currentRule;
+        [JsonIgnore]
         public string CurrentRule
         {
             get => _currentRule;

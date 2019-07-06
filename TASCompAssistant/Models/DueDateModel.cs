@@ -30,6 +30,11 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _dueTime, value);
         }
 
+        public DueDateModel()
+        {
+            ClearDueDates();
+        }
+
         public void ClearDueDates()
         {
             StartDate = DateTime.Now;

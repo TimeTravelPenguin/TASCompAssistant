@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using TASCompAssistant.Types;
 
@@ -8,7 +9,7 @@ namespace TASCompAssistant.Models
     {
         
         // The name of the current competition
-        private string _competitionName;
+        private string _competitionName = "Unnamed Competition";
         public string CompetitionName
         {
             get => _competitionName;
@@ -39,27 +40,28 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _competitionData, value);
         }
 
+        [JsonIgnore]
         public string ToolTip
         {
             get
             {
                 // string tip = $"Name: {CompetitionName}\nStart: {DueDates.StartDate, 0:D}\nEnd: {DueDates.EndDate, 0:D}\nDue Time: {DueDates.DueTime, 0:hh:mm tt}";
-                string tip = $"Description: {Metadata.CompetitionDescription}";
+                string tip = $"Description: {Metadata.CompetitionDescription}\nRule Count: {Metadata.Rules.Count}";
                 return tip;
             }
         }
 
         public CompetitionModel()
         {
-            ClearCompetition();
+
         }
 
         public void ClearCompetition()
         {
-            CompetitionData.Clear();
             CompetitionName = "Unnamed Competition";
             Metadata.ClearData();
             DueDates.ClearDueDates();
+            CompetitionData.Clear();
         }
     }
 }

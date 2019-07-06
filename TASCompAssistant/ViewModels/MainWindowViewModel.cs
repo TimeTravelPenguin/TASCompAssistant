@@ -242,7 +242,7 @@ namespace TASCompAssistant.ViewModels
             // Opens window to modify competition metadata
             ModifyCompetitionMetadata = new ActionCommand(() =>
             {
-                MetadataViewModel.Metadata = Competitions[CompetitionIndex].Metadata;
+                MetadataViewModel.Metadata = EditableCompetition.Metadata;
 
                 var MetadataManger = new CompetitionMetadataManagerView();
                 MetadataManger.DataContext = MetadataViewModel;
@@ -366,15 +366,15 @@ namespace TASCompAssistant.ViewModels
                     EndDate = EditableCompetition.DueDates.EndDate,
                     DueTime = EditableCompetition.DueDates.DueTime
                 },
-                Metadata = new CompetitionMetadataModel
+                Metadata = new CompetitionMetadataModel()
                 {
-                    CompetitionDescription = MetadataViewModel.Metadata.CompetitionDescription,
-                    Rules = MetadataViewModel.Metadata.Rules,
-                    MandatorySaveState = MetadataViewModel.Metadata.MandatorySaveState
-                }
+                    CompetitionDescription = EditableCompetition.Metadata.CompetitionDescription,
+                    Rules = EditableCompetition.Metadata.Rules,
+                    MandatorySaveState = EditableCompetition.Metadata.MandatorySaveState,
+                    CooperativeCompetition = EditableCompetition.Metadata.CooperativeCompetition
+                },
+                CompetitionData = EditableCompetition.CompetitionData
             });
-
-            MetadataViewModel.Metadata.ClearData();
         }
 
         private void SortCompetition()

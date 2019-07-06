@@ -31,7 +31,7 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _mandatorySaveState, value);
         }
 
-        private bool _cooperativeCompetition = false;
+        private bool _cooperativeCompetition;
         public bool CooperativeCompetition
         {
             get => _cooperativeCompetition;
