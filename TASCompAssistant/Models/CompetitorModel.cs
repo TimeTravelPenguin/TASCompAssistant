@@ -1,61 +1,78 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using Newtonsoft.Json;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
     public class CompetitorModel : PropertyChangedBase
     {
+        private bool _dq;
+
+        private bool _dqOther;
+
+        private string _dqOtherReason;
+
+        private ObservableCollection<DQReasonModel> _dQReasons = new ObservableCollection<DQReasonModel>();
         private int _place;
+
+        private int _rerecords;
+
+        private double _score;
+
+        private int _scorePlace;
+
+        private string _username;
+
+        private int _viEnd;
+
+        private int _viStart;
+
+        public CompetitorModel()
+        {
+            ClearCompetitor();
+        }
+
         public int Place
         {
             get => _place;
             set => SetValue(ref _place, value);
         }
 
-        private string _username;
         public string Username
         {
             get => _username;
             set => SetValue(ref _username, value);
         }
 
-        private int _viStart;
         public int VIStart
         {
             get => _viStart;
             set => SetValue(ref _viStart, value);
         }
 
-        private int _viEnd;
         public int VIEnd
         {
             get => _viEnd;
             set => SetValue(ref _viEnd, value);
         }
 
-        public int VICount { get => VIEnd - VIStart; }
-        public double TimeInSeconds { get => GetTime(); }
-        public string TimeFormatted { get => GetFormatTime(); }
+        public int VICount => VIEnd - VIStart;
+        public double TimeInSeconds => GetTime();
+        public string TimeFormatted => GetFormatTime();
 
-        private int _rerecords;
         public int Rerecords
         {
             get => _rerecords;
             set => SetValue(ref _rerecords, value);
         }
 
-        private bool _dq;
         public bool DQ
         {
             get => _dq;
             set => SetValue(ref _dq, value);
         }
 
-        private bool _dqOther;
         [JsonIgnore]
         public bool DQOther
         {
@@ -63,16 +80,14 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _dqOther, value);
         }
 
-        public string Qualification { get => GetQualification(); }
+        public string Qualification => GetQualification();
 
-        private ObservableCollection<DQReasonModel> _dQReasons = new ObservableCollection<DQReasonModel>();
         public ObservableCollection<DQReasonModel> DQReasons
         {
             get => _dQReasons;
             set => SetValue(ref _dQReasons, value);
         }
 
-        private string _dqOtherReason;
         [JsonIgnore]
         public string DQOtherReason
         {
@@ -95,30 +110,21 @@ namespace TASCompAssistant.Models
                 {
                     return dqs.Remove(dqs.Length - 2);
                 }
-                else
-                {
-                    return dqs;
-                }
+
+                return dqs;
             }
         }
 
-        private double _score;
         public double Score
         {
             get => _score;
             set => SetValue(ref _score, value);
         }
 
-        private int _scorePlace;
         public int ScorePlace
         {
             get => _scorePlace;
             set => SetValue(ref _scorePlace, value);
-        }
-
-        public CompetitorModel()
-        {
-            ClearCompetitor();
         }
 
         public void ClearCompetitor()
@@ -142,41 +148,35 @@ namespace TASCompAssistant.Models
             {
                 return "Disqualified";
             }
-            else
-            {
-                return "Qualified";
-            }
+
+            return "Qualified";
         }
 
         private double GetTime()
         {
-            return Math.Round((double)VICount / 60, 3);
+            return Math.Round((double) VICount / 60, 3);
         }
 
         private string GetFormatTime()
         {
-            double sec = TimeInSeconds;
-            TimeSpan time = TimeSpan.FromSeconds(sec);
+            var sec = TimeInSeconds;
+            var time = TimeSpan.FromSeconds(sec);
             string str;
 
             if (sec < 60)
             {
                 str = time.ToString(@"ss\s\:fff\m\s");
-
             }
             else if (sec < 3600)
             {
                 str = time.ToString(@"mm\m\:ss\s\:fff\m\s");
-
             }
             else
             {
                 str = time.ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
-
             }
 
             return str.Replace(':', ' ');
         }
     }
-
 }

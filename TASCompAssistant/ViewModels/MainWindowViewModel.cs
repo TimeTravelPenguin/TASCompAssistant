@@ -1,157 +1,43 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using TASCompAssistant.Models;
-using Microsoft.Expression.Interactivity.Core;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Data;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using TASCompAssistant.Types;
 using System.Windows;
+using System.Windows.Data;
+using Microsoft.Expression.Interactivity.Core;
+using TASCompAssistant.Models;
+using TASCompAssistant.Types;
 using TASCompAssistant.Views;
 
 namespace TASCompAssistant.ViewModels
 {
-    class MainWindowViewModel : PropertyChangedBase
+    internal class MainWindowViewModel : PropertyChangedBase
     {
-        // Competition Metadata ViewModel Datacontext
-        private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
-        public CompetitionMetadataManagerViewModel MetadataViewModel
-        {
-            get => _metadataViewModel;
-            set => SetValue(ref _metadataViewModel, value);
-        }
-
         // Used for sorting
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
 
-        private ObservableCollection<CompetitionTaskModel> _competitionTasks = new ObservableCollection<CompetitionTaskModel>() { new CompetitionTaskModel() { TaskName = "Competition 1" } };
-        public ObservableCollection<CompetitionTaskModel> CompetitionTasks
-        {
-            get => _competitionTasks;
-            set => SetValue(ref _competitionTasks, value);
-        }
-
-        private int _competitionTaskIndex = 0;
-        public int CompetitionTaskIndex
-        {
-            get => _competitionTaskIndex;
-            set
-            {
-                // Do not touch this
-                /*
-                SetValue(ref _competitionIndex, Competitions.Count > 0
-                                                ? value > Competitions.Count ? value : 0
-                                                : value);
-                                                */
-
-                SetValue(ref _competitionTaskIndex, value);
-
-                if (CompetitionTaskIndex > -1)
-                {
-                    RefreshCompetitorDataGrid();
-                    SortCompetition();
-                    UpdateLiveCharts();
-                }
-                else
-                {
-                    MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
-                }
-
-                MessageBox.Show("Current Competition index: " + CompetitionTaskIndex.ToString(), "Debug Popup");
-            }
-        }
-
-        // Gets the competitors for the selected competition
-        public ObservableCollection<CompetitorModel> CurrentCompetitors
-        {
-            get => CompetitionTasks[CompetitionTaskIndex].CompetitorData;
-        }
-
-        // Modifyable competitor model used for on-screen objects
-        private CompetitorModel _editableCompetitor = new CompetitorModel();
-        public CompetitorModel EditableCompetitor
-        {
-            get => _editableCompetitor;
-            set => SetValue(ref _editableCompetitor, value);
-        }
-
-        // Modifyable competition model used for on-screen objects
-        private CompetitionTaskModel _editableCompetitionTask = new CompetitionTaskModel();
-        public CompetitionTaskModel EditableCompetitionTask
-        {
-            get => _editableCompetitionTask;
-            set => SetValue(ref _editableCompetitionTask, value);
-        }
-
-        // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
-        private ICollectionView _competitorCollection;
-        public ICollectionView CompetitorCollection
-        {
-            get => _competitorCollection;
-            set => SetValue(ref _competitorCollection, value);
-        }
+        // Determine
+        private bool _addCompetitorEnabled;
 
         // This is used to bind the DataGrid, to show the contents of Competitions
         private ICollectionView _competitionCollection;
-        public ICollectionView CompetitionCollection
-        {
-            get => _competitionCollection;
-            set => SetValue(ref _competitionCollection, value);
-        }
 
-        // SeriesCollection used to bind for live charting
-        public GraphModel GraphData { get; set; } = new GraphModel();
+        private int _competitionTaskIndex;
 
-        // Contains all the DQ Reasons
-        public DQReasonsProfileModel DQReasonsProfile { get; } = new DQReasonsProfileModel(true);   // This is initialized as a default profile
+        private ObservableCollection<CompetitionTaskModel> _competitionTasks =
+            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
 
-        //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
-        public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } = new ObservableCollection<DQReasonsProfileModel>();
+        // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
+        private ICollectionView _competitorCollection;
 
-        public FileModel FileModel { get; } = new FileModel();
+        // Modifyable competition model used for on-screen objects
+        private CompetitionTaskModel _editableCompetitionTask = new CompetitionTaskModel();
 
-        // Determine
-        private bool _addCompetitorEnabled;
-        public bool AddCompetitorEnabled
-        {
-            //get => _addCompetitorEnabled;                     TODO: FIX THIS
-            get => true;
-            set => SetValue(ref _addCompetitorEnabled, value);
-        }
+        // Modifyable competitor model used for on-screen objects
+        private CompetitorModel _editableCompetitor = new CompetitorModel();
 
-        // Adds a new competitor to the datagrid
-        public ActionCommand CommandAddCompetitor { get; }
-
-        // Adds a new competition to the datagrid
-        public ActionCommand CommandAddCompetitionTask { get; }
-
-        // Add test data to datagrid
-        public ActionCommand CommandAddTestData { get; }
-
-        // Clears the window to be a clean slate
-        public ActionCommand CommandClearAll { get; }
-
-        // Sorts competitors
-        public ActionCommand CommandUpdateData { get; }
-
-        // Updates the graph
-        public ActionCommand CommandUpdateGraph { get; }
-
-        // Opens File
-        public ActionCommand CommandFileOpen { get; }
-
-        // Saves File
-        public ActionCommand CommandFileSave { get; }
-
-        // Opens window to manage competition ruleset
-        public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
-
-        // Opens window to modify global settings
-        public ActionCommand CommandOpenGlobalSettings { get; }
-
-        // Exits the application
-        public ActionCommand CommandExit { get; }
+        // Competition Metadata ViewModel Datacontext
+        private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
 
         /*	TODO:
                 - Add DQ Reasons
@@ -194,10 +80,7 @@ namespace TASCompAssistant.ViewModels
             CommandClearAll = new ActionCommand(() => ClearAll());
 
             // Command to sort data
-            CommandUpdateData = new ActionCommand(() =>
-            {
-                RefreshAll();
-            });
+            CommandUpdateData = new ActionCommand(() => { RefreshAll(); });
 
             // Command to add random test data to datagrid
             CommandAddTestData = new ActionCommand(() =>
@@ -207,15 +90,15 @@ namespace TASCompAssistant.ViewModels
                 CurrentCompetitors.Clear();
 
                 var r = new Random();
-                for (int i = 1; i <= 30; i++)
+                for (var i = 1; i <= 30; i++)
                 {
                     var start = r.Next(0, 1000);
-                    CurrentCompetitors.Add(new CompetitorModel()
+                    CurrentCompetitors.Add(new CompetitorModel
                     {
                         Username = $"User {i}",
                         VIStart = start,
                         VIEnd = start + r.Next(0, 1000),
-                        DQ = r.Next(13) == 0 ? true : false  // simulates random DQ
+                        DQ = r.Next(13) == 0 // simulates random DQ
                     });
                 }
 
@@ -233,22 +116,20 @@ namespace TASCompAssistant.ViewModels
                 }
 
                 CompetitionTaskIndex = 0;
-
             });
 
             // Saves File
-            CommandFileSave = new ActionCommand(() =>
-            {
-                FileModel.SaveFile(CompetitionTasks);
-            });
+            CommandFileSave = new ActionCommand(() => { FileModel.SaveFile(CompetitionTasks); });
 
             // Opens window to modify competition metadata
             CommandModifyCompetitionTaskMetadata = new ActionCommand(() =>
             {
                 MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
 
-                var MetadataManger = new CompetitionMetadataManagerView();
-                MetadataManger.DataContext = MetadataViewModel;
+                var MetadataManger = new CompetitionMetadataManagerView
+                {
+                    DataContext = MetadataViewModel
+                };
 
                 MetadataManger.ShowDialog();
             });
@@ -258,6 +139,125 @@ namespace TASCompAssistant.ViewModels
 
             RefreshAll();
         }
+
+        public CompetitionMetadataManagerViewModel MetadataViewModel
+        {
+            get => _metadataViewModel;
+            set => SetValue(ref _metadataViewModel, value);
+        }
+
+        public ObservableCollection<CompetitionTaskModel> CompetitionTasks
+        {
+            get => _competitionTasks;
+            set => SetValue(ref _competitionTasks, value);
+        }
+
+        public int CompetitionTaskIndex
+        {
+            get => _competitionTaskIndex;
+            set
+            {
+                // Do not touch this
+                /*
+                SetValue(ref _competitionIndex, Competitions.Count > 0
+                                                ? value > Competitions.Count ? value : 0
+                                                : value);
+                                                */
+
+                SetValue(ref _competitionTaskIndex, value);
+
+                if (CompetitionTaskIndex > -1)
+                {
+                    RefreshCompetitorDataGrid();
+                    SortCompetition();
+                    UpdateLiveCharts();
+                }
+                else
+                {
+                    MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
+                }
+
+                MessageBox.Show("Current Competition index: " + CompetitionTaskIndex, "Debug Popup");
+            }
+        }
+
+        // Gets the competitors for the selected competition
+        public ObservableCollection<CompetitorModel> CurrentCompetitors =>
+            CompetitionTasks[CompetitionTaskIndex].CompetitorData;
+
+        public CompetitorModel EditableCompetitor
+        {
+            get => _editableCompetitor;
+            set => SetValue(ref _editableCompetitor, value);
+        }
+
+        public CompetitionTaskModel EditableCompetitionTask
+        {
+            get => _editableCompetitionTask;
+            set => SetValue(ref _editableCompetitionTask, value);
+        }
+
+        public ICollectionView CompetitorCollection
+        {
+            get => _competitorCollection;
+            set => SetValue(ref _competitorCollection, value);
+        }
+
+        public ICollectionView CompetitionCollection
+        {
+            get => _competitionCollection;
+            set => SetValue(ref _competitionCollection, value);
+        }
+
+        // SeriesCollection used to bind for live charting
+        public GraphModel GraphData { get; set; } = new GraphModel();
+
+        // Contains all the DQ Reasons
+        public DQReasonsProfileModel DQReasonsProfile { get; } =
+            new DQReasonsProfileModel(true); // This is initialized as a default profile
+
+        //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
+        public ObservableCollection<DQReasonsProfileModel> DQProfiles { get; set; } =
+            new ObservableCollection<DQReasonsProfileModel>();
+
+        public FileModel FileModel { get; } = new FileModel();
+
+        public bool AddCompetitorEnabled
+        {
+            //get => _addCompetitorEnabled;                     TODO: FIX THIS
+            get => true;
+            set => SetValue(ref _addCompetitorEnabled, value);
+        }
+
+        // Adds a new competitor to the datagrid
+        public ActionCommand CommandAddCompetitor { get; }
+
+        // Adds a new competition to the datagrid
+        public ActionCommand CommandAddCompetitionTask { get; }
+
+        // Add test data to datagrid
+        public ActionCommand CommandAddTestData { get; }
+
+        // Clears the window to be a clean slate
+        public ActionCommand CommandClearAll { get; }
+
+        // Sorts competitors
+        public ActionCommand CommandUpdateData { get; }
+
+        // Opens File
+        public ActionCommand CommandFileOpen { get; }
+
+        // Saves File
+        public ActionCommand CommandFileSave { get; }
+
+        // Opens window to manage competition ruleset
+        public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
+
+        // Opens window to modify global settings
+        public ActionCommand CommandOpenGlobalSettings { get; }
+
+        // Exits the application
+        public ActionCommand CommandExit { get; }
 
         private void RefreshAll()
         {
@@ -275,7 +275,6 @@ namespace TASCompAssistant.ViewModels
                 CompetitionTasks.Add(new CompetitionTaskModel());
                 CompetitionTaskIndex = 0;
             }
-
         }
 
         private void RefreshCompetitorDataGrid()
@@ -283,7 +282,8 @@ namespace TASCompAssistant.ViewModels
             // Set up datagrid grouping
             CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
             CompetitorCollection.GroupDescriptions.Clear();
-            CompetitorCollection.GroupDescriptions.Add(new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
+            CompetitorCollection.GroupDescriptions.Add(
+                new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
         }
 
         private void RefreshCompetitionDataGrid()
@@ -331,7 +331,7 @@ namespace TASCompAssistant.ViewModels
 
         private void AddCompetitor()
         {
-            var newCompetitor = new CompetitorModel()
+            var newCompetitor = new CompetitorModel
             {
                 Username = EditableCompetitor.Username,
                 VIStart = EditableCompetitor.VIStart,
@@ -346,13 +346,17 @@ namespace TASCompAssistant.ViewModels
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DQReasons.Add(new DQReasonModel() { Reason = dq.Reason, IsSelected = true });
+                    newCompetitor.DQReasons.Add(new DQReasonModel {Reason = dq.Reason, IsSelected = true});
                 }
             }
 
             if (EditableCompetitor.DQ && EditableCompetitor.DQOther)
             {
-                newCompetitor.DQReasons.Add(new DQReasonModel() { Reason = EditableCompetitor.DQOtherReason, IsSelected = true });
+                newCompetitor.DQReasons.Add(new DQReasonModel
+                {
+                    Reason = EditableCompetitor.DQOtherReason,
+                    IsSelected = true
+                });
             }
 
             CurrentCompetitors.Add(newCompetitor);
@@ -360,16 +364,16 @@ namespace TASCompAssistant.ViewModels
 
         private void AddCompetition()
         {
-            CompetitionTasks.Add(new CompetitionTaskModel()
+            CompetitionTasks.Add(new CompetitionTaskModel
             {
                 TaskName = EditableCompetitionTask.TaskName,
-                DueDates = new DueDateModel()
+                DueDates = new DueDateModel
                 {
                     StartDate = EditableCompetitionTask.DueDates.StartDate,
                     EndDate = EditableCompetitionTask.DueDates.EndDate,
                     DueTime = EditableCompetitionTask.DueDates.DueTime
                 },
-                Metadata = new CompetitionTaskMetadataModel()
+                Metadata = new CompetitionTaskMetadataModel
                 {
                     TaskDescription = EditableCompetitionTask.Metadata.TaskDescription,
                     Rules = new ObservableCollection<string>(EditableCompetitionTask.Metadata.Rules),
@@ -387,11 +391,11 @@ namespace TASCompAssistant.ViewModels
 
             CurrentCompetitors.Clear();
 
-            int lastVIs = 0;
-            bool lastDQ = false;
-            int lastPlace = 0;
-            int skipCounter = 0;
-            bool isDisqualified = false;
+            var lastVIs = 0;
+            var lastDQ = false;
+            var lastPlace = 0;
+            var skipCounter = 0;
+            var isDisqualified = false;
 
             foreach (var item in items)
             {

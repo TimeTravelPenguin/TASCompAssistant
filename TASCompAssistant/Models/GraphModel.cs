@@ -1,21 +1,31 @@
-﻿using LiveCharts;
-using LiveCharts.Defaults;
-using LiveCharts.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Media;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
     public class GraphModel : PropertyChangedBase
     {
-        private ChartValues<ObservablePoint> CompetitionData { get; set; } = new ChartValues<ObservablePoint>();
-        private ChartValues<ObservablePoint> DQData { get; set; } = new ChartValues<ObservablePoint>();
+        private Func<double, string> _xFormatter;
+
+        private List<string> _xLabels = new List<string>();
+        private Func<double, string> _yFormatter;
+
+        public GraphModel()
+        {
+            CreateSeriesCollection();
+            SetFormatters();
+        }
+
+        private ChartValues<ObservablePoint> CompetitionData { get; } = new ChartValues<ObservablePoint>();
+        private ChartValues<ObservablePoint> DQData { get; } = new ChartValues<ObservablePoint>();
 
         public SeriesCollection SeriesCollection { get; set; }
 
-        private List<string> _xLabels = new List<string>();
         public List<string> XLabels
         {
             get => _xLabels;
@@ -26,8 +36,6 @@ namespace TASCompAssistant.Models
             }
         }
 
-        private Func<double, string> _xFormatter;
-        private Func<double, string> _yFormatter;
         public Func<double, string> XFormatter
         {
             get => _xFormatter;
@@ -37,6 +45,7 @@ namespace TASCompAssistant.Models
                 OnPropertyChanged("XFormatter");
             }
         }
+
         public Func<double, string> YFormatter
         {
             get => _yFormatter;
@@ -45,12 +54,6 @@ namespace TASCompAssistant.Models
                 _yFormatter = value;
                 OnPropertyChanged("YFormatter");
             }
-        }
-
-        public GraphModel()
-        {
-            CreateSeriesCollection();
-            SetFormatters();
         }
 
         private void SetFormatters()
@@ -86,7 +89,7 @@ namespace TASCompAssistant.Models
             DQData.Clear();
 
             // Convert competitionData into observable points
-            int count = 0;
+            var count = 0;
             foreach (var item in compData)
             {
                 CompetitionData.Add(new ObservablePoint(count++, item.VICount));
@@ -95,7 +98,7 @@ namespace TASCompAssistant.Models
 
 
             // Convert dqdata into observable points
-            int offsetX = compData.Count;
+            var offsetX = compData.Count;
             foreach (var item in dqData)
             {
                 DQData.Add(new ObservablePoint(offsetX++, item.VICount));

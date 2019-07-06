@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TASCompAssistant.Types;
 
@@ -12,31 +8,28 @@ namespace TASCompAssistant.Models
 {
     internal class FileModel : PropertyChangedBase
     {
-        private DataModel Data = new DataModel();
-
+        private readonly DataModel Data = new DataModel();
         private string _fileName = "No file opened...";
+
         public string FileName
         {
             get => _fileName;
             private set => SetValue(ref _fileName, value);
         }
 
-        public FileModel()
-        {
-
-        }
-
         public ObservableCollection<CompetitionTaskModel> OpenFile()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "TAS Comp File (*.tascomp)|*.tascomp";
+            var ofd = new OpenFileDialog
+            {
+                Filter = "TAS Comp File (*.tascomp)|*.tascomp"
+            };
             ofd.ShowDialog();
 
             try
             {
                 var fileName = ofd.FileName;
                 var filePath = Path.GetFullPath(fileName);
-                string extension = Path.GetExtension(filePath);
+                var extension = Path.GetExtension(filePath);
 
                 if (extension == ".tascomp")
                 {
@@ -45,14 +38,12 @@ namespace TASCompAssistant.Models
                     var data = Data.OpenData(fileData);
                     return data;
                 }
-                else
-                {
-                    FileClear();
-                    MessageBox.Show("Please open a valid .tascomp file", "Error opening file...");
-                    return new ObservableCollection<CompetitionTaskModel>();
-                }
+
+                FileClear();
+                MessageBox.Show("Please open a valid .tascomp file", "Error opening file...");
+                return new ObservableCollection<CompetitionTaskModel>();
             }
-            catch   // Put errorhandling here for invalid JSON?
+            catch // Put errorhandling here for invalid JSON?
             {
                 FileClear();
             }
@@ -64,14 +55,18 @@ namespace TASCompAssistant.Models
         {
             var saveData = Data.SaveData(data);
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "TAS Comp File (*.tascomp)|*.tascomp";
-            sfd.DefaultExt = "tascomp";
-            sfd.AddExtension = true;
+            var sfd = new SaveFileDialog
+            {
+                Filter = "TAS Comp File (*.tascomp)|*.tascomp",
+                DefaultExt = "tascomp",
+                AddExtension = true
+            };
+
             sfd.ShowDialog();
+
             try
             {
-                string path = Path.GetFullPath(sfd.FileName);
+                var path = Path.GetFullPath(sfd.FileName);
 
                 FileName = path;
 

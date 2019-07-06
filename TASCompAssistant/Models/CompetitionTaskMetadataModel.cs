@@ -1,46 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
-    class CompetitionTaskMetadataModel : PropertyChangedBase
+    internal class CompetitionTaskMetadataModel : PropertyChangedBase
     {
+        private bool _cooperativeTask;
+
+        private bool _mandatorySaveState;
+
+        private ObservableCollection<string> _rules = new ObservableCollection<string>();
         private string _taskDescription;
+
+        public CompetitionTaskMetadataModel()
+        {
+            ClearData();
+        }
+
         public string TaskDescription
         {
             get => _taskDescription;
             set => SetValue(ref _taskDescription, value);
         }
 
-        private ObservableCollection<string> _rules = new ObservableCollection<string>();
         public ObservableCollection<string> Rules
         {
             get => _rules;
             set => SetValue(ref _rules, value);
         }
 
-        private bool _mandatorySaveState;
         public bool MandatorySaveState
         {
             get => _mandatorySaveState;
             set => SetValue(ref _mandatorySaveState, value);
         }
 
-        private bool _cooperativeTask;
         public bool CooperativeTask
         {
             get => _cooperativeTask;
             set => SetValue(ref _cooperativeTask, value);
-        }
-
-        public CompetitionTaskMetadataModel()
-        {
-            ClearData();
         }
 
 

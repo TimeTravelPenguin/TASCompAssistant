@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace TASCompAssistant.Models
 {
     public class DQReasonsProfileModel
     {
-        public string ProfileName { get; set; } = string.Empty;
-        public ObservableCollection<DQReasonModel> DQReasons { get; set; } = new ObservableCollection<DQReasonModel>();
-
-        private List<string> DefaultDQReasons = new List<string>()
+        private readonly List<string> _defaultDQReasons = new List<string>
         {
-                "Illegal interaction",
-                "Strat talk",
-                "Failed task goal",
-                ".m64 ends early",
-                "Desync"
+            "Illegal interaction",
+            "Strat talk",
+            "Failed task goal",
+            ".m64 ends early",
+            "Desync"
         };
 
         public DQReasonsProfileModel(bool setDefaults)
@@ -30,14 +22,17 @@ namespace TASCompAssistant.Models
             }
         }
 
+        public string ProfileName { get; set; } = string.Empty;
+        public ObservableCollection<DQReasonModel> DQReasons { get; set; } = new ObservableCollection<DQReasonModel>();
+
         public void SetProfileDefaults()
         {
             ProfileName = "Default DQ Profile";
             DQReasons.Clear();
 
-            foreach (var dq in DefaultDQReasons)
+            foreach (var dq in _defaultDQReasons)
             {
-                DQReasons.Add(new DQReasonModel() { Reason = dq });
+                DQReasons.Add(new DQReasonModel {Reason = dq});
             }
         }
     }
