@@ -1,8 +1,8 @@
 # UNDER CONSTRUCTION
 
 # Save File Format Documentation
-This document serves the purpose of detailing the archetecture of the save files that the TASCompAssistant (TCA) tool outputs.
-Because TCA uses heavy amounts ob objects to house data within the tool, the save files serialize the data into a JSON format, saved in plain text in a `*.tascomp` file.
+This document serves the purpose of detailing the architecture  of the save files that the TASCompAssistant (TCA) tool outputs.
+Because TCA uses heavy amounts of objects to house data within the tool, the save files serialize the data into a JSON format, saved in plain text in a `*.tascomp` file.
 
 Currently, the save files house the data for the following things:
 * The collection of competition data
