@@ -43,7 +43,6 @@ Represented as JSON, an example competition is serialized into the following str
 			"TimeFormated": "16s 500ms",
 			"Rerecords": 1234,
 			"DQ": true,
-			"DQOther": true,
 			"Qualification": "Disqualified",
 			"DQReasons": [
 				{
@@ -53,10 +52,6 @@ Represented as JSON, an example competition is serialized into the following str
 				{
 					"Reason": "Failed task goal",
 					"IsSelected": true
-				},
-				{
-					"Reason": "Idk lol",
-					"IsSelected": true
 				}
 			],
 			"Score": 50.0,
@@ -65,5 +60,30 @@ Represented as JSON, an example competition is serialized into the following str
 	]
 }
 ```
-
-
+Here are details relevant to each variable:
+- `CompetitionName` is the name of the current competition.
+- `Metadata` contains descriptive guidlines for the competition
+    - `CompetitionDescription` details the competition goal. This would be the outline of the task set for that particular competition.
+    - `Rules` is a self-explanitory collection. It contains the ruleset of the competition that competitors must obide.
+    - `MandatorySaveState` is a boolean representing wheather or not that competition provides a compulsary savestate file that competitors must use.
+    - `CooperativeCompetition` is a boolean representing wheather or not competitors may or may not work together.
+- DueDates contains information about the duration period of the competition.
+    - `StartDate` is a `DateTime` object representing the day the competition begins.
+    - `EndDate` is a `DateTime` object representing the day the competition end.
+    - `DueTime` is a `DateTime` object representing the time the competition is due on `EndDate`
+- `CompetitionData` contains the data of each competitor submitted for the competition.
+    - `Place` is the rank achieved within the competition.
+    - `Username` is the name or alias the competitor goes by.
+    - `VIStart` is the VI (can be considered as the "frame" of a TAS) the TAS begins on.
+    - `VIEnd` is the VI the TAS ends on.
+    - `VIs` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`
+    - `TimeInSeconds` is the real-time equivilent of `VIs`. This is calculated as `VIs / 60`.
+    - `TimeFormated` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
+    - `Rerecords` is the rerecord count of the competitor's TAS.
+    - `DQ` is a boolean representing wheather or not the current competitor is disqualified.
+    - `Qualification` is the extended string of `DQ`. `Qualification` has values `Qualified` or `Disqualified` depending on if `DQ` has value `false` or `true`, respectively.
+    - `DQReasons` is the collection of reasons why the competitor is disqulaified.
+        - `Reason` is the string outlining the reason for disqualification.
+	- `IsSelected` is a boolean used by TCA to ensure the checkbox used for selecting this DQ Reason has a binded value.
+    - `Score` is the score of the competitor up until that competition, with the first competition in the collection being the first competition in time, and the last competition being the most recent competition.
+    - `ScorePlace` is the ranking assigned to the competitor to indicate their position within the scoring leaderboard.
