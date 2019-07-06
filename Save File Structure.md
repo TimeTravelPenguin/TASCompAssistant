@@ -84,6 +84,6 @@ Here are details relevant to each variable:
     - `Qualification` is the extended string of `DQ`. `Qualification` has values `Qualified` or `Disqualified` depending on if `DQ` has value `false` or `true`, respectively.
     - `DQReasons` is the collection of reasons why the competitor is disqulaified.
         - `Reason` is the string outlining the reason for disqualification.
-	- `IsSelected` is a boolean used by TCA to ensure the checkbox used for selecting this DQ Reason has a binded value.
+        - `IsSelected` is a boolean used by TCA to ensure the checkbox used for selecting this DQ Reason has a binded value.
     - `Score` is the score of the competitor up until that competition, with the first competition in the collection being the first competition in time, and the last competition being the most recent competition.
     - `ScorePlace` is the ranking assigned to the competitor to indicate their position within the scoring leaderboard.
