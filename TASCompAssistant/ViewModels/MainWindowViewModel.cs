@@ -368,10 +368,10 @@ namespace TASCompAssistant.ViewModels
                 },
                 Metadata = new CompetitionTaskMetadataModel()
                 {
-                    CompetitionDescription = EditableCompetitionTask.Metadata.CompetitionDescription,
+                    TaskDescription = EditableCompetitionTask.Metadata.TaskDescription,
                     Rules = new ObservableCollection<string>(EditableCompetitionTask.Metadata.Rules),
                     MandatorySaveState = EditableCompetitionTask.Metadata.MandatorySaveState,
-                    CooperativeCompetition = EditableCompetitionTask.Metadata.CooperativeCompetition
+                    CooperativeTask = EditableCompetitionTask.Metadata.CooperativeTask
                 },
                 CompetitorData = EditableCompetitionTask.CompetitorData
             });

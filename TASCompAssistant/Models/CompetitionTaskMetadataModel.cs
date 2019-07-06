@@ -10,11 +10,11 @@ namespace TASCompAssistant.Models
 {
     class CompetitionTaskMetadataModel : PropertyChangedBase
     {
-        private string _competitionDescription;
-        public string CompetitionDescription
+        private string _taskDescription;
+        public string TaskDescription
         {
-            get => _competitionDescription;
-            set => SetValue(ref _competitionDescription, value);
+            get => _taskDescription;
+            set => SetValue(ref _taskDescription, value);
         }
 
         private ObservableCollection<string> _rules = new ObservableCollection<string>();
@@ -31,11 +31,11 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _mandatorySaveState, value);
         }
 
-        private bool _cooperativeCompetition;
-        public bool CooperativeCompetition
+        private bool _cooperativeTask;
+        public bool CooperativeTask
         {
-            get => _cooperativeCompetition;
-            set => SetValue(ref _cooperativeCompetition, value);
+            get => _cooperativeTask;
+            set => SetValue(ref _cooperativeTask, value);
         }
 
         public CompetitionTaskMetadataModel()
@@ -46,11 +46,11 @@ namespace TASCompAssistant.Models
 
         public void ClearData()
         {
-            CompetitionDescription = "In {level}, {do stuff}. Time starts when {reason}, and end when {reason}.";
+            TaskDescription = "In {level}, {do stuff}. Time starts when {reason}, and end when {reason}.";
             Rules.Clear();
             Rules.Add("You may **NOT** interact with enemies");
             MandatorySaveState = true;
-            CooperativeCompetition = false;
+            CooperativeTask = false;
         }
     }
 }
