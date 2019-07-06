@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -71,12 +72,14 @@ namespace TASCompAssistant.Models
         }
 
         private string _dqOtherReason;
+        [JsonIgnore]
         public string DQOtherReason
         {
             get => _dqOtherReason;
             set => SetValue(ref _dqOtherReason, value);
         }
 
+        [JsonIgnore]
         public string DQReasonsAsString
         {
             get

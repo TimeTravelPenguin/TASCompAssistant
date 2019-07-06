@@ -343,7 +343,7 @@ namespace TASCompAssistant.ViewModels
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DQReasons.Add(dq);
+                    newCompetitor.DQReasons.Add(new DQReasonModel() { Reason = dq.Reason, IsSelected = true });
                 }
             }
 
