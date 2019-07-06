@@ -39,7 +39,7 @@ A task is serialized into the following JSON structure (an example competition t
 			"VIEnd": 1000,
 			"VIs": 990,
 			"TimeInSeconds": 16.5,
-			"TimeFormated": "16s 500ms",
+			"TimeFormatted": "16s 500ms",
 			"Rerecords": 1234,
 			"DQ": true,
 			"Qualification": "Disqualified",
@@ -77,7 +77,7 @@ To elaborate on the properties:
     - `VIEnd` is the VI the TAS ends on.
     - `VIs` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`.
     - `TimeInSeconds` is `VIs` converted to seconds. This is done by dividing it by 60; in other words, `TimeInSeconds = VIs / 60`.
-    - `TimeFormated` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
+    - `TimeFormatted` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
     - `Rerecords` is the rerecord count of the competitor's TAS.
     - `DQ` is a Boolean representing whether or not the current competitor is disqualified.
     - `Qualification` is a string which is `"Qualified"` if `DQ` is `false` and `"Disqualified` if `DQ` is `true`.
