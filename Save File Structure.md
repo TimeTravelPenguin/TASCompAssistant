@@ -6,6 +6,7 @@ Currently, the save files house the data for the following things:
 * The collection of competition data
     - Competition Name
     - Competition metadata (descriptions, rules, etc.)
+    - Competition competitor information
     - Due date and time information
 * (Coming soon) DQReasonProfiles
 
