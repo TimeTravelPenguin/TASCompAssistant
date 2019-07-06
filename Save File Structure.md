@@ -1,18 +1,18 @@
 # Save File Format Documentation
-This document serves the purpose of detailing the architecture  of the save files that the TASCompAssistant (TCA) tool outputs.
-Because TCA uses heavy amounts of objects to house data within the tool, the save files serialize the data into a JSON format, saved in plain text in a `*.tascomp` file.
+This document details the format of the save files that TASCompAssistant (TCA) outputs.
+Because TCA uses objects heavily, all the data is serialized into JSON. It is then saved in plain text in a `*.tascomp` file.
 
-Currently, the save files house the data for the following things:
-* The collection of competition data
-    - Competition Name
-    - Competition metadata (descriptions, rules, etc.)
-    - Competition competitor information
-    - Due date and time information
+Currently, the save files store:
+* Competition Data, including:
+    - Competition metadata (name, descriptions, rules, etc.)
+    - Competitor information
+    - Deadline information
+    - etc.
 * (Coming soon) DQReasonProfiles
 
 ## JSON Structure
 ### Competition Structure
-Represented as JSON, an example competition is serialized into the following structure:
+A competition is serialized into the following JSON structure (an example competition is used here for reference):
 ```JSON
 {
 	"CompetitionName": "Competition 1",
@@ -59,30 +59,30 @@ Represented as JSON, an example competition is serialized into the following str
 	]
 }
 ```
-Here are details relevant to each variable:
+To elaborate on the properties:
 - `CompetitionName` is the name of the current competition.
-- `Metadata` contains descriptive guidelines for the competition
-    - `CompetitionDescription` details the competition goal. This would be the outline of the task set for that particular competition.
-    - `Rules` is a self-explanatory collection. It contains the ruleset of the competition that competitors must obide.
+- `Metadata` contains descriptive guidelines for the competition:
+    - `CompetitionDescription` details the competition goal, i.e. the outline of that particular task.
+    - `Rules` is a list of rules that competitors must abide by.
     - `MandatorySaveState` is a Boolean representing whether or not that competition provides a compulsory savestate file that competitors must use.
     - `CooperativeCompetition` is a Boolean representing whether or not competitors may or may not work together.
-- DueDates contains information about the duration period of the competition.
-    - `StartDate` is a `DateTime` object representing the day the competition begins.
-    - `EndDate` is a `DateTime` object representing the day the competition end.
-    - `DueTime` is a `DateTime` object representing the time the competition is due on `EndDate`
-- `CompetitionData` contains the data of each competitor submitted for the competition.
-    - `Place` is the rank achieved within the competition.
+- `DueDates` contains information about the timing of the competition:
+    - `StartDate` is a `DateTime` object representing the time the competition begins.
+    - `EndDate` is a `DateTime` object representing the day the competition ends.
+    - `DueTime` is a `DateTime` object representing the time the competition is due on `EndDate`.
+- `CompetitionData` contains information about each competitor's entry:
+    - `Place` is the competitor's rank in the task.
     - `Username` is the name or alias the competitor goes by.
-    - `VIStart` is the VI (can be considered as the "frame" of a TAS) the TAS begins on.
+    - `VIStart` is the VI the TAS begins on.
     - `VIEnd` is the VI the TAS ends on.
-    - `VIs` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`
-    - `TimeInSeconds` is the real-time equivalent of `VIs`. This is calculated as `VIs / 60`.
+    - `VIs` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`.
+    - `TimeInSeconds` is `VIs` converted to seconds. This is done by dividing it by 60; in other words, `TimeInSeconds = VIs / 60`.
     - `TimeFormated` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
     - `Rerecords` is the rerecord count of the competitor's TAS.
     - `DQ` is a Boolean representing whether or not the current competitor is disqualified.
-    - `Qualification` is the extended string of `DQ`. `Qualification` has values `Qualified` or `Disqualified` depending on if `DQ` has value `false` or `true`, respectively.
-    - `DQReasons` is the collection of reasons why the competitor is disqualified.
-        - `Reason` is the string outlining the reason for disqualification.
-        - `IsSelected` is a Boolean used by TCA to ensure the checkbox used for selecting this DQ Reason has a bound value.
-    - `Score` is the score of the competitor up until that competition, with the first competition in the collection being the first competition in time, and the last competition being the most recent competition.
-    - `ScorePlace` is the ranking assigned to the competitor to indicate their position within the scoring leaderboard.
+    - `Qualification` is a string which is `"Qualified"` if `DQ` is `false` and `"Disqualified` if `DQ` is `true`.
+    - `DQReasons` is a list of reasons why the competitor could be disqualified.
+        - `Reason` is a string summarising the reason for disqualification.
+        - `IsSelected` is a Boolean that describes whether the competitor was disqualified for this reason. If none of the `IsSelected` values in `DQReasons` are `true`, the competitor is not disqualified.
+    - `Score` is the current score of the competitor (up until and including the current task).
+    - `ScorePlace` is the competitor's rank on the score boards.
