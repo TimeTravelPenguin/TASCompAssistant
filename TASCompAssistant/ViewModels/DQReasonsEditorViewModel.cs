@@ -3,10 +3,10 @@ using TASCompAssistant.Models;
 
 namespace TASCompAssistant.ViewModels
 {
-    public class DQReasonsEditorViewModel
+    public class DqReasonsEditorViewModel
     {
-        public ObservableCollection<DQReasonsProfileModel> DqReasonProfiles { get; } =
-            new ObservableCollection<DQReasonsProfileModel>();
+        public ObservableCollection<DqReasonsProfileModel> DqReasonProfiles { get; } =
+            new ObservableCollection<DqReasonsProfileModel>();
 
         /*	TODO:
                 - Add right click fuctions for delete reason & to copy reason to another profile

@@ -11,24 +11,24 @@
         ResizeMode="NoResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
 
     <Window.DataContext>
-        <viewmodels:CompetitionMetadataManagerViewModel/>
+        <viewmodels:CompetitionMetadataManagerViewModel />
     </Window.DataContext>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="10" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Metadata Manager"
@@ -38,45 +38,45 @@
                    FontSize="20"
                    Grid.Row="1"
                    Grid.Column="1"
-                   Grid.ColumnSpan="4"/>
+                   Grid.ColumnSpan="3" />
 
         <GroupBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,-2">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/TASCompAssistant;component/Icons/GreenMushroom.ico" Margin="3,0" Height="15"/>
+                    <Image Source="/TASCompAssistant;component/Icons/GreenMushroom.ico" Margin="3,0" Height="15" />
                     <TextBlock FontSize="13">Task Metadata Manager</TextBlock>
                 </StackPanel>
             </GroupBox.Header>
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="18"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="18"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="18"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="18"/>
-                    <RowDefinition Height="18"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="18" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
 
                 <!-- Task Description -->
                 <TextBlock Text="Task Description:"
                            Grid.Row="1"
                            Grid.Column="1"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center" />
 
                 <TextBox Text="{Binding Metadata.TaskDescription, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
@@ -86,13 +86,13 @@
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Grid.Row="2"
                          Grid.Column="1"
-                         Grid.ColumnSpan="3"/>
+                         Grid.ColumnSpan="3" />
 
                 <!-- Task rules -->
                 <TextBlock Text="Task Rules:"
                            Grid.Row="4"
                            Grid.Column="1"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center" />
 
                 <TextBox Text="{Binding CurrentRule, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
@@ -103,28 +103,28 @@
                          Grid.Row="5"
                          Grid.RowSpan="2"
                          Grid.Column="1"
-                         Margin="0,0,5,0"/>
+                         Margin="0,0,5,0" />
 
                 <ListBox ItemsSource="{Binding Metadata.Rules, UpdateSourceTrigger=PropertyChanged}"
                          SelectedIndex="{Binding RuleIndex}"
                          Grid.Row="5"
                          Grid.RowSpan="2"
                          Grid.Column="2"
-                         Margin="5,0,5,0"/>
+                         Margin="5,0,5,0" />
 
                 <Button Content="Add Rule"
                         Command="{Binding CommandAddRule}"
-                        Grid.Row="7" 
-                        Grid.Column="1" 
+                        Grid.Row="7"
+                        Grid.Column="1"
                         VerticalAlignment="Center"
-                        Margin="15,0,20,0"/>
+                        Margin="15,0,20,0" />
 
                 <Button Content="Remove Rule"
                         Command="{Binding CommandRemoveRule}"
-                        Grid.Row="7" 
+                        Grid.Row="7"
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Margin="20,0,20,0"/>
+                        Margin="20,0,20,0" />
 
                 <!-- Move up/down buttons -->
                 <Button Content="5"
@@ -134,7 +134,7 @@
                         Grid.Column="3"
                         VerticalAlignment="Center"
                         Height="20"
-                        Width="20"/>
+                        Width="20" />
 
                 <Button Content="6"
                         FontFamily="Marlett"
@@ -143,7 +143,7 @@
                         Grid.Column="3"
                         VerticalAlignment="Center"
                         Height="20"
-                        Width="20"/>
+                        Width="20" />
 
                 <!-- Mandatory Savestate -->
                 <TextBlock Text="Mandatory Savestate (.st):"
@@ -151,14 +151,14 @@
                            Grid.Column="1"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,5,0"/>
+                           Margin="0,0,5,0" />
 
                 <CheckBox IsChecked="{Binding Metadata.MandatorySaveState}"
-                          Content="True" 
-                          Grid.Row="9" 
+                          Content="True"
+                          Grid.Row="9"
                           Grid.Column="2"
                           VerticalAlignment="Center"
-                          Margin="5,0,0,0"/>
+                          Margin="5,0,0,0" />
 
                 <!-- Coop Task -->
                 <TextBlock Text="Cooperative Task:"
@@ -166,32 +166,32 @@
                            Grid.Column="1"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,5,0"/>
+                           Margin="0,0,5,0" />
 
                 <CheckBox IsChecked="{Binding Metadata.CooperativeTask}"
-                          Content="True" 
-                          Grid.Row="10" 
+                          Content="True"
+                          Grid.Row="10"
                           Grid.Column="2"
                           VerticalAlignment="Center"
-                          Margin="5,0,0,0"/>
-                
+                          Margin="5,0,0,0" />
+
             </Grid>
         </GroupBox>
 
-        <Button Content="Save" 
+        <Button Content="Save"
                 Grid.Row="4"
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
                 Margin="0,0,5,0"
-                Width="80"/>
+                Width="80" />
 
-        <Button Content="Cancel" 
+        <Button Content="Cancel"
                 Grid.Row="4"
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,0"
-                Width="80"/>
+                Width="80" />
     </Grid>
 </Window>

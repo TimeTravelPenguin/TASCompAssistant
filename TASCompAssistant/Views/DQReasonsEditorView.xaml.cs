@@ -22,10 +22,10 @@ namespace TASCompAssistant.Views
 	/// </summary>
 	public partial class DQReasonsEditorView : Window
 	{
-		public DQReasonsEditorView(ObservableCollection<DQReasonsProfileModel> profiles)
+		public DQReasonsEditorView(ObservableCollection<DqReasonsProfileModel> profiles)
 		{
 			InitializeComponent();
-			DataContext = new DQReasonsEditorViewModel();
+			DataContext = new DqReasonsEditorViewModel();
 		}
 	}
 }

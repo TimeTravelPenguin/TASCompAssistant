@@ -90,11 +90,18 @@
     </ApplicationDefinition>
     <Compile Include="Models\CompetitionTaskMetadataModel.cs" />
     <Compile Include="Models\DueDateModel.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Types\BindingResourceExtension.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
+    <Compile Include="ViewModels\GlobalSettingsViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\DQReasonsEditorView.xaml">
+    <Page Include="Views\DqReasonsEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GlobalSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,16 +117,19 @@
     <Compile Include="Models\CompetitorModel.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Models\DqReasonModel.cs" />
-    <Compile Include="Models\DQReasonsProfileModel.cs" />
+    <Compile Include="Models\DqReasonsProfileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
     <Compile Include="Types\PropertyChangedBase.cs" />
     <Compile Include="Types\CompetitorModelComparer.cs" />
-    <Compile Include="ViewModels\DQReasonsEditorViewModel.cs" />
+    <Compile Include="ViewModels\DqReasonsEditorViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Views\DQReasonsEditorView.xaml.cs">
-      <DependentUpon>DQReasonsEditorView.xaml</DependentUpon>
+    <Compile Include="Views\DqReasonsEditorView.xaml.cs">
+      <DependentUpon>DqReasonsEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\GraphModel.cs" />
+    <Compile Include="Views\GlobalSettingsView.xaml.cs">
+      <DependentUpon>GlobalSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>

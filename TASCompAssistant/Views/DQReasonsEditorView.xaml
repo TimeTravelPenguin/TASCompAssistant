@@ -1,90 +1,90 @@
 ﻿<Window x:Class="TASCompAssistant.Views.DQReasonsEditorView"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:TASCompAssistant.Views"
-		mc:Ignorable="d"
-		Title="DQReasonsEditor" Height="350" Width="320" ResizeMode="NoResize" Icon="/TASCompAssistant;component/Icons/QBlock.ico">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TASCompAssistant.Views"
+        mc:Ignorable="d"
+        Title="DQReasonsEditor" Height="350" Width="320" ResizeMode="NoResize"
+        Icon="/TASCompAssistant;component/Icons/QBlock.ico">
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<!-- This is padding -->
-			<ColumnDefinition Width="10" />
-			<ColumnDefinition Width="80" />
-			<ColumnDefinition Width="120" />
-			<ColumnDefinition Width="*" />
-			<!-- This is padding -->
-			<ColumnDefinition Width="10" />
-		</Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- This is padding -->
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="*" />
+            <!-- This is padding -->
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
 
-		<Grid.RowDefinitions>
-			<!-- This is padding -->
-			<RowDefinition Height="10" />
-			<RowDefinition Height="15" />
-			<RowDefinition Height="15" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="20" />
-			<RowDefinition Height="50" />
-			<!-- This is padding -->
-			<RowDefinition Height="10" />
-		</Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <!-- This is padding -->
+            <RowDefinition Height="10" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50" />
+            <!-- This is padding -->
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
 
-		<!-- Row 0 -->
+        <!-- Row 0 -->
 
-		<!-- Row 1 -->
-		<TextBlock Text="Select Profile:" 
-				   Grid.Row="1" 
-				   Grid.Column="1"/>
+        <!-- Row 1 -->
+        <TextBlock Text="Select Profile:"
+                   Grid.Row="1"
+                   Grid.Column="1" />
 
-		<ComboBox x:Name="combobox_DQProfiles" Text="Profile..." FontSize="11"
-				  ItemsSource="{Binding Path=DQReasonProfiles}"
-				  DisplayMemberPath="ProfileName"
-				  Grid.Row="1" 
-				  Grid.Column="2" 
-				  Margin="0,-2"
-				  IsReadOnly="True"
-				  IsEditable="True"/>
+        <ComboBox ItemsSource="{Binding Path=DQReasonProfiles}"
+                  DisplayMemberPath="ProfileName"
+                  Grid.Row="1"
+                  Grid.Column="2"
+                  Margin="0,-2"
+                  IsReadOnly="True"
+                  IsEditable="True" />
 
-		<!-- Row 2 -->
-		<!-- Row 3 -->
+        <!-- Row 2 -->
+        <!-- Row 3 -->
 
-		<DockPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
-			<DataGrid x:Name="datagrid_DQProfile"
-					  ItemsSource="{Binding Path=DQReasonProfiles}"
-					  DisplayMemberPath="DqReasons"
-					  AutoGenerateColumns="False"
-					  HorizontalGridLinesBrush="DarkGray"
-					  VerticalGridLinesBrush="DarkGray"
-					  IsReadOnly="False"
-					  CanUserReorderColumns="False"
-					  CanUserResizeRows="False"
-					  CanUserResizeColumns="True"
-					  CanUserDeleteRows="True"
-					  CanUserAddRows="False">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header="DQ Reason"
-										Binding="{Binding DQReasons}"
-										Width="*"
-										IsReadOnly="True"
-										SortDirection="Descending"/>
-				</DataGrid.Columns>
+        <DockPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+            <DataGrid ItemsSource="{Binding DQReasonProfiles}"
+                      DisplayMemberPath="DqReasons"
+                      AutoGenerateColumns="False"
+                      HorizontalGridLinesBrush="DarkGray"
+                      VerticalGridLinesBrush="DarkGray"
+                      IsReadOnly="False"
+                      CanUserReorderColumns="False"
+                      CanUserResizeRows="False"
+                      CanUserResizeColumns="True"
+                      CanUserDeleteRows="True"
+                      CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="DQ Reason"
+                                        Binding="{Binding DQReasons}"
+                                        Width="*"
+                                        IsReadOnly="True"
+                                        SortDirection="Descending" />
+                </DataGrid.Columns>
 
-			</DataGrid>
-		</DockPanel>
+            </DataGrid>
+        </DockPanel>
 
-		<!-- Row 4 -->
+        <!-- Row 4 -->
 
-		<TextBlock Text="Reason Description:" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,3,0,0"/>
-		<Button x:Name="btn_SubmitDQReason" Content="Submit Reason" FontSize="10" Grid.Row="4" Grid.Column="3" Margin="2,2"/>
+        <TextBlock Text="Reason Description:" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,3,0,0" />
+        <Button Content="Submit Reason" FontSize="10" Grid.Row="4" Grid.Column="3"
+                Margin="2,2" />
 
-		<!-- Row 5 -->
-		<TextBox x:Name="txtbox_DQReason" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"
-				 TextWrapping="Wrap"
-				 AcceptsReturn="False"
-				 AcceptsTab="False"
-				 SpellCheck.IsEnabled="True"
-				 VerticalScrollBarVisibility="Auto"/>
+        <!-- Row 5 -->
+        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="False"
+                 AcceptsTab="False"
+                 SpellCheck.IsEnabled="True"
+                 VerticalScrollBarVisibility="Auto" />
 
-	</Grid>
+    </Grid>
 </Window>

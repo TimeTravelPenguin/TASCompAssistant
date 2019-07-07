@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace TASCompAssistant.Models
 {
-    public class DQReasonsProfileModel
+    public class DqReasonsProfileModel
     {
         private readonly List<string> _defaultDqReasons = new List<string>
         {
@@ -18,7 +18,7 @@ namespace TASCompAssistant.Models
 
         public ObservableCollection<DqReasonModel> DqReasons { get; set; } = new ObservableCollection<DqReasonModel>();
 
-        public DQReasonsProfileModel(bool setDefaults)
+        public DqReasonsProfileModel(bool setDefaults)
         {
             if (setDefaults)
             {

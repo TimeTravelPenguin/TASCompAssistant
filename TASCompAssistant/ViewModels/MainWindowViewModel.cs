@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.Expression.Interactivity.Core;
@@ -20,14 +21,14 @@ namespace TASCompAssistant.ViewModels
         private bool _addCompetitorEnabled;
 
         // This is used to bind the DataGrid, to show the contents of Competitions
-        private ICollectionView _competitionCollection;
+        private ICollectionView _competitionTaskCollection;
 
         private int _competitionTaskIndex;
 
         private ObservableCollection<CompetitionTaskModel> _competitionTasks =
             new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
 
-        // This is used to bind the DataGrid, to show the contents of CurrentCompetitors
+        // This is used to bind the DataGrid, to show the Competitors
         private ICollectionView _competitorCollection;
 
         // Modifiable competition model used for on-screen objects
@@ -36,8 +37,13 @@ namespace TASCompAssistant.ViewModels
         // Modifiable competitor model used for on-screen objects
         private CompetitorModel _editableCompetitor = new CompetitorModel();
 
+        private GlobalSettingsViewModel _globalSettingsViewModel = new GlobalSettingsViewModel();
+
         // Competition Metadata ViewModel Datacontext
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
+
+        // Stores Global settings
+        private ObservableCollection<SettingsProperty> GlobalSettings => GlobalSettingsViewModel.Settings;
 
         public CompetitionMetadataManagerViewModel MetadataViewModel
         {
@@ -84,40 +90,44 @@ namespace TASCompAssistant.ViewModels
         private ObservableCollection<CompetitorModel> CurrentCompetitors =>
             CompetitionTasks[CompetitionTaskIndex].CompetitorData;
 
+        // Modifiable competitor model used for on-screen objects
         public CompetitorModel EditableCompetitor
         {
             get => _editableCompetitor;
             set => SetValue(ref _editableCompetitor, value);
         }
 
+        // Modifiable competition model used for on-screen objects
         public CompetitionTaskModel EditableCompetitionTask
         {
             get => _editableCompetitionTask;
             set => SetValue(ref _editableCompetitionTask, value);
         }
 
+        // This is used to bind the DataGrid, to show the Competitors
         public ICollectionView CompetitorCollection
         {
             get => _competitorCollection;
             set => SetValue(ref _competitorCollection, value);
         }
 
-        public ICollectionView CompetitionCollection
+        // This is used to bind the DataGrid, to show the contents of Competition Task
+        public ICollectionView CompetitionTaskCollection
         {
-            get => _competitionCollection;
-            set => SetValue(ref _competitionCollection, value);
+            get => _competitionTaskCollection;
+            set => SetValue(ref _competitionTaskCollection, value);
         }
 
         // SeriesCollection used to bind for live charting
         public GraphModel GraphData { get; set; } = new GraphModel();
 
         // Contains all the DQ Reasons
-        public DQReasonsProfileModel DqReasonsProfileModel { get; } =
-            new DQReasonsProfileModel(true); // This is initialized as a default profile
+        public DqReasonsProfileModel DqReasonsProfileModel { get; } =
+            new DqReasonsProfileModel(true); // This is initialized as a default profile
 
         //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
-        public ObservableCollection<DQReasonsProfileModel> DqProfilesCollection { get; set; } =
-            new ObservableCollection<DQReasonsProfileModel>();
+        public ObservableCollection<DqReasonsProfileModel> DqProfilesCollection { get; set; } =
+            new ObservableCollection<DqReasonsProfileModel>();
 
         public FileModel FileModel { get; } = new FileModel();
 
@@ -158,6 +168,12 @@ namespace TASCompAssistant.ViewModels
         // Exits the application
         public ActionCommand CommandExit { get; }
 
+        public GlobalSettingsViewModel GlobalSettingsViewModel
+        {
+            get => _globalSettingsViewModel;
+            set => SetValue(ref _globalSettingsViewModel, value);
+        }
+
         /*	TODO:
                 - Add DQ Reasons
                 - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
@@ -173,6 +189,8 @@ namespace TASCompAssistant.ViewModels
             // Initialize the default DQProfile
             DqReasonsProfileModel.SetProfileDefaults();
             DqProfilesCollection.Add(DqReasonsProfileModel);
+
+            GlobalSettingsViewModel.SetDefaults();
 
             // Command to add data to the competitor datagrid
             CommandAddCompetitor = new ActionCommand(() =>
@@ -241,22 +259,36 @@ namespace TASCompAssistant.ViewModels
             CommandFileSave = new ActionCommand(() => { FileModel.SaveFile(CompetitionTasks); });
 
             // Opens window to modify competition metadata
-            CommandModifyCompetitionTaskMetadata = new ActionCommand(() =>
-            {
-                MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
+            CommandModifyCompetitionTaskMetadata = new ActionCommand(() => { OpenMetadataManager(); });
 
-                var metadataManger = new CompetitionMetadataManagerView
-                {
-                    DataContext = MetadataViewModel
-                };
-
-                metadataManger.ShowDialog();
-            });
+            CommandOpenGlobalSettings = new ActionCommand(() => OpenGlobalSettings());
 
             // Command to Exit
             CommandExit = new ActionCommand(() => Environment.Exit(0));
 
             RefreshAll();
+        }
+
+        private void OpenMetadataManager()
+        {
+            MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
+
+            var metadataManger = new CompetitionMetadataManagerView
+            {
+                DataContext = MetadataViewModel
+            };
+
+            metadataManger.ShowDialog();
+        }
+
+        private void OpenGlobalSettings()
+        {
+            var settingsView = new GlobalSettingsView
+            {
+                DataContext = GlobalSettingsViewModel
+            };
+
+            settingsView.ShowDialog();
         }
 
         private void RefreshAll()
@@ -289,7 +321,7 @@ namespace TASCompAssistant.ViewModels
         private void RefreshCompetitionDataGrid()
         {
             // Set up datagrid
-            CompetitionCollection = CollectionViewSource.GetDefaultView(CompetitionTasks);
+            CompetitionTaskCollection = CollectionViewSource.GetDefaultView(CompetitionTasks);
         }
 
         private void ClearAll()
