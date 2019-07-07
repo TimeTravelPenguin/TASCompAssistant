@@ -25,18 +25,6 @@ namespace TASCompAssistant.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
-        public double TasInputRate {
-            get {
-                return ((double)(this["TasInputRate"]));
-            }
-            set {
-                this["TasInputRate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("VIs")]
         public string TasInputName {
             get {
@@ -44,6 +32,18 @@ namespace TASCompAssistant.Properties {
             }
             set {
                 this["TasInputName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public double TasInputRate {
+            get {
+                return ((double)(this["TasInputRate"]));
+            }
+            set {
+                this["TasInputRate"] = value;
             }
         }
     }
