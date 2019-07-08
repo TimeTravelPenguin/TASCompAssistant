@@ -274,7 +274,8 @@ namespace TASCompAssistant.ViewModels
             CommandExit = new ActionCommand(() => Environment.Exit(0));
 
             // Copy description to clipboard
-            CommandCopyTaskDescriptionToClipboard = new ActionCommand(() => CopyToClipboardModel.CopyTaskDescriptionToClipboard(CompetitionTasks[CompetitionTaskIndex]));
+            CommandCopyTaskDescriptionToClipboard = new ActionCommand(() =>
+                CopyToClipboardModel.CopyTaskDescriptionToClipboard(CompetitionTasks[CompetitionTaskIndex]));
 
             RefreshAll();
         }

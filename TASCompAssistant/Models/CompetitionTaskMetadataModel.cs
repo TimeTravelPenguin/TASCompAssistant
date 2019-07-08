@@ -54,7 +54,7 @@ namespace TASCompAssistant.Models
 
         public void ClearData()
         {
-            TaskDescription = "In **{level}**, **{do stuff}**. Time starts when **{reason}**, and end when **{reason}**.";
+            TaskDescription = "In **{level}**, **{do stuff}**.";
             TaskTimingDescription = "Timing starts **{when}**, and ends **{when}**.";
             Rules.Clear();
             Rules.Add("You may **NOT** interact with enemies");

@@ -21,7 +21,7 @@ namespace TASCompAssistant.ViewModels
 
         public GlobalSettingsViewModel()
         {
-            SetDefaults();
+            GetSettings();
 
             CommandSaveSettings = new ActionCommand(() => SaveSettings());
         }

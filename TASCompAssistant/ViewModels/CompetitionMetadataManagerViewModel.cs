@@ -1,4 +1,7 @@
-﻿using Microsoft.Expression.Interactivity.Core;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Expression.Interactivity.Core;
 using Newtonsoft.Json;
 using TASCompAssistant.Models;
 using TASCompAssistant.Types;
@@ -7,7 +10,7 @@ namespace TASCompAssistant.ViewModels
 {
     internal class CompetitionMetadataManagerViewModel : PropertyChangedBase
     {
-        private string _currentRule;
+        private string _currentRule = "Type a rule here...";
 
         // All the metadata for the current competition
         private CompetitionTaskMetadataModel _metadata = new CompetitionTaskMetadataModel();
@@ -38,18 +41,35 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _currentRule, value);
         }
 
+        public RelayCommand<Window> CommandCloseWindow { get; }
+
         public CompetitionMetadataManagerViewModel()
         {
             CommandAddRule = new ActionCommand(() => AddRule());
             CommandRemoveRule = new ActionCommand(() => RemoveRule());
             CommandMoveUp = new ActionCommand(() => MoveItemUp());
             CommandMoveDown = new ActionCommand(() => MoveItemDown());
+
+            CommandCloseWindow = new RelayCommand<Window>(CloseWindow);
+        }
+
+
+        private void CloseWindow(Window window)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
 
         private void AddRule()
         {
-            Metadata.Rules.Add(CurrentRule);
-            CurrentRule = string.Empty;
+            var rule = CurrentRule;
+            if (Regex.Replace(rule, @"\s+", "") != "")
+            {
+                Metadata.Rules.Add(CurrentRule);
+                CurrentRule = string.Empty;
+            }
         }
 
         private void RemoveRule()
