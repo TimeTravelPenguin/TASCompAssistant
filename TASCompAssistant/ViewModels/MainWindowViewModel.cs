@@ -26,7 +26,7 @@ namespace TASCompAssistant.ViewModels
         private int _competitionTaskIndex;
 
         private ObservableCollection<CompetitionTaskModel> _competitionTasks =
-            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
+            new ObservableCollection<CompetitionTaskModel> { new CompetitionTaskModel { TaskName = "Competition 1" } };
 
         // This is used to bind the DataGrid, to show the Competitors
         private ICollectionView _competitorCollection;
@@ -39,13 +39,13 @@ namespace TASCompAssistant.ViewModels
 
         private GlobalSettingsViewModel _globalSettingsViewModel = new GlobalSettingsViewModel();
 
-        // Competition Metadata ViewModel Datacontext
+        // Competition Metadata ViewModel data-context
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
 
         // Stores Global settings
         private ObservableCollection<SettingsProperty> GlobalSettings => GlobalSettingsViewModel.Settings;
 
-        public CompetitionMetadataManagerViewModel MetadataViewModel
+        private CompetitionMetadataManagerViewModel MetadataViewModel
         {
             get => _metadataViewModel;
             set => SetValue(ref _metadataViewModel, value);
@@ -63,11 +63,11 @@ namespace TASCompAssistant.ViewModels
             set
             {
                 // Do not touch this
-                /*
-                SetValue(ref _competitionIndex, Competitions.Count > 0
-                                                ? value > Competitions.Count ? value : 0
-                                                : value);
-                                                */
+                //SetValue(ref _competitionTaskIndex, CompetitionTasks.Count > 0
+                //    ? value < CompetitionTasks.Count
+                //        ? value
+                //        : 0
+                //    : value);
 
                 SetValue(ref _competitionTaskIndex, value);
 
@@ -82,7 +82,10 @@ namespace TASCompAssistant.ViewModels
                     MessageBox.Show("Leaderboard was not updated. Please manually refresh.", "An error occured...");
                 }
 
-                MessageBox.Show("Current Competition index: " + CompetitionTaskIndex, "Debug Popup");
+                if (CompetitionTaskIndex < 0)
+                {
+                    MessageBox.Show("Current Competition index: " + CompetitionTaskIndex, "Debug Popup");
+                }
             }
         }
 
@@ -126,7 +129,7 @@ namespace TASCompAssistant.ViewModels
             new DqReasonsProfileModel(true); // This is initialized as a default profile
 
         //Contains all the DQ Profiles used by different competitions. Each profile contains a list of the DQ reasons as ObservableCollection<string>
-        public ObservableCollection<DqReasonsProfileModel> DqProfilesCollection { get; set; } =
+        private ObservableCollection<DqReasonsProfileModel> DqProfilesCollection { get; } =
             new ObservableCollection<DqReasonsProfileModel>();
 
         public FileModel FileModel { get; } = new FileModel();
@@ -138,13 +141,13 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _addCompetitorEnabled, value);
         }
 
-        // Adds a new competitor to the datagrid
+        // Adds a new competitor to the data-grid
         public ActionCommand CommandAddCompetitor { get; }
 
-        // Adds a new competition to the datagrid
+        // Adds a new competition to the data-grid
         public ActionCommand CommandAddCompetitionTask { get; }
 
-        // Add test data to datagrid
+        // Add test data to data-grid
         public ActionCommand CommandAddTestData { get; }
 
         // Clears the window to be a clean slate
@@ -168,7 +171,7 @@ namespace TASCompAssistant.ViewModels
         // Exits the application
         public ActionCommand CommandExit { get; }
 
-        public GlobalSettingsViewModel GlobalSettingsViewModel
+        private GlobalSettingsViewModel GlobalSettingsViewModel
         {
             get => _globalSettingsViewModel;
             set => SetValue(ref _globalSettingsViewModel, value);
@@ -177,9 +180,9 @@ namespace TASCompAssistant.ViewModels
         /*	TODO:
                 - Add DQ Reasons
                 - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
-                    - On event there is duplicate upon entering via left feild, initiate a yes/no prompt
+                    - On event there is duplicate upon entering via left field, initiate a yes/no prompt
                       to determine if you should overwrite the values previously submitted for that username
-                - When double-clicking a checkbox in the datagrid to edit the value, unless you click away, it doesn't commit the edit.
+                - When double-clicking a checkbox in the data-grid to edit the value, unless you click away, it doesn't commit the edit.
                   can we make it so that upon the value change of the text box, the commit occurs?
                 - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
         */
@@ -192,7 +195,7 @@ namespace TASCompAssistant.ViewModels
 
             GlobalSettingsViewModel.SetDefaults();
 
-            // Command to add data to the competitor datagrid
+            // Command to add data to the competitor data-grid
             CommandAddCompetitor = new ActionCommand(() =>
             {
                 CheckMinimumCompetitions();
@@ -213,13 +216,13 @@ namespace TASCompAssistant.ViewModels
                 ClearCompetitionInputs();
             });
 
-            // Command to clear the datagrid
+            // Command to clear the data-grid
             CommandClearAll = new ActionCommand(() => ClearAll());
 
             // Command to sort data
             CommandUpdateData = new ActionCommand(() => { RefreshAll(); });
 
-            // Command to add random test data to datagrid
+            // Command to add random test data to data-grid
             CommandAddTestData = new ActionCommand(() =>
             {
                 CheckMinimumCompetitions();
@@ -311,7 +314,7 @@ namespace TASCompAssistant.ViewModels
 
         private void RefreshCompetitorDataGrid()
         {
-            // Set up datagrid grouping
+            // Set up data-grid grouping
             CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
             CompetitorCollection.GroupDescriptions.Clear();
             CompetitorCollection.GroupDescriptions.Add(
@@ -320,7 +323,7 @@ namespace TASCompAssistant.ViewModels
 
         private void RefreshCompetitionDataGrid()
         {
-            // Set up datagrid
+            // Set up data-grid
             CompetitionTaskCollection = CollectionViewSource.GetDefaultView(CompetitionTasks);
         }
 
@@ -334,7 +337,7 @@ namespace TASCompAssistant.ViewModels
             CompetitionTasks.Add(new CompetitionTaskModel());
 
             CompetitionTaskIndex = 0;
-            //TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
+            // TODO FIX: Competitions = new ObservableCollection<CompetitionModel>() { new CompetitionModel() };
             // Aka, clear all competitions IF THE USER WANTS TO ==> Make a dialogue appear
 
             SortCompetition();
@@ -378,7 +381,7 @@ namespace TASCompAssistant.ViewModels
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DqReasons.Add(new DqReasonModel {Reason = dq.Reason, IsSelected = true});
+                    newCompetitor.DqReasons.Add(new DqReasonModel { Reason = dq.Reason, IsSelected = true });
                 }
             }
 
@@ -412,7 +415,7 @@ namespace TASCompAssistant.ViewModels
                     MandatorySaveState = EditableCompetitionTask.Metadata.MandatorySaveState,
                     CooperativeTask = EditableCompetitionTask.Metadata.CooperativeTask
                 },
-                CompetitorData = EditableCompetitionTask.CompetitorData
+                CompetitorData =  new ObservableCollection<CompetitorModel>(EditableCompetitionTask.CompetitorData)
             });
         }
 

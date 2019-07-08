@@ -14,6 +14,7 @@ namespace TASCompAssistant.Models
         private string _dqOtherReason;
 
         private ObservableCollection<DqReasonModel> _dQReasons = new ObservableCollection<DqReasonModel>();
+
         private int _place;
 
         private int _rerecords;

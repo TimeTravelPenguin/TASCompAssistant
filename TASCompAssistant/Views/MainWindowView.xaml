@@ -178,10 +178,10 @@
                                                     Binding="{Binding DQ}"
                                                     Width="30" />
                             <DataGridTextColumn Header="DQReason"
-                                                Binding="{Binding DQReasons}"
+                                                Binding="{Binding DqReasons}"
                                                 Width="Auto" />
                             <DataGridTextColumn Header="DQReason (text)"
-                                                Binding="{Binding DQReasonsAsString, Mode=OneWay}"
+                                                Binding="{Binding DqReasonsAsString, Mode=OneWay}"
                                                 Width="Auto"
                                                 IsReadOnly="False" />
 
