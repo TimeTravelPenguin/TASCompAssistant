@@ -13,6 +13,15 @@ namespace TASCompAssistant.Models
 
         private string _taskDescription;
 
+        private string _taskTimingDescription;
+
+
+        public string TaskTimingDescription
+        {
+            get => _taskTimingDescription;
+            set => SetValue(ref _taskTimingDescription, value);
+        }
+
         public string TaskDescription
         {
             get => _taskDescription;
@@ -45,7 +54,8 @@ namespace TASCompAssistant.Models
 
         public void ClearData()
         {
-            TaskDescription = "In {level}, {do stuff}. Time starts when {reason}, and end when {reason}.";
+            TaskDescription = "In **{level}**, **{do stuff}**. Time starts when **{reason}**, and end when **{reason}**.";
+            TaskTimingDescription = "Timing starts **{when}**, and ends **{when}**.";
             Rules.Clear();
             Rules.Add("You may **NOT** interact with enemies");
             MandatorySaveState = true;

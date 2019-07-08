@@ -93,6 +93,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Types\BindingResourceExtension.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
+    <Compile Include="Models\CopyToClipboardModel.cs" />
     <Compile Include="ViewModels\GlobalSettingsViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>

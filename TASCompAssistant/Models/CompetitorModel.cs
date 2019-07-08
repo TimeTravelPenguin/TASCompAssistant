@@ -55,7 +55,7 @@ namespace TASCompAssistant.Models
 
         public int VICount => VIEnd - VIStart;
 
-        public double TimeInSeconds => GetTime();
+        private double TimeInSeconds => GetTime();
 
         public string TimeFormatted => GetFormatTime();
 

@@ -26,7 +26,7 @@ namespace TASCompAssistant.ViewModels
         private int _competitionTaskIndex;
 
         private ObservableCollection<CompetitionTaskModel> _competitionTasks =
-            new ObservableCollection<CompetitionTaskModel> { new CompetitionTaskModel { TaskName = "Competition 1" } };
+            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
 
         // This is used to bind the DataGrid, to show the Competitors
         private ICollectionView _competitorCollection;
@@ -177,6 +177,10 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _globalSettingsViewModel, value);
         }
 
+        public ActionCommand CommandCopyTaskDescriptionToClipboard { get; }
+
+        private CopyToClipboardModel CopyToClipboardModel { get; } = new CopyToClipboardModel();
+
         /*	TODO:
                 - Add DQ Reasons
                 - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
@@ -269,6 +273,9 @@ namespace TASCompAssistant.ViewModels
             // Command to Exit
             CommandExit = new ActionCommand(() => Environment.Exit(0));
 
+            // Copy description to clipboard
+            CommandCopyTaskDescriptionToClipboard = new ActionCommand(() => CopyToClipboardModel.CopyTaskDescriptionToClipboard(CompetitionTasks[CompetitionTaskIndex]));
+
             RefreshAll();
         }
 
@@ -358,6 +365,17 @@ namespace TASCompAssistant.ViewModels
             }
         }
 
+        private void CopyTaskLeaderboardToClipboard()
+        {
+            Clipboard.SetText("Hello, clipboard");
+        }
+
+        private void CopyCompetitionScoresClipboard()
+        {
+            // Copies task information to clipboard
+            Clipboard.SetText("Hello, clipboard");
+        }
+
         private void ClearCompetitionInputs()
         {
             // Clear Competition Data
@@ -381,7 +399,7 @@ namespace TASCompAssistant.ViewModels
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DqReasons.Add(new DqReasonModel { Reason = dq.Reason, IsSelected = true });
+                    newCompetitor.DqReasons.Add(new DqReasonModel {Reason = dq.Reason, IsSelected = true});
                 }
             }
 
@@ -411,11 +429,12 @@ namespace TASCompAssistant.ViewModels
                 Metadata = new CompetitionTaskMetadataModel
                 {
                     TaskDescription = EditableCompetitionTask.Metadata.TaskDescription,
+                    TaskTimingDescription = EditableCompetitionTask.Metadata.TaskTimingDescription,
                     Rules = new ObservableCollection<string>(EditableCompetitionTask.Metadata.Rules),
                     MandatorySaveState = EditableCompetitionTask.Metadata.MandatorySaveState,
                     CooperativeTask = EditableCompetitionTask.Metadata.CooperativeTask
                 },
-                CompetitorData =  new ObservableCollection<CompetitorModel>(EditableCompetitionTask.CompetitorData)
+                CompetitorData = new ObservableCollection<CompetitorModel>(EditableCompetitionTask.CompetitorData)
             });
         }
 
