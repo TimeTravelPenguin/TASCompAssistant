@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace TASCompAssistant.Models
 {
-    internal class CopyToClipboardModel
+    internal class OutputToClipboardModel
     {
         public void CopyTaskDescriptionToClipboard(CompetitionTaskModel currentTask)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using TASCompAssistant.Properties;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
@@ -157,7 +158,7 @@ namespace TASCompAssistant.Models
 
         private double GetTime()
         {
-            var divideRate = Properties.Settings.Default.TasInputRate;
+            var divideRate = Settings.Default.TasInputRate;
             return Math.Round(VICount / divideRate, 3);
         }
 

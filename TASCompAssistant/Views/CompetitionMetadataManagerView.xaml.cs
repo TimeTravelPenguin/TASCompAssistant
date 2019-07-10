@@ -5,7 +5,7 @@ namespace TASCompAssistant.Views
 {
     public partial class CompetitionMetadataManagerView : Window
     {
-        private CompetitionMetadataManagerViewModel ViewModel { get => DataContext as CompetitionMetadataManagerViewModel; }
+        private CompetitionMetadataManagerViewModel ViewModel => DataContext as CompetitionMetadataManagerViewModel;
 
         public CompetitionMetadataManagerView()
         {

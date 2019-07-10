@@ -3,13 +3,13 @@ using TASCompAssistant.ViewModels;
 
 namespace TASCompAssistant.Views
 {
-	public partial class MainWindowView : Window
-	{
-		private MainWindowViewModel ViewModel { get => DataContext as MainWindowViewModel; }
+    public partial class MainWindowView : Window
+    {
+        private MainWindowViewModel ViewModel => DataContext as MainWindowViewModel;
 
-		public MainWindowView()
-		{
-			InitializeComponent();
-		}
-	}
+        public MainWindowView()
+        {
+            InitializeComponent();
+        }
+    }
 }

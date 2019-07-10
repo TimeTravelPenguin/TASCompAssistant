@@ -77,7 +77,7 @@
 
                 <!-- Plain text results -->
                 <MenuItem Header="_Results Output">
-                    <MenuItem Header="Copy Task Description" Command="{Binding CommandCopyTaskDescriptionToClipboard}"/>
+                    <MenuItem Header="Copy Task Description" Command="{Binding CommandCopyTaskDescriptionToClipboard}" />
                     <MenuItem Header="Copy Task Leaderboard" />
                     <MenuItem Header="Copy Competition Score" />
                 </MenuItem>
@@ -334,16 +334,17 @@
                         </GroupBox>
 
                         <!-- Datagrid Competition -->
-                        <DataGrid ItemsSource="{Binding CompetitionTaskCollection, UpdateSourceTrigger=PropertyChanged}"
-                                  HorizontalGridLinesBrush="DarkGray"
-                                  VerticalGridLinesBrush="DarkGray"
-                                  IsReadOnly="False"
-                                  CanUserReorderColumns="False"
-                                  CanUserResizeRows="False"
-                                  CanUserResizeColumns="True"
-                                  CanUserDeleteRows="True"
-                                  CanUserAddRows="False"
-                                  AutoGenerateColumns="False">
+                        <DataGrid
+                            ItemsSource="{Binding CompetitionTaskCollection, UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalGridLinesBrush="DarkGray"
+                            VerticalGridLinesBrush="DarkGray"
+                            IsReadOnly="False"
+                            CanUserReorderColumns="False"
+                            CanUserResizeRows="False"
+                            CanUserResizeColumns="True"
+                            CanUserDeleteRows="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False">
 
                             <DataGrid.RowDetailsTemplate>
                                 <DataTemplate>

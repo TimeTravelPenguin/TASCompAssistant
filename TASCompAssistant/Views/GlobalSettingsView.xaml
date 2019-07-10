@@ -36,13 +36,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Setting"
-                    Binding="{Binding Name}"
                     Width="*"
-                    IsReadOnly="True" />
+                    IsReadOnly="True" >
+                </DataGridTextColumn>
 
                 <DataGridTextColumn
                     Header="Setting"
-                    Binding="{Binding DefaultValue}"
                     Width="*"
                     IsReadOnly="False" />
 

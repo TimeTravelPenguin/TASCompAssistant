@@ -1,12 +1,14 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TASCompAssistant.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="TasInputName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">VIs</Value>
-    </Setting>
-    <Setting Name="TasInputRate" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">60</Value>
-    </Setting>
-  </Settings>
+
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
+              GeneratedClassNamespace="TASCompAssistant.Properties" GeneratedClassName="Settings">
+    <Profiles />
+    <Settings>
+        <Setting Name="TasInputName" Type="System.String" Scope="User">
+            <Value Profile="(Default)">VIs</Value>
+        </Setting>
+        <Setting Name="TasInputRate" Type="System.Double" Scope="User">
+            <Value Profile="(Default)">60</Value>
+        </Setting>
+    </Settings>
 </SettingsFile>

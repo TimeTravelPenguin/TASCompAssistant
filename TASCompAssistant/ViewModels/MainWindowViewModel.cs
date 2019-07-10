@@ -43,7 +43,7 @@ namespace TASCompAssistant.ViewModels
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
 
         // Stores Global settings
-        private ObservableCollection<SettingsProperty> GlobalSettings => GlobalSettingsViewModel.Settings;
+        private GlobalSettingsModel GlobalSettings => GlobalSettingsViewModel.Settings;
 
         private CompetitionMetadataManagerViewModel MetadataViewModel
         {
@@ -179,7 +179,7 @@ namespace TASCompAssistant.ViewModels
 
         public ActionCommand CommandCopyTaskDescriptionToClipboard { get; }
 
-        private CopyToClipboardModel CopyToClipboardModel { get; } = new CopyToClipboardModel();
+        private OutputToClipboardModel CopyToClipboardModel { get; } = new OutputToClipboardModel();
 
         /*	TODO:
                 - Add DQ Reasons
@@ -196,8 +196,6 @@ namespace TASCompAssistant.ViewModels
             // Initialize the default DQProfile
             DqReasonsProfileModel.SetProfileDefaults();
             DqProfilesCollection.Add(DqReasonsProfileModel);
-
-            GlobalSettingsViewModel.SetDefaults();
 
             // Command to add data to the competitor data-grid
             CommandAddCompetitor = new ActionCommand(() =>

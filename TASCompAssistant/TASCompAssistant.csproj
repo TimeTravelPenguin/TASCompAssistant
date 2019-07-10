@@ -102,10 +102,12 @@
     </ApplicationDefinition>
     <Compile Include="Models\CompetitionTaskMetadataModel.cs" />
     <Compile Include="Models\DueDateModel.cs" />
+    <Compile Include="Models\GlobalSettingsModel.cs" />
+    <Compile Include="Models\GlobalSettingsModels\TickSettingsModel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Types\BindingResourceExtension.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
-    <Compile Include="Models\CopyToClipboardModel.cs" />
+    <Compile Include="Models\OutputToClipboardModel.cs" />
     <Compile Include="ViewModels\GlobalSettingsViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>
