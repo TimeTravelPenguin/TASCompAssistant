@@ -40,23 +40,21 @@ namespace TASCompAssistant.Models
                 output += Environment.NewLine + Environment.NewLine +
                           "This is an optional co-op task. You may co-operate with just one other person. Both teammates must DM who your co-author is to **@{AdminAccount}**";
             }
-
             else
             {
                 output += Environment.NewLine + Environment.NewLine +
-                          "The provided savestate(s) are **NOT** mandatory for this task.";
+                          "This is a solo task and you may not co-operate with anyone else.";
             }
 
             if (mandatorySt)
             {
                 output += Environment.NewLine + Environment.NewLine +
-                          "The provided savestate(s) are **MANDATORY** for this task.";
+                          "The provided savestate(s) are **mandatory** for this task.";
             }
-
             else
             {
                 output += Environment.NewLine + Environment.NewLine +
-                          "The provided savestate(s) are **NOT** mandatory for this task.";
+                          "The provided savestate(s) are **not** mandatory for this task.";
             }
 
             output += Environment.NewLine + Environment.NewLine +

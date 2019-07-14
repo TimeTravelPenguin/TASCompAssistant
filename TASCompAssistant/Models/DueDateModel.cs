@@ -29,7 +29,7 @@ namespace TASCompAssistant.Models
             get => _dueTime;
             set => SetValue(ref _dueTime,
                 new DateTime(EndDate.Value.Year, EndDate.Value.Month, EndDate.Value.Day, value.Value.Hour,
-                    value.Value.Minute, value.Value.Second, 0));
+                    value.Value.Minute, 0, 0));
         }
 
         public DueDateModel()
@@ -40,7 +40,7 @@ namespace TASCompAssistant.Models
         public void ClearDueDates()
         {
             StartDate = DateTime.Now;
-            EndDate = DateTime.Now;
+            EndDate = DateTime.Now.AddDays(7);
             DueTime = DateTime.Now;
         }
     }
