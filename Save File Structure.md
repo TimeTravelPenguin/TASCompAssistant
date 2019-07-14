@@ -84,7 +84,7 @@ To elaborate on the properties:
     - `VIStart` is the VI the TAS begins on (specifically it is the initial `TimeMeasurementName` value - VI is used as a more relatable variable name for development. This will be changed in the future).
     - `VIEnd` is the VI the TAS ends on.
     - `VICount` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`.
-    - `TimeInSeconds` is `VICount` converted to seconds. This is done by dividing it by 60; in other words, `TimeInSeconds = VIs / TimeMeasurementFrequency`.
+    - `TimeInSeconds` is the calculation of `VICount` being converted to seconds. This is done by dividing it by 60; in other words, `TimeInSeconds = VICount / TimeMeasurementFrequency`.
     - `TimeFormatted` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
     - `Rerecords` is the rerecord count of the competitor's TAS.
     - `DQ` is a Boolean representing whether or not the current competitor is disqualified.
