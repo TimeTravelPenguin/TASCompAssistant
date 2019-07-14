@@ -17,11 +17,6 @@ A task is serialized into the following JSON structure (an example competition t
 ```JSON
 {
 	"TaskName": "TimeTravelPenguin's Competition - Task 1",
-	"DueDates": {
-		"StartDate": "2019-07-05T00:00:00",
-		"EndDate": "2019-07-12T00:00:00",
-		"DueTime": "2019-07-12T15:30:00"
-	},
 	"Metadata": {
 		"TaskDescription": "Competitors must collect 10 coins and then kill 2 enemies",
 		"TaskTimingDescription": "Time starts upon level start, and ends when conditions are met",
@@ -32,6 +27,11 @@ A task is serialized into the following JSON structure (an example competition t
 		],
 		"MandatorySaveState": true,
 		"CooperativeTask": false
+	},
+	"DueDates": {
+		"StartDate": "2019-07-05T00:00:00",
+		"EndDate": "2019-07-12T00:00:00",
+		"DueTime": "2019-07-12T15:30:00"
 	},
 	"CompetitorData": [
 		{
