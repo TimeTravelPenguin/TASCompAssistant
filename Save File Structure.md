@@ -37,9 +37,9 @@ A task is serialized into the following JSON structure (an example competition t
 		{
 			"Place": 1,
 			"Username": "TimeTravelPenguin",
-			"VIStart": 10,
-			"VIEnd": 1000,
-			"VICount": 990,
+			"TimeUnitStart": 10,
+			"TimeUnitEnd": 1000,
+			"TimeUnitCount": 990,
 			"TimeInSeconds": 16.5,
 			"TimeFormatted": "16s 500ms",
 			"Rerecords": 1234,
@@ -81,10 +81,10 @@ To elaborate on the properties:
 - `CompetitorData` contains information about each competitor's entry:
     - `Place` is the competitor's rank in the task.
     - `Username` is the name or alias the competitor goes by.
-    - `VIStart` is the VI the TAS begins on (specifically it is the initial `TimeMeasurementName` value - VI is used as a more relatable variable name for development. This will be changed in the future).
-    - `VIEnd` is the VI the TAS ends on.
-    - `VICount` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`.
-    - `TimeInSeconds` is the calculation of `VICount` being converted to seconds. This is done by dividing it by `TimeMeasurementFrequency`; in other words, `TimeInSeconds = VICount / TimeMeasurementFrequency`.
+    - `TimeUnitStart` is the unit of time that the TAS begins on (specifically it is the initial `TimeMeasurementName` value).
+    - `TimeUnitEnd` is the unit of time the TAS ends on.
+    - `TimeUnitCount` is the total count of time units for the competitor's submission. This is calculated as `TimeUnitEnd - TimeUnitStart`.
+    - `TimeInSeconds` is the calculation of `TimeUnitCount` being converted to seconds. This is done by dividing it by `TimeMeasurementFrequency`; in other words, `TimeInSeconds = TimeUnitCount / TimeMeasurementFrequency`.
     - `TimeFormatted` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
     - `Rerecords` is the rerecord count of the competitor's TAS.
     - `DQ` is a Boolean representing whether or not the current competitor is disqualified.
