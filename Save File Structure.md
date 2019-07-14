@@ -57,7 +57,12 @@ A task is serialized into the following JSON structure (an example competition t
 			"Score": 50.0,
 			"ScorePlace": 1
 		}
-	]
+	],
+	"SettingsData": {
+		"TimeMeasurementName": "VI",
+		"TimeMeasurementFrequency": 60.0,
+		"CompetitionTimeZone": "(UTC+10:00) Canberra, Melbourne, Sydney"
+	}
 }
 ```
 To elaborate on the properties:
@@ -75,7 +80,7 @@ To elaborate on the properties:
 - `CompetitorData` contains information about each competitor's entry:
     - `Place` is the competitor's rank in the task.
     - `Username` is the name or alias the competitor goes by.
-    - `VIStart` is the VI the TAS begins on.
+    - `VIStart` is the VI the TAS begins on (specifically it is the initial `TimeMeasurementName` value - VI is used as a more relatable variable name for development. This will be changed in the future).
     - `VIEnd` is the VI the TAS ends on.
     - `VICount` is the total VI count of the competitor's submission. This is calculated as `VIEnd - VIStart`.
     - `TimeInSeconds` is `VICount` converted to seconds. This is done by dividing it by 60; in other words, `TimeInSeconds = VIs / 60`.
@@ -88,3 +93,7 @@ To elaborate on the properties:
         - `IsSelected` is a Boolean that describes whether the competitor was disqualified for this reason. If none of the `IsSelected` values in `DQReasons` are `true`, the competitor is not disqualified.
     - `Score` is the current score of the competitor (up until and including the current task of the competition).
     - `ScorePlace` is the competitor's rank on the score boards.
+- `SettingsData`contains the data used as settings properties within the application
+    - `TimeMeasurementName` a `string` used to represent the naming convention of a single unit of in-game time (e.g. VI, Frame, Tick, etc.).
+    - `TimeMeasurementFrequency` is a `double` use to represent the number of times the game increments it's singular time unit within a second
+    - `CompetitionTimeZone` is the timezone used for competition due date information. This will be moved to `Metadata` in the future.
