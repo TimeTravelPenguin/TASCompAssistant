@@ -16,8 +16,14 @@ A task is serialized into the following JSON structure (an example competition t
 ```JSON
 {
 	"TaskName": "TimeTravelPenguin's Competition - Task 1",
+	"DueDates": {
+		"StartDate": "2019-07-05T00:00:00",
+		"EndDate": "2019-07-12T00:00:00",
+		"DueTime": "2019-07-12T15:30:00"
+	},
 	"Metadata": {
 		"TaskDescription": "Competitors must collect 10 coins and then kill 2 enemies",
+		"TaskTimingDescription": "Time starts upon level start, and ends when conditions are met",
 		"Rules": [
 			"Rule One",
 			"Rule Two",
@@ -25,11 +31,6 @@ A task is serialized into the following JSON structure (an example competition t
 		],
 		"MandatorySaveState": true,
 		"CooperativeTask": false
-	},
-	"DueDates": {
-		"StartDate": "2019-07-05T00:00:00",
-		"EndDate": "2019-07-12T00:00:00",
-		"DueTime": "2019-07-12T15:30:00"
 	},
 	"CompetitorData": [
 		{
@@ -63,6 +64,7 @@ To elaborate on the properties:
 - `TaskName` is the name of the current task.
 - `Metadata` contains descriptive guidelines for the task:
     - `TaskDescription` details the task goal, i.e. the outline of that particular task.
+    - `TaskTimingDescription` details the task timing outlining when the task starts and ends.
     - `Rules` is a list of rules that competitors must abide by.
     - `MandatorySaveState` is a Boolean representing whether or not that task provides a compulsory savestate file that competitors must use.
     - `CooperativeTask` is a Boolean representing whether or not competitors may or may not work together.
