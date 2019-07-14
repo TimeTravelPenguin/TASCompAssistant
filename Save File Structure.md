@@ -93,7 +93,7 @@ To elaborate on the properties:
         - `Reason` is a string summarising the reason for disqualification.
         - `IsSelected` is a Boolean that describes whether the competitor was disqualified for this reason. If none of the `IsSelected` values in `DQReasons` are `true`, the competitor is not disqualified.
     - `Score` is the current score of the competitor (up until and including the current task of the competition).
-    - `ScorePlace` is the competitor's rank on the score boards.
+    - `ScorePlace` is the competitor's rank on the score boards up to that competition.
 - `SettingsData`contains the data used as settings properties within the application
     - `TimeMeasurementName` a `string` used to represent the naming convention of a single unit of in-game time (e.g. VI, Frame, Tick, etc.).
     - `TimeMeasurementFrequency` is a `double` use to represent the number of times the game increments it's singular time unit within a second
