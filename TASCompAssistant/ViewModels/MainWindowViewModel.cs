@@ -240,8 +240,8 @@ namespace TASCompAssistant.ViewModels
                     CurrentCompetitors.Add(new CompetitorModel
                     {
                         Username = $"User {i}",
-                        VIStart = start,
-                        VIEnd = start + r.Next(0, 1000),
+                        TimeUnitStart = start,
+                        TimeUnitEnd = start + r.Next(0, 1000),
                         DQ = r.Next(13) == 0 // simulates random DQ
                     });
                 }
@@ -408,8 +408,8 @@ namespace TASCompAssistant.ViewModels
             var newCompetitor = new CompetitorModel
             {
                 Username = EditableCompetitor.Username,
-                VIStart = EditableCompetitor.VIStart,
-                VIEnd = EditableCompetitor.VIEnd,
+                TimeUnitStart = EditableCompetitor.TimeUnitStart,
+                TimeUnitEnd = EditableCompetitor.TimeUnitEnd,
                 Rerecords = EditableCompetitor.Rerecords,
                 DQ = EditableCompetitor.DQ,
                 DqOther = EditableCompetitor.DqOther
@@ -466,7 +466,7 @@ namespace TASCompAssistant.ViewModels
 
             CurrentCompetitors.Clear();
 
-            var lastVIs = 0;
+            var lastTimeUnitValue = 0;
             var lastDq = false;
             var lastPlace = 0;
             var skipCounter = 0;
@@ -480,7 +480,7 @@ namespace TASCompAssistant.ViewModels
                 }
                 else
                 {
-                    if (lastVIs == item.VICount && lastDq == item.DQ)
+                    if (lastTimeUnitValue == item.TimeUnitTotal && lastDq == item.DQ)
                     {
                         item.Place = lastPlace;
                         skipCounter++;
@@ -501,7 +501,7 @@ namespace TASCompAssistant.ViewModels
                     }
                 }
 
-                lastVIs = item.VICount;
+                lastTimeUnitValue = item.TimeUnitTotal;
                 lastDq = item.DQ;
                 lastPlace = item.Place;
 

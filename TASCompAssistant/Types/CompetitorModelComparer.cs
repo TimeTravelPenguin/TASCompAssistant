@@ -9,12 +9,12 @@ namespace TASCompAssistant.Types
         {
             if (x.DQ == y.DQ)
             {
-                if (x.VICount == y.VICount)
+                if (x.TimeUnitTotal == y.TimeUnitTotal)
                 {
                     return 0;
                 }
 
-                return x.VICount < y.VICount ? -1 : 1;
+                return x.TimeUnitTotal < y.TimeUnitTotal ? -1 : 1;
             }
 
             return x.DQ == false ? -1 : 1;

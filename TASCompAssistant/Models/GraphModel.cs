@@ -58,8 +58,8 @@ namespace TASCompAssistant.Models
 
         private void SetFormatters()
         {
-            XFormatter = val => val.ToString();
-            YFormatter = val => val.ToString() + " VIs";
+            XFormatter = val => $"{val}";
+            YFormatter = val => $"{val} {Properties.Settings.Default.TimeMeasurementName}s";
         }
 
         private void CreateSeriesCollection()
@@ -68,14 +68,14 @@ namespace TASCompAssistant.Models
             {
                 new LineSeries
                 {
-                    Title = "Competition Data (VIs/Player Number)",
+                    Title = $"Competition Data",
                     Values = CompetitionData,
                     LineSmoothness = 0.6,
                     PointForeground = Brushes.Blue
                 },
                 new LineSeries
                 {
-                    Title = "DQ Data (VIs/Player Number)",
+                    Title = $"DQ Data",
                     Values = DqData,
                     LineSmoothness = 1,
                     PointForeground = Brushes.Red
@@ -92,7 +92,7 @@ namespace TASCompAssistant.Models
             var count = 0;
             foreach (var item in compData)
             {
-                CompetitionData.Add(new ObservablePoint(count++, item.VICount));
+                CompetitionData.Add(new ObservablePoint(count++, item.TimeUnitTotal));
                 XLabels.Add(Convert.ToString(item.Place));
             }
 
@@ -101,7 +101,7 @@ namespace TASCompAssistant.Models
             var offsetX = compData.Count;
             foreach (var item in dqData)
             {
-                DqData.Add(new ObservablePoint(offsetX++, item.VICount));
+                DqData.Add(new ObservablePoint(offsetX++, item.TimeUnitTotal));
                 XLabels.Add(Convert.ToString(item.Place));
             }
         }

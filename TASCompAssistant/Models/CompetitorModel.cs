@@ -26,9 +26,9 @@ namespace TASCompAssistant.Models
 
         private string _username;
 
-        private int _viEnd;
+        private int _timeUnitEnd;
 
-        private int _viStart;
+        private int _timeUnitStart;
 
         public int Place
         {
@@ -42,19 +42,19 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _username, value);
         }
 
-        public int VIStart
+        public int TimeUnitStart
         {
-            get => _viStart;
-            set => SetValue(ref _viStart, value);
+            get => _timeUnitStart;
+            set => SetValue(ref _timeUnitStart, value);
         }
 
-        public int VIEnd
+        public int TimeUnitEnd
         {
-            get => _viEnd;
-            set => SetValue(ref _viEnd, value);
+            get => _timeUnitEnd;
+            set => SetValue(ref _timeUnitEnd, value);
         }
 
-        public int VICount => VIEnd - VIStart;
+        public int TimeUnitTotal => TimeUnitEnd - TimeUnitStart;
 
         public double TimeInSeconds => GetTime();
 
@@ -135,8 +135,8 @@ namespace TASCompAssistant.Models
         {
             Place = 0;
             Username = "";
-            VIStart = 0;
-            VIEnd = 0;
+            TimeUnitStart = 0;
+            TimeUnitEnd = 0;
             Rerecords = 0;
             DQ = false;
             DqReasons.Clear();
@@ -159,7 +159,7 @@ namespace TASCompAssistant.Models
         private double GetTime()
         {
             var divideRate = Settings.Default.TimeMeasurementFrequency;
-            return Math.Round(VICount / (divideRate > 0 ? divideRate : 1), 3);
+            return Math.Round(TimeUnitTotal / (divideRate > 0 ? divideRate : 1), 3);
         }
 
         private string GetFormatTime()

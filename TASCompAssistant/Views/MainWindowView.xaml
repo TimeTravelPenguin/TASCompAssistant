@@ -154,7 +154,7 @@
                                                 Binding="{Binding Username}"
                                                 Width="120" />
 
-                            <DataGridTextColumn Binding="{Binding VIStart}"
+                            <DataGridTextColumn Binding="{Binding TimeUnitStart}"
                                                 Width="Auto">
                                 <DataGridTextColumn.Header>
                                     <TextBlock>
@@ -166,7 +166,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Binding="{Binding VIEnd}"
+                            <DataGridTextColumn Binding="{Binding TimeUnitEnd}"
                                                 Width="Auto">
                                 <DataGridTextColumn.Header>
                                     <TextBlock>
@@ -178,7 +178,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Binding="{Binding VICount}"
+                            <DataGridTextColumn Binding="{Binding TimeUnitCount}"
                                                 Width="Auto"
                                                 IsReadOnly="True">
                                 <DataGridTextColumn.Header>
@@ -489,7 +489,7 @@
                     <Run Text="{Binding ApplicationSettings.TimeMeasurementName}" /><Run Text=":" />
                 </TextBlock>
 
-                <TextBox Text="{Binding EditableCompetitor.VIStart}"
+                <TextBox Text="{Binding EditableCompetitor.TimeUnitStart}"
                          Grid.Row="1"
                          Grid.Column="1"
                          VerticalAlignment="Center"
@@ -500,7 +500,7 @@
                     <Run Text="{Binding ApplicationSettings.TimeMeasurementName}" /><Run Text=":" />
                 </TextBlock>
 
-                <TextBox Text="{Binding EditableCompetitor.VIEnd}"
+                <TextBox Text="{Binding EditableCompetitor.TimeUnitEnd}"
                          Grid.Row="2"
                          Grid.Column="1"
                          VerticalAlignment="Center"
