@@ -15,17 +15,16 @@ namespace TASCompAssistant.Models
 
         private string _taskTimingDescription;
 
+        public string TaskDescription
+        {
+            get => _taskDescription;
+            set => SetValue(ref _taskDescription, value);
+        }
 
         public string TaskTimingDescription
         {
             get => _taskTimingDescription;
             set => SetValue(ref _taskTimingDescription, value);
-        }
-
-        public string TaskDescription
-        {
-            get => _taskDescription;
-            set => SetValue(ref _taskDescription, value);
         }
 
         public ObservableCollection<string> Rules

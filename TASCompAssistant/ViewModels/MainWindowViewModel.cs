@@ -270,19 +270,14 @@ namespace TASCompAssistant.ViewModels
 
         private void EditCurrentMetadata()
         {
-            var tempDataContext = new CompetitionMetadataManagerViewModel();
-
-            var tempMetadata = CompetitionTasks[CompetitionTaskIndex].Metadata;
-            tempDataContext.Metadata = tempMetadata;
+            MetadataViewModel.Metadata = CompetitionTasks[CompetitionTaskIndex].Metadata;
 
             var metadataManger = new CompetitionMetadataManagerView
             {
-                DataContext = tempDataContext
+                DataContext = MetadataViewModel
             };
 
             metadataManger.ShowDialog();
-
-            CompetitionTasks[CompetitionTaskIndex].Metadata.UpdateMetadata(tempDataContext.Metadata);
         }
 
         private void OpenFile()
