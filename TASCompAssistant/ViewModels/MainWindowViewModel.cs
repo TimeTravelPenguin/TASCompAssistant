@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.Expression.Interactivity.Core;
@@ -37,13 +36,19 @@ namespace TASCompAssistant.ViewModels
         // Modifiable competitor model used for on-screen objects
         private CompetitorModel _editableCompetitor = new CompetitorModel();
 
-        private GlobalSettingsViewModel _globalSettingsViewModel = new GlobalSettingsViewModel();
+        /*	TODO:
+                - Add DQ Reasons
+                - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
+                    - On event there is duplicate upon entering via left field, initiate a yes/no prompt
+                      to determine if you should overwrite the values previously submitted for that username
+                - When double-clicking a checkbox in the data-grid to edit the value, unless you click away, it doesn't commit the edit.
+                  can we make it so that upon the value change of the text box, the commit occurs?
+                - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
+        */
+        private GlobalSettingsModel _applicationSettings = new GlobalSettingsModel();
 
         // Competition Metadata ViewModel data-context
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
-
-        // Stores Global settings
-        private GlobalSettingsModel GlobalSettings => GlobalSettingsViewModel.Settings;
 
         private CompetitionMetadataManagerViewModel MetadataViewModel
         {
@@ -165,31 +170,19 @@ namespace TASCompAssistant.ViewModels
         // Opens window to manage competition rule-set
         public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
 
-        // Opens window to modify global settings
-        public ActionCommand CommandOpenGlobalSettings { get; }
-
         // Exits the application
         public ActionCommand CommandExit { get; }
-
-        private GlobalSettingsViewModel GlobalSettingsViewModel
-        {
-            get => _globalSettingsViewModel;
-            set => SetValue(ref _globalSettingsViewModel, value);
-        }
 
         public ActionCommand CommandCopyTaskDescriptionToClipboard { get; }
 
         private OutputToClipboardModel CopyToClipboardModel { get; } = new OutputToClipboardModel();
 
-        /*	TODO:
-                - Add DQ Reasons
-                - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
-                    - On event there is duplicate upon entering via left field, initiate a yes/no prompt
-                      to determine if you should overwrite the values previously submitted for that username
-                - When double-clicking a checkbox in the data-grid to edit the value, unless you click away, it doesn't commit the edit.
-                  can we make it so that upon the value change of the text box, the commit occurs?
-                - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
-        */
+        // Settings used to change in UI features, as well as other features
+        public GlobalSettingsModel ApplicationSettings
+        {
+            get => _applicationSettings;
+            set => SetValue(ref _applicationSettings, value);
+        }
 
         public MainWindowViewModel()
         {
@@ -249,24 +242,13 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Opens File
-            CommandFileOpen = new ActionCommand(() =>
-            {
-                CompetitionTasks.Clear();
-                foreach (var item in FileModel.OpenFile())
-                {
-                    CompetitionTasks.Add(item);
-                }
-
-                CompetitionTaskIndex = 0;
-            });
+            CommandFileOpen = new ActionCommand(() => { OpenFile(); });
 
             // Saves File
-            CommandFileSave = new ActionCommand(() => { FileModel.SaveFile(CompetitionTasks); });
+            CommandFileSave = new ActionCommand(() => { SaveFile(); });
 
             // Opens window to modify competition metadata
             CommandModifyCompetitionTaskMetadata = new ActionCommand(() => { OpenMetadataManager(); });
-
-            CommandOpenGlobalSettings = new ActionCommand(() => OpenGlobalSettings());
 
             // Command to Exit
             CommandExit = new ActionCommand(() => Environment.Exit(0));
@@ -276,6 +258,36 @@ namespace TASCompAssistant.ViewModels
                 CopyToClipboardModel.CopyTaskDescriptionToClipboard(CompetitionTasks[CompetitionTaskIndex]));
 
             RefreshAll();
+        }
+
+        private void OpenFile()
+        {
+            CompetitionTasks.Clear();
+            var data = FileModel.OpenFile();
+
+            ApplicationSettings.UpdateSettings(data.SettingsData);
+
+            foreach (var item in data.CompetitionData)
+            {
+                CompetitionTasks.Add(item);
+            }
+
+            CompetitionTaskIndex = 0;
+        }
+
+        private void SaveFile()
+        {
+            SavedDataModel data = new SavedDataModel()
+            {
+                CompetitionData = CompetitionTasks,
+                SettingsData = ApplicationSettings
+            };
+            FileModel.SaveFile(data);
+        }
+
+        private void SetDefaultSettings()
+        {
+            ApplicationSettings.SetDefaultValues();
         }
 
         private void OpenMetadataManager()
@@ -288,16 +300,6 @@ namespace TASCompAssistant.ViewModels
             };
 
             metadataManger.ShowDialog();
-        }
-
-        private void OpenGlobalSettings()
-        {
-            var settingsView = new GlobalSettingsView
-            {
-                DataContext = GlobalSettingsViewModel
-            };
-
-            settingsView.ShowDialog();
         }
 
         private void RefreshAll()

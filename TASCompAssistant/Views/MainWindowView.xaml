@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TASCompAssistant.Views"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -100,13 +101,6 @@
                    FontSize="14" />
 
         <!-- ZIndex brings element to front -->
-        <TextBlock Text="Competition:"
-                   Grid.Row="2"
-                   Grid.Column="2"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"
-                   Panel.ZIndex="1" />
-
         <ComboBox ItemsSource="{Binding CompetitionTasks}"
                   DisplayMemberPath="TaskName"
                   SelectedValuePath="TaskName"
@@ -135,6 +129,7 @@
                               CanUserResizeColumns="True"
                               CanUserDeleteRows="True"
                               CanUserAddRows="False"
+                              CanUserSortColumns="False"
                               AutoGenerateColumns="False">
 
                         <!-- Grouping Style -->
@@ -154,33 +149,62 @@
                                                 Binding="{Binding Place}"
                                                 Width="45"
                                                 IsReadOnly="True" />
+
                             <DataGridTextColumn Header="Username"
                                                 Binding="{Binding Username}"
                                                 Width="120" />
-                            <DataGridTextColumn Header="VIStart"
-                                                Binding="{Binding VIStart}"
-                                                Width="Auto" />
-                            <DataGridTextColumn Header="VIEnd"
-                                                Binding="{Binding VIEnd}"
-                                                Width="Auto" />
-                            <DataGridTextColumn Header="VIs"
-                                                Binding="{Binding VICount}"
+
+                            <DataGridTextColumn Binding="{Binding VIStart}"
+                                                Width="Auto">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock>
+                                        <Run Text="Starting" />
+                                        <Run
+                                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName, 
+                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}}}" />
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding VIEnd}"
+                                                Width="Auto">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock>
+                                        <Run Text="Ending" />
+                                        <Run
+                                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName, 
+                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}}}" />
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding VICount}"
                                                 Width="Auto"
-                                                IsReadOnly="True" />
+                                                IsReadOnly="True">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock>
+                                        <Run Text="Total" />
+                                        <Run
+                                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName, 
+                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}}}" />
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
                             <DataGridTextColumn Header="Time"
                                                 Binding="{Binding TimeFormatted}"
                                                 Width="Auto"
                                                 IsReadOnly="True" />
+
                             <DataGridTextColumn Header="Rerecords"
                                                 Binding="{Binding Rerecords}"
                                                 Width="Auto" />
+
                             <DataGridCheckBoxColumn Header="DQ"
                                                     Binding="{Binding DQ}"
                                                     Width="30" />
+
                             <DataGridTextColumn Header="DQReason"
-                                                Binding="{Binding DqReasons}"
-                                                Width="Auto" />
-                            <DataGridTextColumn Header="DQReason (text)"
                                                 Binding="{Binding DqReasonsAsString, Mode=OneWay}"
                                                 Width="Auto"
                                                 IsReadOnly="False" />
@@ -280,7 +304,7 @@
                                     <RowDefinition Height="24" />
                                     <RowDefinition Height="5" />
                                     <RowDefinition Height="18" />
-                                    <RowDefinition Height="24" />
+                                    <RowDefinition Height="auto" />
                                     <RowDefinition Height="5" />
                                     <RowDefinition Height="18" />
                                     <RowDefinition Height="18" />
@@ -414,6 +438,16 @@
                 </Grid>
             </TabItem>
 
+            <TabItem Header="Application Setting">
+                <Grid>
+                    <syncfusion:PropertyGrid Grid.Row="0"
+                                             Grid.Column="0"
+                                             BorderBrush="SlateGray"
+                                             SelectedObject="{Binding ApplicationSettings}"
+                                             EnableGrouping="True"
+                                             DescriptionPanelVisibility="Visible" />
+                </Grid>
+            </TabItem>
         </TabControl>
 
         <!-- Row 3 -->
@@ -430,7 +464,7 @@
             <Grid>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
@@ -443,33 +477,41 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Username:</TextBlock>
                 <TextBox Text="{Binding EditableCompetitor.Username}"
                          Grid.Row="0"
                          Grid.Column="1"
                          VerticalAlignment="Center"
-                         Margin="0,4" Grid.ColumnSpan="2" />
+                         Margin="5,4,0,4" />
 
-                <TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="11" Margin="0,5">Starting VI:</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">
+                    <Run Text="Starting" />
+                    <Run Text="{Binding ApplicationSettings.TimeMeasurementName}" /><Run Text=":" />
+                </TextBlock>
+
                 <TextBox Text="{Binding EditableCompetitor.VIStart}"
                          Grid.Row="1"
                          Grid.Column="1"
                          VerticalAlignment="Center"
-                         Margin="0,4" Grid.ColumnSpan="2" />
+                         Margin="5,4,0,4" />
 
-                <TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="11" Margin="0,5">Ending VI:</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">
+                    <Run Text="Ending" />
+                    <Run Text="{Binding ApplicationSettings.TimeMeasurementName}" /><Run Text=":" />
+                </TextBlock>
+
                 <TextBox Text="{Binding EditableCompetitor.VIEnd}"
                          Grid.Row="2"
                          Grid.Column="1"
                          VerticalAlignment="Center"
-                         Margin="0,4" Grid.ColumnSpan="2" />
+                         Margin="5,4,0,4" />
 
-                <TextBlock Grid.Row="3" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">Rerecords:</TextBlock>
                 <TextBox Text="{Binding EditableCompetitor.Rerecords}"
                          Grid.Row="3"
                          Grid.Column="1"
                          VerticalAlignment="Center"
-                         Margin="0,4" Grid.ColumnSpan="2" />
+                         Margin="5,4,0,4" />
 
                 <CheckBox Content="DQ?"
                           IsChecked="{Binding EditableCompetitor.DQ}"

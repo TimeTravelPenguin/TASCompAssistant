@@ -53,12 +53,18 @@
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.PropertyGrid.WPF, Version=17.2460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfInput.WPF, Version=17.2460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfShared.Wpf, Version=17.2460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Shared.Wpf, Version=17.2460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Tools.Wpf, Version=17.2460.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -103,20 +109,16 @@
     <Compile Include="Models\CompetitionTaskMetadataModel.cs" />
     <Compile Include="Models\DueDateModel.cs" />
     <Compile Include="Models\GlobalSettingsModel.cs" />
-    <Compile Include="Models\GlobalSettingsModels\TickSettingsModel.cs" />
+    <Compile Include="Models\SettingItem.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Types\BindingResourceExtension.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
     <Compile Include="Models\OutputToClipboardModel.cs" />
-    <Compile Include="ViewModels\GlobalSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SavedDataModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DqReasonsEditorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GlobalSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,7 +132,7 @@
     </Compile>
     <Compile Include="Models\CompetitionTaskModel.cs" />
     <Compile Include="Models\CompetitorModel.cs" />
-    <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Models\SerializeDataModel.cs" />
     <Compile Include="Models\DqReasonModel.cs" />
     <Compile Include="Models\DqReasonsProfileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
@@ -142,9 +144,6 @@
       <DependentUpon>DqReasonsEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\GraphModel.cs" />
-    <Compile Include="Views\GlobalSettingsView.xaml.cs">
-      <DependentUpon>GlobalSettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>

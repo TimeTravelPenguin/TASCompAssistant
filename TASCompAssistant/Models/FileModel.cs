@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Forms;
 using TASCompAssistant.Types;
+using TASCompAssistant.ViewModels;
 
 namespace TASCompAssistant.Models
 {
     internal class FileModel : PropertyChangedBase
     {
-        private readonly DataModel _dataModel = new DataModel();
+        private readonly SerializeDataModel _dataModel = new SerializeDataModel();
         private string _fileName = "No file opened...";
 
         public string FileName
@@ -17,7 +18,7 @@ namespace TASCompAssistant.Models
             private set => SetValue(ref _fileName, value);
         }
 
-        public ObservableCollection<CompetitionTaskModel> OpenFile()
+        public SavedDataModel OpenFile()
         {
             var ofd = new OpenFileDialog
             {
@@ -41,17 +42,17 @@ namespace TASCompAssistant.Models
 
                 FileClear();
                 MessageBox.Show("Please open a valid .tascomp file", "Error opening file...");
-                return new ObservableCollection<CompetitionTaskModel>();
+                return new SavedDataModel();
             }
             catch // Put errorhandling here for invalid JSON?
             {
                 FileClear();
             }
 
-            return new ObservableCollection<CompetitionTaskModel>();
+            return new SavedDataModel();
         }
 
-        public void SaveFile(ObservableCollection<CompetitionTaskModel> data)
+        public void SaveFile(SavedDataModel data)
         {
             var saveData = _dataModel.SaveData(data);
 
