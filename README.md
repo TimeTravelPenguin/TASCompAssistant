@@ -4,7 +4,7 @@ This is a tool intended to assist in compiling leaderboards and scoreboards for 
 ## About this tool
 Communities such as the Super Mario 64 Tool-Assisted Speedrunning (TAS) community actively host various competitions to push the limits of TASers. This tool is developed with the intention of aiding in the administrative processing of competitors through the competitions.
 
-This tool is written in C# with the MVVM software architect pattern.
+This tool is a WPF application, written in C# with the MVVM software architect pattern.
 
 ## Features
 Note that this tool is still in development.
