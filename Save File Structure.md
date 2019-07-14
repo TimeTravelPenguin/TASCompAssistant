@@ -7,6 +7,7 @@ Currently, the save files store:
     - Task metadata (name, descriptions, rules, etc.)
     - Competitor information
     - Deadline information
+    - Application settings
     - etc.
 * (Coming soon) DQReasonProfiles
 
