@@ -158,8 +158,8 @@ namespace TASCompAssistant.Models
 
         private double GetTime()
         {
-            var divideRate = Settings.Default.TasInputRate;
-            return Math.Round(VICount / divideRate, 3);
+            var divideRate = Settings.Default.TimeMeasurementFrequency;
+            return Math.Round(VICount / (divideRate > 0 ? divideRate : 1), 3);
         }
 
         private string GetFormatTime()

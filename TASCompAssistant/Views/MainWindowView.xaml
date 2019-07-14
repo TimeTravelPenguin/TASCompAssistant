@@ -64,7 +64,7 @@
 
                 <!-- Settings -->
                 <MenuItem Header="_Settings">
-                    <MenuItem Header="Global Settings" Command="{Binding CommandOpenGlobalSettings}" />
+                    <MenuItem Header="Edit current metadata" Command="{Binding CommandEditCurrentMetadata}" />
                     <MenuItem Header="DQ Reasons Profiles...">
                         <MenuItem Header="Configure DQ Reasons Profile" />
                         <MenuItem Header="Import DQ Reasons Profile" />
@@ -72,7 +72,7 @@
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Rank Competition" Command="{Binding CommandUpdateData}" />
+                <MenuItem Header="Refresh Leaderboard" Command="{Binding CommandUpdateData}" />
 
                 <MenuItem Header="Add Test Data" Command="{Binding CommandAddTestData}" />
 
@@ -523,7 +523,6 @@
 
                 <Button Grid.Row="4"
                         Grid.Column="1"
-                        Grid.ColumnSpan="2"
                         Margin="5,3"
                         Content="Add Competitor"
                         Command="{Binding CommandAddCompetitor}" />

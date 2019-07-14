@@ -1,15 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
+using TASCompAssistant.Properties;
 using TASCompAssistant.Types;
-using TASCompAssistant.ViewModels;
 
 namespace TASCompAssistant.Models
 {
-    internal class GlobalSettingsModel : PropertyChangedBase
+    internal class ApplicationSettingsModel : PropertyChangedBase
     {
+        private string _competitionTimeZone;
         private double _timeMeasurementFrequency;
         private string _timeMeasurementName;
-        private TimeZone _competitionTimeZone;
 
         [Category("Global Settings")]
         [DisplayNameAttribute("Unit of time name")]
@@ -18,7 +18,11 @@ namespace TASCompAssistant.Models
         public string TimeMeasurementName
         {
             get => _timeMeasurementName;
-            set => SetValue(ref _timeMeasurementName, value);
+            set
+            {
+                SetValue(ref _timeMeasurementName, value);
+                Settings.Default.TimeMeasurementName = TimeMeasurementName;
+            }
         }
 
         [Category("Global Settings")]
@@ -28,20 +32,24 @@ namespace TASCompAssistant.Models
         public double TimeMeasurementFrequency
         {
             get => _timeMeasurementFrequency;
-            set => SetValue(ref _timeMeasurementFrequency, value);
+            set
+            {
+                SetValue(ref _timeMeasurementFrequency, value);
+                Settings.Default.TimeMeasurementFrequency = TimeMeasurementFrequency;
+            }
         }
 
         [Category("Competition Settings")]
         [DisplayNameAttribute("Competition due date timezone")]
         [DescriptionAttribute(
             "This is the timezone that will be used when determining the duedate time of a competition")]
-        public TimeZone CompetitionTimeZone
+        public string CompetitionTimeZone
         {
             get => _competitionTimeZone;
             set => SetValue(ref _competitionTimeZone, value);
         }
 
-        public GlobalSettingsModel()
+        public ApplicationSettingsModel()
         {
             SetDefaultValues();
         }
@@ -50,10 +58,10 @@ namespace TASCompAssistant.Models
         {
             TimeMeasurementName = "VI";
             TimeMeasurementFrequency = 60;
-            CompetitionTimeZone = TimeZone.CurrentTimeZone;
+            CompetitionTimeZone = TimeZoneInfo.Local.DisplayName;
         }
 
-        internal void UpdateSettings(GlobalSettingsModel data)
+        internal void UpdateSettings(ApplicationSettingsModel data)
         {
             TimeMeasurementName = data.TimeMeasurementName;
             TimeMeasurementFrequency = data.TimeMeasurementFrequency;

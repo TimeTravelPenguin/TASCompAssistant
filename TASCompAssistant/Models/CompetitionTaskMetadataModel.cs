@@ -61,5 +61,19 @@ namespace TASCompAssistant.Models
             MandatorySaveState = true;
             CooperativeTask = false;
         }
+
+        internal void UpdateMetadata(CompetitionTaskMetadataModel metadata)
+        {
+            TaskDescription = metadata.TaskDescription;
+            TaskTimingDescription = metadata.TaskTimingDescription;
+            MandatorySaveState = metadata.MandatorySaveState;
+            CooperativeTask = metadata.CooperativeTask;
+
+            Rules.Clear();
+            foreach (var metadataRule in metadata.Rules)
+            {
+                Rules.Add(metadataRule);
+            }
+        }
     }
 }

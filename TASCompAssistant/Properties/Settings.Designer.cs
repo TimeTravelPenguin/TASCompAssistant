@@ -26,24 +26,24 @@ namespace TASCompAssistant.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("VIs")]
-        public string TasInputName {
+        public string TimeMeasurementName {
             get {
-                return ((string)(this["TasInputName"]));
+                return ((string)(this["TimeMeasurementName"]));
             }
             set {
-                this["TasInputName"] = value;
+                this["TimeMeasurementName"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("60")]
-        public double TasInputRate {
+        public double TimeMeasurementFrequency {
             get {
-                return ((double)(this["TasInputRate"]));
+                return ((double)(this["TimeMeasurementFrequency"]));
             }
             set {
-                this["TasInputRate"] = value;
+                this["TimeMeasurementFrequency"] = value;
             }
         }
     }

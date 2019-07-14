@@ -19,6 +19,17 @@ namespace TASCompAssistant.ViewModels
         // Determine
         private bool _addCompetitorEnabled;
 
+        /*	TODO:
+                - Add DQ Reasons
+                - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
+                    - On event there is duplicate upon entering via left field, initiate a yes/no prompt
+                      to determine if you should overwrite the values previously submitted for that username
+                - When double-clicking a checkbox in the data-grid to edit the value, unless you click away, it doesn't commit the edit.
+                  can we make it so that upon the value change of the text box, the commit occurs?
+                - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
+        */
+        private ApplicationSettingsModel _applicationSettings;
+
         // This is used to bind the DataGrid, to show the contents of Competitions
         private ICollectionView _competitionTaskCollection;
 
@@ -35,17 +46,6 @@ namespace TASCompAssistant.ViewModels
 
         // Modifiable competitor model used for on-screen objects
         private CompetitorModel _editableCompetitor = new CompetitorModel();
-
-        /*	TODO:
-                - Add DQ Reasons
-                - Add check for Competitors for objects with equivalent Username values, to avoid duplicates
-                    - On event there is duplicate upon entering via left field, initiate a yes/no prompt
-                      to determine if you should overwrite the values previously submitted for that username
-                - When double-clicking a checkbox in the data-grid to edit the value, unless you click away, it doesn't commit the edit.
-                  can we make it so that upon the value change of the text box, the commit occurs?
-                - Fix the dropdown menus: https://stackoverflow.com/questions/1010962/how-do-get-menu-to-open-to-the-left-in-wpf/1011313#1011313
-        */
-        private GlobalSettingsModel _applicationSettings = new GlobalSettingsModel();
 
         // Competition Metadata ViewModel data-context
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
@@ -167,6 +167,9 @@ namespace TASCompAssistant.ViewModels
         // Saves File
         public ActionCommand CommandFileSave { get; }
 
+        // Opens metadatamanager with current competition
+        public ActionCommand CommandEditCurrentMetadata { get; }
+
         // Opens window to manage competition rule-set
         public ActionCommand CommandModifyCompetitionTaskMetadata { get; }
 
@@ -178,7 +181,7 @@ namespace TASCompAssistant.ViewModels
         private OutputToClipboardModel CopyToClipboardModel { get; } = new OutputToClipboardModel();
 
         // Settings used to change in UI features, as well as other features
-        public GlobalSettingsModel ApplicationSettings
+        public ApplicationSettingsModel ApplicationSettings
         {
             get => _applicationSettings;
             set => SetValue(ref _applicationSettings, value);
@@ -186,6 +189,9 @@ namespace TASCompAssistant.ViewModels
 
         public MainWindowViewModel()
         {
+            // Initializes application settings
+            ApplicationSettings = new ApplicationSettingsModel();
+
             // Initialize the default DQProfile
             DqReasonsProfileModel.SetProfileDefaults();
             DqProfilesCollection.Add(DqReasonsProfileModel);
@@ -217,6 +223,9 @@ namespace TASCompAssistant.ViewModels
             // Command to sort data
             CommandUpdateData = new ActionCommand(() => { RefreshAll(); });
 
+            // Edit current metadata in window
+            CommandEditCurrentMetadata = new ActionCommand(() => EditCurrentMetadata());
+
             // Command to add random test data to data-grid
             CommandAddTestData = new ActionCommand(() =>
             {
@@ -236,7 +245,6 @@ namespace TASCompAssistant.ViewModels
                         DQ = r.Next(13) == 0 // simulates random DQ
                     });
                 }
-
 
                 RefreshAll();
             });
@@ -260,6 +268,23 @@ namespace TASCompAssistant.ViewModels
             RefreshAll();
         }
 
+        private void EditCurrentMetadata()
+        {
+            var tempDataContext = new CompetitionMetadataManagerViewModel();
+
+            var tempMetadata = CompetitionTasks[CompetitionTaskIndex].Metadata;
+            tempDataContext.Metadata = tempMetadata;
+
+            var metadataManger = new CompetitionMetadataManagerView
+            {
+                DataContext = tempDataContext
+            };
+
+            metadataManger.ShowDialog();
+
+            CompetitionTasks[CompetitionTaskIndex].Metadata.UpdateMetadata(tempDataContext.Metadata);
+        }
+
         private void OpenFile()
         {
             CompetitionTasks.Clear();
@@ -277,7 +302,7 @@ namespace TASCompAssistant.ViewModels
 
         private void SaveFile()
         {
-            SavedDataModel data = new SavedDataModel()
+            var data = new SavedDataModel
             {
                 CompetitionData = CompetitionTasks,
                 SettingsData = ApplicationSettings

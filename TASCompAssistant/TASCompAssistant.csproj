@@ -108,7 +108,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\CompetitionTaskMetadataModel.cs" />
     <Compile Include="Models\DueDateModel.cs" />
-    <Compile Include="Models\GlobalSettingsModel.cs" />
+    <Compile Include="Models\ApplicationSettingsModel.cs" />
     <Compile Include="Models\SettingItem.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Types\BindingResourceExtension.cs" />

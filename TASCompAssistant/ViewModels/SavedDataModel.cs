@@ -8,6 +8,6 @@ namespace TASCompAssistant.ViewModels
         public ObservableCollection<CompetitionTaskModel> CompetitionData { get; set; } =
             new ObservableCollection<CompetitionTaskModel>();
 
-        public GlobalSettingsModel SettingsData { get; set; } = new GlobalSettingsModel();
+        public ApplicationSettingsModel SettingsData { get; set; } = new ApplicationSettingsModel();
     }
 }
