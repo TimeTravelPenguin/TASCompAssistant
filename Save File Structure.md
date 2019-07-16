@@ -124,7 +124,7 @@ It should be noted that for these properties, the second and millisecond fields 
     - `Username` is the name or alias the competitor goes by.
     - `TimeUnitStart` is the unit of time that the TAS begins on (specifically it is the initial `TimeMeasurementName` value).
     - `TimeUnitEnd` is the unit of time the TAS ends on.
-    - `TimeUnitCount` is the total count of time units for the competitor's submission. This is calculated as `TimeUnitEnd - TimeUnitStart`.
+    - `TimeUnitCount` is the total count of time units for the competitor's submission. This is calculated as `TimeUnitCount = TimeUnitEnd - TimeUnitStart`.
     - `TimeInSeconds` is the calculation of `TimeUnitCount` being converted to seconds. This is done by dividing it by `TimeMeasurementFrequency`; in other words, `TimeInSeconds = TimeUnitCount / TimeMeasurementFrequency`.
     - `TimeFormatted` is the formatted string of `TimeInSeconds` using hours, minutes, seconds, milliseconds format (e.g. 1h 21m 12s 500ms).
     - `Rerecords` is the rerecord count of the competitor's TAS.
