@@ -28,12 +28,12 @@
         <!-- Column and Row Definitions to help keep shit neat -->
         <Grid.ColumnDefinitions>
             <!--v This is padding v-->
-            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="5" />
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="120" />
             <!--v This is padding v-->
-            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -157,24 +157,18 @@
                             <DataGridTextColumn Binding="{Binding TimeUnitStart}"
                                                 Width="Auto">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock>
-                                        <Run Text="Starting" />
-                                        <Run
-                                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName, 
-                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}}}" />
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                        RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
+                                        StringFormat=Starting {0}}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
                             <DataGridTextColumn Binding="{Binding TimeUnitEnd}"
                                                 Width="Auto">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock>
-                                        <Run Text="Ending" />
-                                        <Run
-                                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName, 
-                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}}}" />
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                        RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
+                                        StringFormat=Ending {0}}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
@@ -182,12 +176,9 @@
                                                 Width="Auto"
                                                 IsReadOnly="True">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock>
-                                        <Run Text="Total" />
-                                        <Run
-                                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName, 
-                                              RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}}}" />
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                        RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
+                                        StringFormat=Total {0}s}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
@@ -453,7 +444,7 @@
         <!-- Row 3 -->
 
         <!-- Group Box -->
-        <GroupBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,-2" IsEnabled="{Binding AddCompetitorEnabled}">
+        <GroupBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" IsEnabled="{Binding AddCompetitorEnabled}">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/TASCompAssistant;component/Icons/RedMushroom.ico" Margin="3,0" Height="15" />
@@ -484,10 +475,8 @@
                          VerticalAlignment="Center"
                          Margin="5,4,0,4" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">
-                    <Run Text="Starting" />
-                    <Run Text="{Binding ApplicationSettings.TimeMeasurementName}" /><Run Text=":" />
-                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5"
+                           Text="{Binding ApplicationSettings.TimeMeasurementName, StringFormat=Starting {0}}" />
 
                 <TextBox Text="{Binding EditableCompetitor.TimeUnitStart}"
                          Grid.Row="1"
@@ -495,10 +484,8 @@
                          VerticalAlignment="Center"
                          Margin="5,4,0,4" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5">
-                    <Run Text="Ending" />
-                    <Run Text="{Binding ApplicationSettings.TimeMeasurementName}" /><Run Text=":" />
-                </TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" FontSize="11" Margin="0,5"
+                           Text="{Binding ApplicationSettings.TimeMeasurementName, StringFormat=Ending {0}}" />
 
                 <TextBox Text="{Binding EditableCompetitor.TimeUnitEnd}"
                          Grid.Row="2"
