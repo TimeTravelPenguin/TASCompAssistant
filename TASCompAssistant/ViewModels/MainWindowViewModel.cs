@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.Expression.Interactivity.Core;
@@ -36,7 +37,7 @@ namespace TASCompAssistant.ViewModels
         private int _competitionTaskIndex;
 
         private ObservableCollection<CompetitionTaskModel> _competitionTasks =
-            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
+            new ObservableCollection<CompetitionTaskModel> { new CompetitionTaskModel { TaskName = "Competition 1" } };
 
         // This is used to bind the DataGrid, to show the Competitors
         private ICollectionView _competitorCollection;
@@ -155,6 +156,9 @@ namespace TASCompAssistant.ViewModels
         // Add test data to data-grid
         public ActionCommand CommandAddTestData { get; }
 
+        // Opens window to display live stream results
+        public ActionCommand CommandOpenStreamResultsWindow { get; }
+
         // Clears the window to be a clean slate
         public ActionCommand CommandClearAll { get; }
 
@@ -265,7 +269,68 @@ namespace TASCompAssistant.ViewModels
             CommandCopyTaskDescriptionToClipboard = new ActionCommand(() =>
                 CopyToClipboardModel.CopyTaskDescriptionToClipboard(CompetitionTasks[CompetitionTaskIndex]));
 
+            // Opens window for live stream results
+            CommandOpenStreamResultsWindow = new ActionCommand(() => OpenStreamResultsWindow());
+
             RefreshAll();
+        }
+
+        private double CalcScore(int place, int totalCompetitors)
+        {
+            var x = (double)(totalCompetitors - place + 1) / totalCompetitors;
+
+            return 15 * Math.Pow(x, 6) + 10 * Math.Pow(x, 4) + 5 * Math.Pow(x, 2) + 14 * x + 6;
+        }
+
+        private void UpdateScores()
+        {
+            // Clear all scores
+            // For each competition, from oldest to newest (index zero to last), calc scores and add the previous scores if there is any
+            // To add previous scores, check if current competitor is in the history collection if so, add that value to the value of the current comp, then update that value
+            // If they aren't in that collection, add them
+
+            var competitionHistory = new List<CompetitorModel>();
+
+            foreach (var task in CompetitionTasks)
+            {
+                // Calc scores
+                foreach (var competitor in task.CompetitorData)
+                {
+                    // Calc score for current comp results
+                    if (!competitor.DQ)
+                    {
+                        competitor.Score = CalcScore(competitor.Place, task.CompetitorData.Count);
+                    }
+                    else
+                    {
+                        competitor.Score = 0;
+                    }
+
+                    // check history for competitor of same name add add previous results on top
+                    var historicResultExists = false;
+                    foreach (var historyCompetitor in competitionHistory)
+                    {
+                        if (competitor.Username == historyCompetitor.Username)
+                        {
+                            historicResultExists = true;
+                            competitor.Score += historyCompetitor.Score;
+                            break;
+                        }
+                    }
+
+                    if (!historicResultExists)
+                    {
+                        competitionHistory.Add(competitor);
+                    }
+                }
+            }
+
+            // Rank scores
+            SortScores();
+        }
+
+        private void OpenStreamResultsWindow()
+        {
         }
 
         private void EditCurrentMetadata()
@@ -302,6 +367,7 @@ namespace TASCompAssistant.ViewModels
                 CompetitionData = CompetitionTasks,
                 SettingsData = ApplicationSettings
             };
+
             FileModel.SaveFile(data);
         }
 
@@ -326,6 +392,7 @@ namespace TASCompAssistant.ViewModels
         {
             CheckMinimumCompetitions();
             SortCompetition();
+            UpdateScores();
             RefreshCompetitorDataGrid();
             RefreshCompetitionDataGrid();
             UpdateLiveCharts();
@@ -420,7 +487,7 @@ namespace TASCompAssistant.ViewModels
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DqReasons.Add(new DqReasonModel {Reason = dq.Reason, IsSelected = true});
+                    newCompetitor.DqReasons.Add(new DqReasonModel { Reason = dq.Reason, IsSelected = true });
                 }
             }
 
@@ -457,6 +524,46 @@ namespace TASCompAssistant.ViewModels
                 },
                 CompetitorData = new ObservableCollection<CompetitorModel>(EditableCompetitionTask.CompetitorData)
             });
+        }
+
+        private void SortScores()
+        {
+            foreach (var task in CompetitionTasks)
+            {
+                var sortingList = new List<CompetitorModel>(task.CompetitorData);
+                sortingList.OrderBy(o => o.Score);
+
+                task.CompetitorData.Clear();
+
+                var lastScore = 0d;
+                var lastPlace = 0;
+                var skipCounter = 0;
+                foreach (var competitor in sortingList)
+                {
+                    if (lastPlace == 0)
+                    {
+                        competitor.Place = 1;
+                    }
+                    else
+                    {
+                        if (lastScore == competitor.Score)
+                        {
+                            competitor.Place = lastPlace;
+                            skipCounter++;
+                        }
+                        else
+                        {
+                            competitor.Place = lastPlace + skipCounter + 1;
+                            skipCounter = 0;
+                        }
+                    }
+
+                    lastScore = competitor.Score;
+                    lastPlace = competitor.Place;
+
+                    CurrentCompetitors.Add(competitor);
+                }
+            }
         }
 
         private void SortCompetition()

@@ -127,8 +127,12 @@
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
     <Compile Include="Models\OutputToClipboardModel.cs" />
     <Compile Include="ViewModels\SavedDataModel.cs" />
+    <Compile Include="ViewModels\StreamOutputViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StreamOutputView.xaml.cs">
+      <DependentUpon>StreamOutputView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DqReasonsEditorView.xaml">
       <SubType>Designer</SubType>
@@ -161,6 +165,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CompetitionMetadataManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StreamOutputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -83,6 +83,8 @@
                     <MenuItem Header="Copy Competition Score" />
                 </MenuItem>
 
+                <MenuItem Header="Stream Output" Command="{Binding CommandOpenStreamResultsWindow}"/>
+
             </Menu>
             <StackPanel />
         </DockPanel>
@@ -211,13 +213,17 @@
                 <Grid Background="#FFE5E5E5">
 
                     <!-- Datagrid Score -->
-                    <DataGrid ItemsSource="{Binding null}"
-                              AutoGenerateColumns="False"
+                    <DataGrid ItemsSource="{Binding CompetitorCollection, UpdateSourceTrigger=PropertyChanged}"
+                              HorizontalGridLinesBrush="DarkGray"
+                              VerticalGridLinesBrush="DarkGray"
                               IsReadOnly="True"
                               CanUserReorderColumns="False"
                               CanUserResizeRows="False"
                               CanUserResizeColumns="True"
-                              CanUserDeleteRows="True">
+                              CanUserDeleteRows="False"
+                              CanUserAddRows="False"
+                              CanUserSortColumns="False"
+                              AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Place"
                                                 Binding="{Binding ScorePlace}"
@@ -226,7 +232,7 @@
                                                 Binding="{Binding Username}"
                                                 Width="*" />
                             <DataGridTextColumn Header="Score"
-                                                Binding="{Binding ScorePlace}"
+                                                Binding="{Binding Score}"
                                                 Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
