@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
@@ -16,8 +18,7 @@ namespace TASCompAssistant.Models
 
         // The name of the current competition
         private string _taskName = "Unnamed Competition Task";
-
-
+        
         public string TaskName
         {
             get => _taskName;

@@ -225,9 +225,9 @@
                               CanUserSortColumns="False"
                               AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Place"
+                            <DataGridTextColumn Header="Score Rank"
                                                 Binding="{Binding ScorePlace}"
-                                                Width="45" />
+                                                Width="80" />
                             <DataGridTextColumn Header="Username"
                                                 Binding="{Binding Username}"
                                                 Width="*" />
