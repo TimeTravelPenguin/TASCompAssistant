@@ -40,7 +40,7 @@ namespace TASCompAssistant.ViewModels
         private int _competitionTaskIndex;
 
         private ObservableCollection<CompetitionTaskModel> _competitionTasks =
-            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
+            new ObservableCollection<CompetitionTaskModel> { new CompetitionTaskModel { TaskName = "Competition 1" } };
 
         // This is used to bind the DataGrid, to show the Competitors
         private ICollectionView _competitorCollection;
@@ -448,7 +448,7 @@ namespace TASCompAssistant.ViewModels
             {
                 if (dq.IsSelected)
                 {
-                    newCompetitor.DqReasons.Add(new DqReasonModel {Reason = dq.Reason, IsSelected = true});
+                    newCompetitor.DqReasons.Add(new DqReasonModel { Reason = dq.Reason, IsSelected = true });
                 }
             }
 
@@ -489,7 +489,7 @@ namespace TASCompAssistant.ViewModels
 
         private static double CalcScore(int place, int totalCompetitors)
         {
-            var x = (double) (totalCompetitors - place + 1) / totalCompetitors;
+            var x = (double)(totalCompetitors - place + 1) / totalCompetitors;
 
             return 15 * Math.Pow(x, 6) + 10 * Math.Pow(x, 4) + 5 * Math.Pow(x, 2) + 14 * x + 6;
         }
@@ -575,6 +575,16 @@ namespace TASCompAssistant.ViewModels
                     lastScore = competitor.Score;
                     lastPlace = competitor.ScorePlace;
 
+                    task.CompetitorData.Add(competitor);
+                }
+
+                // Re-sort list into competition place order
+                var scoredList = new List<CompetitorModel>(sortingList).OrderBy(o => o.Place);
+
+                task.CompetitorData.Clear();
+
+                foreach (var competitor in scoredList)
+                {
                     task.CompetitorData.Add(competitor);
                 }
             }

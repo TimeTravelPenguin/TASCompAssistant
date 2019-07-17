@@ -222,12 +222,12 @@
                               CanUserResizeColumns="True"
                               CanUserDeleteRows="False"
                               CanUserAddRows="False"
-                              CanUserSortColumns="False"
+                              CanUserSortColumns="True"
                               AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Score Rank"
+                            <DataGridTextColumn Header="Score Place"
                                                 Binding="{Binding ScorePlace}"
-                                                Width="80" />
+                                                Width="auto" />
                             <DataGridTextColumn Header="Username"
                                                 Binding="{Binding Username}"
                                                 Width="*" />
