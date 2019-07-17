@@ -24,11 +24,11 @@ namespace TASCompAssistant.Models
 
         private int _scorePlace;
 
-        private string _username;
-
         private int _timeUnitEnd;
 
         private int _timeUnitStart;
+
+        private string _username;
 
         public int Place
         {

@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:TASCompAssistant.Views"
         xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
         Title="Matadata Manager" Height="460" MinHeight="460" Width="420" MinWidth="420"
         Icon="/TASCompAssistant;component/Icons/QBlock.ico">
@@ -41,7 +42,7 @@
                    Grid.Column="1"
                    Grid.ColumnSpan="3" />
 
-        <GroupBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,-2">
+        <telerik:GroupBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,-2">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/TASCompAssistant;component/Icons/GreenMushroom.ico" Margin="3,0" Height="15" />
@@ -199,7 +200,7 @@
                           Margin="0,0,7,0" />
 
             </Grid>
-        </GroupBox>
+        </telerik:GroupBox>
 
         <Button Content="Close"
                 Command="{Binding CommandCloseWindow, Mode=OneWay}"

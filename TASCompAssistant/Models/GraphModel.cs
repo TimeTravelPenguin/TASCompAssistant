@@ -4,6 +4,7 @@ using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using TASCompAssistant.Properties;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
@@ -59,7 +60,7 @@ namespace TASCompAssistant.Models
         private void SetFormatters()
         {
             XFormatter = val => $"{val}";
-            YFormatter = val => $"{val} {Properties.Settings.Default.TimeMeasurementName}s";
+            YFormatter = val => $"{val} {Settings.Default.TimeMeasurementName}s";
         }
 
         private void CreateSeriesCollection()
@@ -68,14 +69,14 @@ namespace TASCompAssistant.Models
             {
                 new LineSeries
                 {
-                    Title = $"Competition Data",
+                    Title = "Competition Data",
                     Values = CompetitionData,
                     LineSmoothness = 0.6,
                     PointForeground = Brushes.Blue
                 },
                 new LineSeries
                 {
-                    Title = $"DQ Data",
+                    Title = "DQ Data",
                     Values = DqData,
                     LineSmoothness = 1,
                     PointForeground = Brushes.Red

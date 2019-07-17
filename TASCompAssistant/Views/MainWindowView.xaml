@@ -8,6 +8,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:viewmodels="clr-namespace:TASCompAssistant.ViewModels"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
@@ -53,7 +54,6 @@
         <!-- Menu Bar -->
         <DockPanel Grid.Row="0" Grid.ColumnSpan="5">
             <Menu DockPanel.Dock="Top">
-
                 <!-- File -->
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="{Binding CommandClearAll}" />
@@ -157,18 +157,20 @@
                             <DataGridTextColumn Binding="{Binding TimeUnitStart}"
                                                 Width="Auto">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                    <TextBlock
+                                        Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
                                         RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
-                                        StringFormat=Starting {0}}"/>
+                                        StringFormat=Starting {0}}" />
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
                             <DataGridTextColumn Binding="{Binding TimeUnitEnd}"
                                                 Width="Auto">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                    <TextBlock
+                                        Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
                                         RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
-                                        StringFormat=Ending {0}}"/>
+                                        StringFormat=Ending {0}}" />
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
@@ -176,9 +178,10 @@
                                                 Width="Auto"
                                                 IsReadOnly="True">
                                 <DataGridTextColumn.Header>
-                                    <TextBlock Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                    <TextBlock
+                                        Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
                                         RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
-                                        StringFormat=Total {0}s}"/>
+                                        StringFormat=Total {0}s}" />
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
@@ -274,7 +277,7 @@
                     <DockPanel>
 
                         <!-- Add Competition Sidebar-->
-                        <GroupBox Margin="0,0,0,-2">
+                        <telerik:GroupBox Margin="0,0,0,-2">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/TASCompAssistant;component/Icons/GreenMushroom.ico" Margin="3,0"
@@ -346,7 +349,7 @@
                                         VerticalAlignment="Center" />
 
                             </Grid>
-                        </GroupBox>
+                        </telerik:GroupBox>
 
                         <!-- Datagrid Competition -->
                         <DataGrid
@@ -444,7 +447,7 @@
         <!-- Row 3 -->
 
         <!-- Group Box -->
-        <GroupBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" IsEnabled="{Binding AddCompetitorEnabled}">
+        <telerik:GroupBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" IsEnabled="{Binding AddCompetitorEnabled}">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/TASCompAssistant;component/Icons/RedMushroom.ico" Margin="3,0" Height="15" />
@@ -515,7 +518,7 @@
                         Command="{Binding CommandAddCompetitor}" />
 
                 <!-- DQ Section -->
-                <GroupBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <telerik:GroupBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                     <GroupBox.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/TASCompAssistant;component/Icons/Coin.ico" Margin="3,0" Height="15" />
@@ -579,10 +582,10 @@
 
                         </Grid>
                     </StackPanel>
-                </GroupBox>
+                </telerik:GroupBox>
 
             </Grid>
-        </GroupBox>
+        </telerik:GroupBox>
 
         <!-- Row 4 -->
 
