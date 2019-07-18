@@ -65,10 +65,12 @@
                 <!-- Settings -->
                 <MenuItem Header="_Settings">
                     <MenuItem Header="Edit current metadata" Command="{Binding CommandEditCurrentMetadata}" />
-                    <MenuItem Header="DQ Reasons Profiles...">
+                    <MenuItem Header="DQ Reasons Profiles... (Coming soon!)">
+                        <!--
                         <MenuItem Header="Configure DQ Reasons Profile" />
                         <MenuItem Header="Import DQ Reasons Profile" />
                         <MenuItem Header="Export DQ Reasons Profile" />
+                        -->
                     </MenuItem>
                 </MenuItem>
 
@@ -79,8 +81,8 @@
                 <!-- Plain text results -->
                 <MenuItem Header="_Results Output">
                     <MenuItem Header="Copy Task Description" Command="{Binding CommandCopyTaskDescriptionToClipboard}" />
-                    <MenuItem Header="Copy Task Leaderboard" />
-                    <MenuItem Header="Copy Competition Score" />
+                    <MenuItem Header="Copy Task Leaderboard" Command="{Binding CommandCopyTaskLeaderboardToClipboard}"/>
+                    <MenuItem Header="Copy Competition Score" Command="{Binding CommandCopyCompetitionScoreToClipboard}"/>
                 </MenuItem>
 
                 <MenuItem Header="Stream Output" Command="{Binding CommandOpenStreamResultsWindow}" />

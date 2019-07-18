@@ -121,6 +121,7 @@
     <Compile Include="Models\CompetitionTaskMetadataModel.cs" />
     <Compile Include="Models\DueDateModel.cs" />
     <Compile Include="Models\ApplicationSettingsModel.cs" />
+    <Compile Include="Models\OrdinalModel.cs" />
     <Compile Include="Models\ScoreModel.cs" />
     <Compile Include="Models\SettingItem.cs" />
     <Compile Include="Settings.cs" />

@@ -192,6 +192,8 @@ namespace TASCompAssistant.ViewModels
         public ActionCommand CommandExit { get; }
 
         public ActionCommand CommandCopyTaskDescriptionToClipboard { get; }
+        public ActionCommand CommandCopyTaskLeaderboardToClipboard { get; }
+        public ActionCommand CommandCopyCompetitionScoreToClipboard { get; }
 
         private OutputToClipboardModel CopyToClipboardModel { get; } = new OutputToClipboardModel();
 
@@ -285,6 +287,14 @@ namespace TASCompAssistant.ViewModels
             // Copy description to clipboard
             CommandCopyTaskDescriptionToClipboard = new ActionCommand(() =>
                 CopyToClipboardModel.CopyTaskDescriptionToClipboard(CompetitionTasks[CompetitionTaskIndex]));
+
+            // Copy leaderboard to clipboard
+            CommandCopyTaskLeaderboardToClipboard = new ActionCommand(() =>
+                CopyToClipboardModel.CopyTaskLeaderboardToClipboard(CompetitionTasks[CompetitionTaskIndex]));
+
+            // Copy scores to clipboard
+            CommandCopyCompetitionScoreToClipboard = new ActionCommand(() =>
+                CopyToClipboardModel.CopyCompetitionScoresToClipboard(ScoreTotals));
 
             // Opens window for live stream results
             CommandOpenStreamResultsWindow = new ActionCommand(() => OpenStreamResultsWindow());
