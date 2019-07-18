@@ -321,17 +321,31 @@ namespace TASCompAssistant.ViewModels
             }
 
             CompetitionTaskIndex = 0;
+
+            RefreshAll();
         }
 
         private void SaveFile()
         {
-            var data = new SavedDataModel
+            try
             {
-                CompetitionData = CompetitionTasks,
-                SettingsData = ApplicationSettings
-            };
+                RefreshAll();
 
-            FileModel.SaveFile(data);
+                var data = new SavedDataModel
+                {
+                    CompetitionData = CompetitionTasks,
+                    SettingsData = ApplicationSettings,
+                    ScoreData = ScoreTotals
+                };
+
+                FileModel.SaveFile(data);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(
+                    $"There was an error saving the data. The following error has occured:{Environment.NewLine}{err.Message}",
+                    "An error has occured...");
+            }
         }
 
         private void SetDefaultSettings()

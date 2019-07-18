@@ -95,7 +95,7 @@ namespace TASCompAssistant.Models
 
                 if (!historicResultExists)
                 {
-                    competitionHistory.Add(competitor);
+                    competitionHistory.Add(new CompetitorModel(competitor));
                 }
             }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using TASCompAssistant.Models;
 
-namespace TASCompAssistant.ViewModels
+namespace TASCompAssistant.Models
 {
     internal class SavedDataModel
     {
@@ -9,5 +8,7 @@ namespace TASCompAssistant.ViewModels
             new ObservableCollection<CompetitionTaskModel>();
 
         public ApplicationSettingsModel SettingsData { get; set; } = new ApplicationSettingsModel();
+
+        public ObservableCollection<ScoreModel> ScoreData = new ObservableCollection<ScoreModel>();
     }
 }

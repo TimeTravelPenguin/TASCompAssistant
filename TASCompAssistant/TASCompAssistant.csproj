@@ -127,7 +127,7 @@
     <Compile Include="Types\BindingResourceExtension.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
     <Compile Include="Models\OutputToClipboardModel.cs" />
-    <Compile Include="ViewModels\SavedDataModel.cs" />
+    <Compile Include="Models\SavedDataModel.cs" />
     <Compile Include="ViewModels\StreamOutputViewModel.cs" />
     <Compile Include="Views\CompetitionMetadataManagerView.xaml.cs">
       <DependentUpon>CompetitionMetadataManagerView.xaml</DependentUpon>
