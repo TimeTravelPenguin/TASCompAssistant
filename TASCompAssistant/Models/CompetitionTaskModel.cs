@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
@@ -18,7 +18,7 @@ namespace TASCompAssistant.Models
 
         // The name of the current competition
         private string _taskName = "Unnamed Competition Task";
-        
+
         public string TaskName
         {
             get => _taskName;
@@ -57,6 +57,49 @@ namespace TASCompAssistant.Models
             Metadata.ClearData();
             DueDates.ClearDueDates();
             CompetitorData.Clear();
+        }
+
+        private static double CalcScore(int place, int totalCompetitors)
+        {
+            var x = (double) (totalCompetitors - place + 1) / totalCompetitors;
+
+            return 15 * Math.Pow(x, 6) + 10 * Math.Pow(x, 4) + 5 * Math.Pow(x, 2) + 14 * x + 6;
+        }
+
+        internal List<CompetitorModel> UpdateScores(List<CompetitorModel> competitionHistory)
+        {
+            // Calc scores
+            foreach (var competitor in CompetitorData)
+            {
+                // Calc score for current comp results
+                if (!competitor.DQ)
+                {
+                    competitor.Score = CalcScore(competitor.Place, CompetitorData.Count);
+                }
+                else
+                {
+                    competitor.Score = 0;
+                }
+
+                // check history for competitor of same name add add previous results on top
+                var historicResultExists = false;
+                foreach (var historyCompetitor in competitionHistory)
+                {
+                    if (competitor.Username == historyCompetitor.Username)
+                    {
+                        historicResultExists = true;
+                        historyCompetitor.Score += competitor.Score;
+                        break;
+                    }
+                }
+
+                if (!historicResultExists)
+                {
+                    competitionHistory.Add(competitor);
+                }
+            }
+
+            return competitionHistory;
         }
     }
 }

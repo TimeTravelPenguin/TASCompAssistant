@@ -6,7 +6,5 @@
         xmlns:local="clr-namespace:TASCompAssistant.Views"
         mc:Ignorable="d"
         Title="StreamOutputView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Grid />
 </Window>

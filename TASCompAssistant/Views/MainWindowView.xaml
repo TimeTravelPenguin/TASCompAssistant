@@ -83,7 +83,7 @@
                     <MenuItem Header="Copy Competition Score" />
                 </MenuItem>
 
-                <MenuItem Header="Stream Output" Command="{Binding CommandOpenStreamResultsWindow}"/>
+                <MenuItem Header="Stream Output" Command="{Binding CommandOpenStreamResultsWindow}" />
 
             </Menu>
             <StackPanel />
@@ -176,7 +176,7 @@
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Binding="{Binding TimeUnitCount}"
+                            <DataGridTextColumn Binding="{Binding TimeUnitTotal}"
                                                 Width="Auto"
                                                 IsReadOnly="True">
                                 <DataGridTextColumn.Header>
@@ -196,6 +196,10 @@
                                                 Binding="{Binding Rerecords}"
                                                 Width="Auto" />
 
+                            <DataGridTextColumn Header="Task Points"
+                                                Binding="{Binding Score}"
+                                                Width="Auto" />
+
                             <DataGridCheckBoxColumn Header="DQ"
                                                     Binding="{Binding DQ}"
                                                     Width="30" />
@@ -213,7 +217,7 @@
                 <Grid Background="#FFE5E5E5">
 
                     <!-- Datagrid Score -->
-                    <DataGrid ItemsSource="{Binding CompetitorCollection, UpdateSourceTrigger=PropertyChanged}"
+                    <DataGrid ItemsSource="{Binding CompetitionScoresCollection, UpdateSourceTrigger=PropertyChanged}"
                               HorizontalGridLinesBrush="DarkGray"
                               VerticalGridLinesBrush="DarkGray"
                               IsReadOnly="True"
@@ -222,12 +226,13 @@
                               CanUserResizeColumns="True"
                               CanUserDeleteRows="False"
                               CanUserAddRows="False"
-                              CanUserSortColumns="True"
+                              CanUserSortColumns="False"
                               AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Score Place"
                                                 Binding="{Binding ScorePlace}"
-                                                Width="auto" />
+                                                Width="auto"
+                                                SortDirection="Ascending" />
                             <DataGridTextColumn Header="Username"
                                                 Binding="{Binding Username}"
                                                 Width="*" />

@@ -79,8 +79,6 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _dqOther, value);
         }
 
-        public string Qualification => GetQualification();
-
         public ObservableCollection<DqReasonModel> DqReasons
         {
             get => _dQReasons;
@@ -93,6 +91,8 @@ namespace TASCompAssistant.Models
             get => _dqOtherReason;
             set => SetValue(ref _dqOtherReason, value);
         }
+
+        public string Qualification => DQ ? "Disqualified" : "Qualified";
 
         [JsonIgnore]
         public string DqReasonsAsString
@@ -131,6 +131,26 @@ namespace TASCompAssistant.Models
             ClearCompetitor();
         }
 
+        public CompetitorModel(CompetitorModel item)
+        {
+            Place = item.Place;
+            Username = item.Username;
+            TimeUnitStart = item.TimeUnitStart;
+            TimeUnitEnd = item.TimeUnitEnd;
+            Rerecords = item.Rerecords;
+            DQ = item.DQ;
+            DqOtherReason = item.DqOtherReason;
+            DqOther = item.DqOther;
+            Score = item.Score;
+            ScorePlace = ScorePlace;
+
+            DqReasons.Clear();
+            foreach (var dq in item.DqReasons)
+            {
+                DqReasons.Add(dq);
+            }
+        }
+
         public void ClearCompetitor()
         {
             Place = 0;
@@ -146,15 +166,6 @@ namespace TASCompAssistant.Models
             ScorePlace = 0;
         }
 
-        private string GetQualification()
-        {
-            if (DQ)
-            {
-                return "Disqualified";
-            }
-
-            return "Qualified";
-        }
 
         private double GetTime()
         {
