@@ -6,7 +6,7 @@ namespace TASCompAssistant.Models
 {
     internal class OutputToClipboardModel
     {
-        private OrdinalModel ordinalModel = new OrdinalModel();
+        private readonly OrdinalModel ordinalModel = new OrdinalModel();
 
         internal void CopyTaskDescriptionToClipboard(CompetitionTaskModel currentTask)
         {
@@ -71,69 +71,118 @@ namespace TASCompAssistant.Models
 
         internal void CopyTaskLeaderboardToClipboard(CompetitionTaskModel currentTask)
         {
-            var output = string.Empty;
-
-            // Header
-            output += $"__**{currentTask.TaskName}**__" + Environment.NewLine + Environment.NewLine;
-
-            // As this output is designed for discord, it uses **bold** formatting for the top most rankings, with at most, the top 5 places being bolded.
-            // For smaller competitions, this can look strange with too many bold names, so there is logic to determine how many names to bold.
-            // The bold limit is, by my arbitrary definition, equal to the floor of half the number of non-DQ runs (so long as the answer is less than or equal to 5)
-
-            // Number of qualified runs:
-            var qRuns = 0d;
-            foreach (var competitor in currentTask.CompetitorData)
+            if (currentTask.CompetitorData.Count == 0)
             {
-                qRuns += competitor.DQ ? 0 : 1;
+                MessageBox.Show($"The leaderboard for {currentTask.TaskName} is empty...", "There was nothing to copy");
             }
-
-            var boldLimit = 5;
-            if (qRuns <= boldLimit)
+            else
             {
-                boldLimit = (int)Math.Ceiling(qRuns / 2);
-            }
+                var output = string.Empty;
 
-            var dqNewLine = true; // Indicates this is the beginning of the DQ section
-            foreach (var competitor in currentTask.CompetitorData)
-            {
-                if (!competitor.DQ)
+                // Title
+                output += $"__**{currentTask.TaskName}**__" + Environment.NewLine + Environment.NewLine;
+
+                // As this output is designed for discord, it uses **bold** formatting for the top most rankings, with at most, the top 5 places being bolded.
+                // For smaller competitions, this can look strange with too many bold names, so there is logic to determine how many names to bold.
+                // The bold limit is, by my arbitrary definition, equal to the floor of half the number of non-DQ runs (so long as the answer is less than or equal to 5)
+
+                // Number of qualified runs:
+                var qRuns = 0d;
+                foreach (var competitor in currentTask.CompetitorData)
                 {
-                    if (competitor.Place <= boldLimit)
-                    {
-                        output += $"**{ordinalModel.FormatOrdinal(competitor.Place)}. {competitor.Username} {competitor.TimeFormatted}**" + Environment.NewLine;
-                    }
-                    else
-                    {
-                        output += $"{ordinalModel.FormatOrdinal(competitor.Place)}. {competitor.Username} {competitor.TimeFormatted}" + Environment.NewLine;
-                    } 
+                    qRuns += competitor.DQ ? 0 : 1;
                 }
-                else if (competitor.DQ)
+
+                var boldLimit = 5;
+                if (qRuns <= boldLimit)
                 {
-                    if (dqNewLine)
-                    {
-                        output += Environment.NewLine;
-                    }
-
-                    var dqReason = string.Empty;
-                    if (competitor.DqReasons.Count>0)
-                    {
-                        dqReason = $"({competitor.DqReasonsAsString})";
-                    }
-                    output += $"DQ. {competitor.Username} {dqReason}" + Environment.NewLine;
-
-                    dqNewLine = false;
+                    boldLimit = (int) Math.Ceiling(qRuns / 2);
                 }
+
+                var dqNewLine = true; // Indicates this is the beginning of the DQ section
+                foreach (var competitor in currentTask.CompetitorData)
+                {
+                    if (!competitor.DQ)
+                    {
+                        var line =
+                            $"{ordinalModel.FormatOrdinal(competitor.Place)}. {competitor.Username} {competitor.TimeFormatted}";
+
+                        if (competitor.Place <= boldLimit)
+                        {
+                            output +=
+                                $"**{line}**" + Environment.NewLine;
+                        }
+                        else
+                        {
+                            output +=
+                                $"{line}" + Environment.NewLine;
+                        }
+                    }
+                    else if (competitor.DQ)
+                    {
+                        if (dqNewLine)
+                        {
+                            output += Environment.NewLine;
+                        }
+
+                        var dqReason = string.Empty;
+                        if (competitor.DqReasons.Count > 0)
+                        {
+                            dqReason = $"({competitor.DqReasonsAsString})";
+                        }
+
+                        output += $"DQ. {competitor.Username} {dqReason}" + Environment.NewLine;
+
+                        dqNewLine = false;
+                    }
+                }
+
+                Clipboard.SetText(output);
+
+                MessageBox.Show($"The leaderboard for {currentTask.TaskName} has be copied to the clipboard",
+                    "Copy complete!");
             }
-
-            Clipboard.SetText(output);
-
-            MessageBox.Show($"The leaderboard for {currentTask.TaskName} has be copied to the clipboard",
-                "Copy complete!");
         }
 
         internal void CopyCompetitionScoresToClipboard(ObservableCollection<ScoreModel> scoreTotals)
         {
-            throw new NotImplementedException();
+            if (scoreTotals.Count == 0)
+            {
+                MessageBox.Show(
+                    "There is no score data to copy. There must be at least one competitor in the whole competition...",
+                    "There was nothing to copy");
+            }
+            else
+            {
+                var boldLimit = scoreTotals.Count > 3
+                    ? 3
+                    : (int) Math.Ceiling((double) scoreTotals.Count / 2);
+
+                var output = string.Empty;
+
+                // Title 
+                output += "__**Total Scores**__" + Environment.NewLine + Environment.NewLine;
+
+                foreach (var competitor in scoreTotals)
+                {
+                    var line =
+                        $"{ordinalModel.FormatOrdinal(competitor.ScorePlace)}. {competitor.Username} {competitor.Score}";
+
+                    if (competitor.ScorePlace <= boldLimit)
+                    {
+                        output += $"**{line}**" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        output += line + Environment.NewLine;
+                    }
+                }
+
+                Clipboard.SetText(output);
+
+                MessageBox.Show("The score data has be copied to the clipboard",
+                    "Copy complete!");
+            }
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows.Forms;
 using TASCompAssistant.Types;
-using TASCompAssistant.ViewModels;
 
 namespace TASCompAssistant.Models
 {

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using TASCompAssistant.ViewModels;
 
 namespace TASCompAssistant.Models
 {

@@ -81,8 +81,9 @@
                 <!-- Plain text results -->
                 <MenuItem Header="_Results Output">
                     <MenuItem Header="Copy Task Description" Command="{Binding CommandCopyTaskDescriptionToClipboard}" />
-                    <MenuItem Header="Copy Task Leaderboard" Command="{Binding CommandCopyTaskLeaderboardToClipboard}"/>
-                    <MenuItem Header="Copy Competition Score" Command="{Binding CommandCopyCompetitionScoreToClipboard}"/>
+                    <MenuItem Header="Copy Task Leaderboard" Command="{Binding CommandCopyTaskLeaderboardToClipboard}" />
+                    <MenuItem Header="Copy Competition Score"
+                              Command="{Binding CommandCopyCompetitionScoreToClipboard}" />
                 </MenuItem>
 
                 <MenuItem Header="Stream Output" Command="{Binding CommandOpenStreamResultsWindow}" />

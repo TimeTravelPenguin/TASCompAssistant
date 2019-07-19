@@ -299,6 +299,8 @@ namespace TASCompAssistant.ViewModels
             // Opens window for live stream results
             CommandOpenStreamResultsWindow = new ActionCommand(() => OpenStreamResultsWindow());
 
+            EditableCompetitionTask.Metadata.DefaultData();
+
             RefreshAll();
         }
 
@@ -353,7 +355,7 @@ namespace TASCompAssistant.ViewModels
             catch (Exception err)
             {
                 MessageBox.Show(
-                    $"There was an error saving the data. The following error has occured:{Environment.NewLine}{err.Message}",
+                    $"There was an error saving the data. The following error has occured:{Environment.NewLine + err.Message}",
                     "An error has occured...");
             }
         }
@@ -423,6 +425,7 @@ namespace TASCompAssistant.ViewModels
             ClearCompetitionInputs();
 
             CompetitionTasks.Clear();
+
             CompetitionTasks.Add(new CompetitionTaskModel());
 
             CompetitionTaskIndex = 0;

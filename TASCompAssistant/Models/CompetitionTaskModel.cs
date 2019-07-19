@@ -54,7 +54,7 @@ namespace TASCompAssistant.Models
         public void ClearCompetition()
         {
             TaskName = "Unnamed Competition Task";
-            Metadata.ClearData();
+            Metadata.DefaultData();
             DueDates.ClearDueDates();
             CompetitorData.Clear();
         }

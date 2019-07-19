@@ -45,13 +45,7 @@ namespace TASCompAssistant.Models
             set => SetValue(ref _cooperativeTask, value);
         }
 
-        public CompetitionTaskMetadataModel()
-        {
-            ClearData();
-        }
-
-
-        public void ClearData()
+        public void DefaultData()
         {
             TaskDescription = "In **{level}**, **{do stuff}**.";
             TaskTimingDescription = "Timing starts **{when}**, and ends **{when}**.";
