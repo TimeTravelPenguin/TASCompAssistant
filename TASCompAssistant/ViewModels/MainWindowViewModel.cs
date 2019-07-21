@@ -182,7 +182,7 @@ namespace TASCompAssistant.ViewModels
         // Saves File
         public ActionCommand CommandFileSave { get; }
 
-        // Opens metadatamanager with current competition
+        // Opens metadata manager with current competition
         public ActionCommand CommandEditCurrentMetadata { get; }
 
         // Opens window to manage competition rule-set
@@ -204,7 +204,7 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _applicationSettings, value);
         }
 
-        public ObservableCollection<ScoreModel> ScoreTotals
+        private ObservableCollection<ScoreModel> ScoreTotals
         {
             get => _scoreTotals;
             set => SetValue(ref _scoreTotals, value);
@@ -214,6 +214,7 @@ namespace TASCompAssistant.ViewModels
         {
             // Initializes application settings
             ApplicationSettings = new ApplicationSettingsModel();
+            ApplicationSettings.SetDefaultValues();
 
             // Initialize the default DQProfile
             DqReasonsProfileModel.SetProfileDefaults();
@@ -241,13 +242,13 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Command to clear the data-grid
-            CommandClearAll = new ActionCommand(() => ClearAll());
+            CommandClearAll = new ActionCommand(ClearAll);
 
             // Command to sort data
-            CommandUpdateData = new ActionCommand(() => { RefreshAll(); });
+            CommandUpdateData = new ActionCommand(RefreshAll);
 
             // Edit current metadata in window
-            CommandEditCurrentMetadata = new ActionCommand(() => EditCurrentMetadata());
+            CommandEditCurrentMetadata = new ActionCommand(EditCurrentMetadata);
 
             // Command to add random test data to data-grid
             CommandAddTestData = new ActionCommand(() =>
@@ -273,13 +274,13 @@ namespace TASCompAssistant.ViewModels
             });
 
             // Opens File
-            CommandFileOpen = new ActionCommand(() => { OpenFile(); });
+            CommandFileOpen = new ActionCommand(OpenFile);
 
             // Saves File
-            CommandFileSave = new ActionCommand(() => { SaveFile(); });
+            CommandFileSave = new ActionCommand(SaveFile);
 
             // Opens window to modify competition metadata
-            CommandModifyCompetitionTaskMetadata = new ActionCommand(() => { OpenMetadataManager(); });
+            CommandModifyCompetitionTaskMetadata = new ActionCommand(OpenMetadataManager);
 
             // Command to Exit
             CommandExit = new ActionCommand(() => Environment.Exit(0));
@@ -297,7 +298,7 @@ namespace TASCompAssistant.ViewModels
                 CopyToClipboardModel.CopyCompetitionScoresToClipboard(ScoreTotals));
 
             // Opens window for live stream results
-            CommandOpenStreamResultsWindow = new ActionCommand(() => OpenStreamResultsWindow());
+            CommandOpenStreamResultsWindow = new ActionCommand(OpenStreamResultsWindow);
 
             EditableCompetitionTask.Metadata.DefaultData();
 
@@ -345,9 +346,9 @@ namespace TASCompAssistant.ViewModels
 
                 var data = new SavedDataModel
                 {
-                    CompetitionData = CompetitionTasks,
-                    SettingsData = ApplicationSettings,
-                    ScoreData = ScoreTotals
+                    CompetitionData = new ObservableCollection<CompetitionTaskModel>(CompetitionTasks),
+                    SettingsData = new ApplicationSettingsModel(ApplicationSettings),
+                    ScoreData = new ObservableCollection<ScoreModel>(ScoreTotals)
                 };
 
                 FileModel.SaveFile(data);
@@ -360,7 +361,7 @@ namespace TASCompAssistant.ViewModels
             }
         }
 
-        private void SetDefaultSettings()
+        private void SetDefaultApplicationSettings()
         {
             ApplicationSettings.SetDefaultValues();
         }
@@ -423,6 +424,7 @@ namespace TASCompAssistant.ViewModels
             // TODO: Reset all dq reasons to false
             ClearCompetitorInputs();
             ClearCompetitionInputs();
+            SetDefaultApplicationSettings();
 
             CompetitionTasks.Clear();
 
@@ -448,17 +450,6 @@ namespace TASCompAssistant.ViewModels
             {
                 dq.IsSelected = false;
             }
-        }
-
-        private void CopyTaskLeaderboardToClipboard()
-        {
-            Clipboard.SetText("Hello, clipboard");
-        }
-
-        private void CopyCompetitionScoresClipboard()
-        {
-            // Copies task information to clipboard
-            Clipboard.SetText("Hello, clipboard");
         }
 
         private void ClearCompetitionInputs()
@@ -521,13 +512,6 @@ namespace TASCompAssistant.ViewModels
                 },
                 CompetitorData = new ObservableCollection<CompetitorModel>(EditableCompetitionTask.CompetitorData)
             });
-        }
-
-        private static double CalcScore(int place, int totalCompetitors)
-        {
-            var x = (double) (totalCompetitors - place + 1) / totalCompetitors;
-
-            return 15 * Math.Pow(x, 6) + 10 * Math.Pow(x, 4) + 5 * Math.Pow(x, 2) + 14 * x + 6;
         }
 
         private void UpdateScores()

@@ -51,7 +51,11 @@ namespace TASCompAssistant.Models
 
         public ApplicationSettingsModel()
         {
-            SetDefaultValues();
+        }
+
+        public ApplicationSettingsModel(ApplicationSettingsModel applicationSettings)
+        {
+            UpdateSettings(applicationSettings);
         }
 
         public void SetDefaultValues()
