@@ -89,7 +89,6 @@
                 <MenuItem Header="Stream Output" Command="{Binding CommandOpenStreamResultsWindow}" />
 
             </Menu>
-            <StackPanel />
         </DockPanel>
 
         <!-- Row 1 -->
@@ -240,7 +239,7 @@
                                                 Binding="{Binding Username}"
                                                 Width="*" />
                             <DataGridTextColumn Header="Score"
-                                                Binding="{Binding Score}"
+                                                Binding="{Binding Score, StringFormat=N2}"
                                                 Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -460,7 +459,7 @@
         <!-- Row 3 -->
 
         <!-- Group Box -->
-        <telerik:GroupBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" IsEnabled="{Binding AddCompetitorEnabled}">
+        <telerik:GroupBox Grid.Row="3" Grid.Column="1" IsEnabled="{Binding AddCompetitorEnabled}">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/TASCompAssistant;component/Icons/RedMushroom.ico" Margin="3,0" Height="15" />

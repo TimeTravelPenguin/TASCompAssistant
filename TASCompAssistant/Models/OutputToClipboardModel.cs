@@ -7,7 +7,7 @@
 // File Name: OutputToClipboardModel.cs
 // 
 // Current Data:
-// 2019-07-22 5:30 PM
+// 2019-07-22 5:34 PM
 // 
 // Creation Date:
 // 2019-07-08 3:37 PM
@@ -160,7 +160,7 @@ namespace TASCompAssistant.Models
             }
         }
 
-        internal void CopyCompetitionScoresToClipboard(ObservableCollection<ScoreModel> scoreTotals)
+        internal void CopyCompetitionScoresToClipboard(ObservableCollection<ScoreModel> scoreTotals, int roundingPlace)
         {
             if (scoreTotals.Count == 0)
             {
@@ -182,7 +182,7 @@ namespace TASCompAssistant.Models
                 foreach (var competitor in scoreTotals)
                 {
                     var line =
-                        $"{ordinalModel.FormatOrdinal(competitor.ScorePlace)}. {competitor.Username} {competitor.Score}";
+                        $"{ordinalModel.FormatOrdinal(competitor.ScorePlace)}. {competitor.Username} {Math.Round(competitor.Score, roundingPlace)}";
 
                     if (competitor.ScorePlace <= boldLimit)
                     {

@@ -7,7 +7,7 @@
 // File Name: CompetitorModelComparer.cs
 // 
 // Current Data:
-// 2019-07-22 5:30 PM
+// 2019-07-22 5:34 PM
 // 
 // Creation Date:
 // 2019-06-23 8:30 PM

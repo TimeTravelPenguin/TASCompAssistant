@@ -7,7 +7,7 @@
 // File Name: MainWindowViewModel.cs
 // 
 // Current Data:
-// 2019-07-22 5:30 PM
+// 2019-07-22 8:40 PM
 // 
 // Creation Date:
 // 2019-06-16 7:17 PM
@@ -66,6 +66,9 @@ namespace TASCompAssistant.ViewModels
 
         // Modifiable competitor model used for on-screen objects
         private CompetitorModel _editableCompetitor = new CompetitorModel();
+
+        // SeriesCollection used to bind for live charting
+        private GraphModel _graphData = new GraphModel();
 
         // Competition Metadata ViewModel data-context
         private CompetitionMetadataManagerViewModel _metadataViewModel = new CompetitionMetadataManagerViewModel();
@@ -154,8 +157,11 @@ namespace TASCompAssistant.ViewModels
             set => SetValue(ref _competitionScoresCollection, value);
         }
 
-        // SeriesCollection used to bind for live charting
-        public GraphModel GraphData { get; set; } = new GraphModel();
+        public GraphModel GraphData
+        {
+            get => _graphData;
+            set => SetValue(ref _graphData, value);
+        }
 
         // Contains all the DQ Reasons
         public DqReasonsProfileModel DqReasonsProfileModel { get; } =
@@ -311,7 +317,7 @@ namespace TASCompAssistant.ViewModels
 
             // Copy scores to clipboard
             CommandCopyCompetitionScoreToClipboard = new ActionCommand(() =>
-                CopyToClipboardModel.CopyCompetitionScoresToClipboard(ScoreTotals));
+                CopyToClipboardModel.CopyCompetitionScoresToClipboard(ScoreTotals, ApplicationSettings.ScoreDecimalPlace));
 
             // Opens window for live stream results
             CommandOpenStreamResultsWindow = new ActionCommand(OpenStreamResultsWindow);
@@ -323,6 +329,14 @@ namespace TASCompAssistant.ViewModels
 
         private void OpenStreamResultsWindow()
         {
+            var sOVM = new StreamOutputViewModel(CurrentCompetitors);
+
+            var sOV = new StreamOutputView
+            {
+                DataContext = sOVM
+            };
+
+            sOV.ShowDialog();
         }
 
         private void EditCurrentMetadata()
@@ -418,6 +432,12 @@ namespace TASCompAssistant.ViewModels
         {
             // Set up data-grid grouping
             CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
+            
+            /* BUG
+             System.InvalidOperationException
+             Message='Grouping' is not allowed during an AddNew or EditItem transaction.
+             */
+
             CompetitorCollection.GroupDescriptions.Clear();
             CompetitorCollection.GroupDescriptions.Add(
                 new PropertyGroupDescription(nameof(CompetitorModel.Qualification)));
@@ -642,27 +662,7 @@ namespace TASCompAssistant.ViewModels
         private void UpdateLiveCharts()
         {
             // Update graph data
-            UpdateGraphStatistics();
-        }
-
-        private void UpdateGraphStatistics()
-        {
-            var compData = new List<CompetitorModel>();
-            var dqData = new List<CompetitorModel>();
-
-            foreach (var item in CurrentCompetitors)
-            {
-                if (!item.DQ)
-                {
-                    compData.Add(item);
-                }
-                else if (item.DQ)
-                {
-                    dqData.Add(item);
-                }
-            }
-
-            GraphData.ParseData(compData, dqData);
+            GraphData.UpdateData(CurrentCompetitors);
         }
 
         // TODO: Open the DQReasonsProfileEditorView		

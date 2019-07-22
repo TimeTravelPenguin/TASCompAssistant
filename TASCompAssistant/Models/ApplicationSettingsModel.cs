@@ -7,7 +7,7 @@
 // File Name: ApplicationSettingsModel.cs
 // 
 // Current Data:
-// 2019-07-22 5:30 PM
+// 2019-07-22 9:06 PM
 // 
 // Creation Date:
 // 2019-07-10 2:49 PM
@@ -24,6 +24,7 @@ namespace TASCompAssistant.Models
     internal class ApplicationSettingsModel : PropertyChangedBase
     {
         private string _competitionTimeZone;
+        private int _scoreDecimalPlace;
         private double _timeMeasurementFrequency;
         private string _timeMeasurementName;
 
@@ -56,6 +57,16 @@ namespace TASCompAssistant.Models
         }
 
         [Category("Competition Settings")]
+        [DisplayNameAttribute("Score Value Rounding")]
+        [DescriptionAttribute(
+            "The decimal place value for the scoreboard and scorebord output.")]
+        public int ScoreDecimalPlace
+        {
+            get => _scoreDecimalPlace;
+            set => SetValue(ref _scoreDecimalPlace, value);
+        }
+
+        [Category("Competition Settings")]
         [DisplayNameAttribute("Competition due date timezone")]
         [DescriptionAttribute(
             "This is the timezone that will be used when determining the duedate time of a competition")]
@@ -78,6 +89,7 @@ namespace TASCompAssistant.Models
         {
             TimeMeasurementName = "VI";
             TimeMeasurementFrequency = 60;
+            ScoreDecimalPlace = 2;
             CompetitionTimeZone = TimeZoneInfo.Local.DisplayName;
         }
 
@@ -85,6 +97,7 @@ namespace TASCompAssistant.Models
         {
             TimeMeasurementName = data.TimeMeasurementName;
             TimeMeasurementFrequency = data.TimeMeasurementFrequency;
+            ScoreDecimalPlace = data.ScoreDecimalPlace;
             CompetitionTimeZone = data.CompetitionTimeZone;
         }
 

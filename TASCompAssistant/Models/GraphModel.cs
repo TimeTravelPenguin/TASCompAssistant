@@ -7,7 +7,7 @@
 // File Name: GraphModel.cs
 // 
 // Current Data:
-// 2019-07-22 5:30 PM
+// 2019-07-22 5:34 PM
 // 
 // Creation Date:
 // 2019-06-15 1:15 PM
@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Defaults;
@@ -121,6 +122,26 @@ namespace TASCompAssistant.Models
                 DqData.Add(new ObservablePoint(offsetX++, item.TimeUnitTotal));
                 XLabels.Add(Convert.ToString(item.Place));
             }
+        }
+
+        internal void UpdateData(ObservableCollection<CompetitorModel> currentCompetitors)
+        {
+            var compData = new List<CompetitorModel>();
+            var dqData = new List<CompetitorModel>();
+
+            foreach (var item in currentCompetitors)
+            {
+                if (!item.DQ)
+                {
+                    compData.Add(item);
+                }
+                else if (item.DQ)
+                {
+                    dqData.Add(item);
+                }
+            }
+
+            ParseData(compData, dqData);
         }
     }
 }

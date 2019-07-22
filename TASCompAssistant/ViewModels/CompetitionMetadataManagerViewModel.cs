@@ -7,7 +7,7 @@
 // File Name: CompetitionMetadataManagerViewModel.cs
 // 
 // Current Data:
-// 2019-07-22 5:30 PM
+// 2019-07-22 5:34 PM
 // 
 // Creation Date:
 // 2019-07-04 7:02 PM

@@ -8,7 +8,7 @@
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Stream Output View" Height="450" Width="800">
+        Title="Stream Output View" Height="570" Width="1050">
 
     <Window.DataContext>
         <viewModels:StreamOutputViewModel />
@@ -67,15 +67,15 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Place"
                                     Binding="{Binding Place}"
-                                    Width="45"
+                                    Width="*"
                                     IsReadOnly="True" />
 
                 <DataGridTextColumn Header="Username"
                                     Binding="{Binding Username}"
-                                    Width="120" />
+                                    Width="*" />
 
                 <DataGridTextColumn Binding="{Binding TimeUnitTotal}"
-                                    Width="Auto"
+                                    Width="*"
                                     IsReadOnly="True">
                     <DataGridTextColumn.Header>
                         <TextBlock
@@ -87,12 +87,12 @@
 
                 <DataGridTextColumn Header="Time"
                                     Binding="{Binding TimeFormatted}"
-                                    Width="Auto"
+                                    Width="*"
                                     IsReadOnly="True" />
 
                 <DataGridTextColumn Header="Rerecords"
                                     Binding="{Binding Rerecords}"
-                                    Width="Auto" />
+                                    Width="*" />
 
                 <DataGridCheckBoxColumn Header="DQ"
                                         Binding="{Binding DQ}"
@@ -100,7 +100,7 @@
 
                 <DataGridTextColumn Header="DQReason"
                                     Binding="{Binding DqReasonsAsString, Mode=OneWay}"
-                                    Width="Auto"
+                                    Width="*"
                                     IsReadOnly="False" />
 
             </DataGrid.Columns>
