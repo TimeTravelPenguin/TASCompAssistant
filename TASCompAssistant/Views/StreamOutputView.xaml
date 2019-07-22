@@ -4,7 +4,145 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TASCompAssistant.Views"
+        xmlns:viewModels="clr-namespace:TASCompAssistant.ViewModels"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="StreamOutputView" Height="450" Width="800">
-    <Grid />
+        Title="Stream Output View" Height="450" Width="800">
+
+    <Window.DataContext>
+        <viewModels:StreamOutputViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5" />
+        </Grid.RowDefinitions>
+
+        <!-- Competitor Table -->
+        <telerik:GroupBox Grid.Row="1"
+                          Grid.Column="1"
+                          Header="Current Competitor">
+            <Grid />
+        </telerik:GroupBox>
+
+        <!-- DataGrid Competition -->
+        <DataGrid ItemsSource="{Binding CompetitorCollection, UpdateSourceTrigger=PropertyChanged}"
+                  Grid.Row="1"
+                  Grid.RowSpan="2"
+                  Grid.Column="2"
+                  HorizontalGridLinesBrush="DarkGray"
+                  VerticalGridLinesBrush="DarkGray"
+                  IsReadOnly="True"
+                  CanUserReorderColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserResizeColumns="True"
+                  CanUserDeleteRows="False"
+                  CanUserAddRows="False"
+                  CanUserSortColumns="False"
+                  AutoGenerateColumns="False">
+
+            <!-- Grouping Style -->
+            <DataGrid.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+
+            <!-- Column Information -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Place"
+                                    Binding="{Binding Place}"
+                                    Width="45"
+                                    IsReadOnly="True" />
+
+                <DataGridTextColumn Header="Username"
+                                    Binding="{Binding Username}"
+                                    Width="120" />
+
+                <DataGridTextColumn Binding="{Binding TimeUnitTotal}"
+                                    Width="Auto"
+                                    IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock
+                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                        RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
+                                        StringFormat=Total {0}s}" />
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Time"
+                                    Binding="{Binding TimeFormatted}"
+                                    Width="Auto"
+                                    IsReadOnly="True" />
+
+                <DataGridTextColumn Header="Rerecords"
+                                    Binding="{Binding Rerecords}"
+                                    Width="Auto" />
+
+                <DataGridCheckBoxColumn Header="DQ"
+                                        Binding="{Binding DQ}"
+                                        Width="30" />
+
+                <DataGridTextColumn Header="DQReason"
+                                    Binding="{Binding DqReasonsAsString, Mode=OneWay}"
+                                    Width="Auto"
+                                    IsReadOnly="False" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2"
+              Grid.Column="1">
+
+            <lvc:CartesianChart Series="{Binding GraphData.SeriesCollection}"
+                                LegendLocation="Top">
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis
+                        Title="Submission"
+                        IsMerged="False"
+                        Labels="{Binding GraphData.XLabels}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator
+                                StrokeThickness="1"
+                                StrokeDashArray="2"
+                                Stroke="LightGray" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis
+                        Title="VIs"
+                        IsMerged="False"
+                        MinValue="0"
+                        LabelFormatter="{Binding GraphData.YFormatter}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator
+                                StrokeThickness="1"
+                                StrokeDashArray="4"
+                                Stroke="LightGray" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+
+            </lvc:CartesianChart>
+        </Grid>
+
+    </Grid>
 </Window>

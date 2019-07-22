@@ -1,4 +1,20 @@
-﻿using System.Collections.ObjectModel;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: DqReasonsEditorViewModel.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-06-15 1:16 PM
+
+#endregion
+
+using System.Collections.ObjectModel;
 using TASCompAssistant.Models;
 
 namespace TASCompAssistant.ViewModels

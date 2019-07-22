@@ -1,4 +1,20 @@
-﻿namespace TASCompAssistant.Models
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: OrdinalModel.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-07-18 8:55 PM
+
+#endregion
+
+namespace TASCompAssistant.Models
 {
     internal class OrdinalModel
     {

@@ -1,4 +1,20 @@
-﻿using System.Text.RegularExpressions;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: CompetitionMetadataManagerViewModel.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-07-04 7:02 PM
+
+#endregion
+
+using System.Text.RegularExpressions;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Expression.Interactivity.Core;

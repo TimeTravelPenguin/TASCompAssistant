@@ -1,4 +1,20 @@
-﻿using TASCompAssistant.Types;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: DqReasonModel.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-07-02 11:02 PM
+
+#endregion
+
+using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {

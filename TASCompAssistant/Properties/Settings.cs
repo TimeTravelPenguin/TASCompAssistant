@@ -1,4 +1,20 @@
-﻿using System.ComponentModel;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: Settings.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-07-22 5:25 PM
+
+#endregion
+
+using System.ComponentModel;
 using System.Configuration;
 
 namespace TASCompAssistant.Properties

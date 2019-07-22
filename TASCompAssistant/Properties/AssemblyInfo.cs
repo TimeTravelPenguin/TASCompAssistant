@@ -1,4 +1,20 @@
-﻿using System.Reflection;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: AssemblyInfo.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-06-07 10:36 AM
+
+#endregion
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 

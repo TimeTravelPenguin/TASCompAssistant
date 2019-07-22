@@ -1,4 +1,20 @@
-﻿using System;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: GraphModel.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-06-15 1:15 PM
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Windows.Media;
 using LiveCharts;

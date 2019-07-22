@@ -249,8 +249,7 @@
 
             <TabItem Header="Statistics">
                 <Grid>
-                    <lvc:CartesianChart IsEnabled="True" Visibility="Visible"
-                                        Series="{Binding GraphData.SeriesCollection}"
+                    <lvc:CartesianChart Series="{Binding GraphData.SeriesCollection}"
                                         LegendLocation="Top">
 
                         <lvc:CartesianChart.AxisX>

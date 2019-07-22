@@ -1,4 +1,20 @@
-﻿using System.Collections.Generic;
+﻿#region Title Header
+
+// Name: Phillip Smith
+// 
+// Solution: TASCompAssistant
+// Project: TASCompAssistant
+// File Name: CompetitorModelComparer.cs
+// 
+// Current Data:
+// 2019-07-22 5:30 PM
+// 
+// Creation Date:
+// 2019-06-23 8:30 PM
+
+#endregion
+
+using System.Collections.Generic;
 using TASCompAssistant.Models;
 
 namespace TASCompAssistant.Types
