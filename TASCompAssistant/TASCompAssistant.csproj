@@ -126,6 +126,7 @@
     <Compile Include="Models\SettingItem.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Types\BindingResourceExtension.cs" />
+    <Compile Include="Types\DoubleExtension.cs" />
     <Compile Include="ViewModels\CompetitionMetadataManagerViewModel.cs" />
     <Compile Include="Models\OutputToClipboardModel.cs" />
     <Compile Include="Models\SavedDataModel.cs" />

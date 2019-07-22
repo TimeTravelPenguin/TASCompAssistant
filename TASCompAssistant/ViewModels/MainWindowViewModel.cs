@@ -554,7 +554,7 @@ namespace TASCompAssistant.ViewModels
                 }
                 else
                 {
-                    if (lastScore == competitor.Score)
+                    if (lastScore.IsEqualTo(competitor.Score))
                     {
                         competitor.ScorePlace = lastPlace;
                         skipCounter++;
