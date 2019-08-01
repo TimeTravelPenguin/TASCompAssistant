@@ -33,11 +33,38 @@
         <telerik:GroupBox Grid.Row="1"
                           Grid.Column="1"
                           Header="Current Competitor">
-            <Grid />
+            <Grid>
+                <!-- Current competition information -->
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="5" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Current Place:"
+                           Grid.Column="1"
+                           Grid.Row="1" />
+
+                <TextBlock Text="Current Username:"
+                           Grid.Column="1"
+                           Grid.Row="2" />
+            </Grid>
         </telerik:GroupBox>
 
         <!-- DataGrid Competition -->
-        <DataGrid ItemsSource="{Binding CompetitorCollection, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid ItemsSource="{Binding CompetitorCollection}"
                   Grid.Row="1"
                   Grid.RowSpan="2"
                   Grid.Column="2"
@@ -80,7 +107,7 @@
                     <DataGridTextColumn.Header>
                         <TextBlock
                             Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
-                                        RelativeSource={RelativeSource AncestorType={x:Type local:MainWindowView}},
+                                        RelativeSource={RelativeSource AncestorType={x:Type local:StreamOutputView}},
                                         StringFormat=Total {0}s}" />
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>

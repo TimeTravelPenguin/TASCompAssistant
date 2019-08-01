@@ -329,7 +329,7 @@ namespace TASCompAssistant.ViewModels
 
         private void OpenStreamResultsWindow()
         {
-            var sOVM = new StreamOutputViewModel(CurrentCompetitors);
+            var sOVM = new StreamOutputViewModel(CurrentCompetitors, ApplicationSettings);
 
             var sOV = new StreamOutputView
             {

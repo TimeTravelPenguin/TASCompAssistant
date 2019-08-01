@@ -26,10 +26,31 @@ namespace TASCompAssistant.ViewModels
     internal class StreamOutputViewModel : PropertyChangedBase
     {
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
+
+        private ApplicationSettingsModel _applicationSettings;
         private ObservableCollection<CompetitorModel> _competitionData = new ObservableCollection<CompetitorModel>();
         private ICollectionView _competitorCollection;
 
         private GraphModel _graphData = new GraphModel();
+
+        public StreamOutputViewModel()
+        {
+        }
+
+        public StreamOutputViewModel(IEnumerable<CompetitorModel> data, ApplicationSettingsModel applicationSettings)
+        {
+            CompetitionData = new ObservableCollection<CompetitorModel>(data);
+            ApplicationSettings = new ApplicationSettingsModel(applicationSettings);
+
+            RefreshCompetitorDataGrid();
+            UpdateGraph();
+        }
+
+        public ApplicationSettingsModel ApplicationSettings
+        {
+            get => _applicationSettings;
+            set => SetValue(ref _applicationSettings, value);
+        }
 
         public ObservableCollection<CompetitorModel> CompetitionData
         {
@@ -47,18 +68,6 @@ namespace TASCompAssistant.ViewModels
         {
             get => _graphData;
             set => SetValue(ref _graphData, value);
-        }
-
-        public StreamOutputViewModel()
-        {
-        }
-
-        public StreamOutputViewModel(IEnumerable<CompetitorModel> data)
-        {
-            CompetitionData = new ObservableCollection<CompetitorModel>(data);
-
-            RefreshCompetitorDataGrid();
-            UpdateGraph();
         }
 
         private void UpdateGraph()
