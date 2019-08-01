@@ -7,7 +7,7 @@
 // File Name: StreamOutputViewModel.cs
 // 
 // Current Data:
-// 2019-07-22 8:34 PM
+// 2019-08-01 11:18 PM
 // 
 // Creation Date:
 // 2019-07-17 4:48 PM
@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
+using Microsoft.Expression.Interactivity.Core;
 using TASCompAssistant.Models;
 using TASCompAssistant.Types;
 
@@ -26,24 +27,27 @@ namespace TASCompAssistant.ViewModels
     internal class StreamOutputViewModel : PropertyChangedBase
     {
         private readonly CompetitorModelComparer _competitorComparer = new CompetitorModelComparer();
-
         private ApplicationSettingsModel _applicationSettings;
         private ObservableCollection<CompetitorModel> _competitionData = new ObservableCollection<CompetitorModel>();
         private ICollectionView _competitorCollection;
 
+        private CompetitorModel _currentCompetitor;
+
+
         private GraphModel _graphData = new GraphModel();
 
-        public StreamOutputViewModel()
+        private int _selectedCompetitorIndex;
+
+        public int SelectedCompetitorIndex
         {
+            get => _selectedCompetitorIndex;
+            set => SetValue(ref _selectedCompetitorIndex, value);
         }
 
-        public StreamOutputViewModel(IEnumerable<CompetitorModel> data, ApplicationSettingsModel applicationSettings)
+        public CompetitorModel CurrentCompetitor
         {
-            CompetitionData = new ObservableCollection<CompetitorModel>(data);
-            ApplicationSettings = new ApplicationSettingsModel(applicationSettings);
-
-            RefreshCompetitorDataGrid();
-            UpdateGraph();
+            get => _currentCompetitor;
+            set => SetValue(ref _currentCompetitor, value);
         }
 
         public ApplicationSettingsModel ApplicationSettings
@@ -68,6 +72,50 @@ namespace TASCompAssistant.ViewModels
         {
             get => _graphData;
             set => SetValue(ref _graphData, value);
+        }
+
+        public ActionCommand CommandNextCompetitor { get; set; }
+        public ActionCommand CommandPreviousCompetitor { get; set; }
+
+        public StreamOutputViewModel()
+        {
+        }
+
+        public StreamOutputViewModel(IEnumerable<CompetitorModel> competitorData,
+            ApplicationSettingsModel applicationSettings)
+        {
+            CompetitionData = new ObservableCollection<CompetitorModel>(competitorData);
+            ApplicationSettings = new ApplicationSettingsModel(applicationSettings);
+
+            CommandNextCompetitor = new ActionCommand(NextCompetitor);
+            CommandPreviousCompetitor = new ActionCommand(PreviousCompetitor);
+
+            RefreshCompetitorDataGrid();
+            UpdateGraph();
+            UpdateCurrentCompetitor();
+        }
+
+        private void NextCompetitor()
+        {
+            if (SelectedCompetitorIndex < CompetitionData.Count)
+            {
+                SelectedCompetitorIndex++;
+                UpdateCurrentCompetitor();
+            }
+        }
+
+        private void PreviousCompetitor()
+        {
+            if (SelectedCompetitorIndex > 0)
+            {
+                SelectedCompetitorIndex--;
+                UpdateCurrentCompetitor();
+            }
+        }
+
+        private void UpdateCurrentCompetitor()
+        {
+            CurrentCompetitor = new CompetitorModel(CompetitionData[SelectedCompetitorIndex]);
         }
 
         private void UpdateGraph()

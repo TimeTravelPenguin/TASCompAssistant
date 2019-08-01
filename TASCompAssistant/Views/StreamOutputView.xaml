@@ -39,6 +39,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="5" />
                 </Grid.ColumnDefinitions>
@@ -50,6 +51,10 @@
                     <RowDefinition Height="15" />
                     <RowDefinition Height="15" />
                     <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
 
@@ -57,9 +62,86 @@
                            Grid.Column="1"
                            Grid.Row="1" />
 
+                <TextBlock Text="{Binding CurrentCompetitor.Place}"
+                           Grid.Column="3"
+                           Grid.Row="1" />
+
                 <TextBlock Text="Current Username:"
                            Grid.Column="1"
                            Grid.Row="2" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.Username}"
+                           Grid.Column="3"
+                           Grid.Row="2" />
+
+                <TextBlock
+                    Text="{Binding ApplicationSettings.TimeMeasurementName, StringFormat=Total {0}s:}"
+                    Grid.Column="1"
+                    Grid.Row="3" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.TimeUnitTotal}"
+                           Grid.Column="3"
+                           Grid.Row="3" />
+
+                <TextBlock
+                    Text="Time:"
+                    Grid.Column="1"
+                    Grid.Row="4" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.TimeFormatted}"
+                           Grid.Column="3"
+                           Grid.Row="4" />
+
+                <TextBlock
+                    Text="Rerecords:"
+                    Grid.Column="1"
+                    Grid.Row="5" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.Rerecords}"
+                           Grid.Column="3"
+                           Grid.Row="5" />
+
+                <TextBlock
+                    Text="DQ:"
+                    Grid.Column="1"
+                    Grid.Row="6" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.DQ}"
+                           Grid.Column="3"
+                           Grid.Row="6" />
+
+                <TextBlock
+                    Text="DQ Reason:"
+                    Grid.Column="1"
+                    Grid.Row="7" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.DqReasonsAsString}"
+                           Grid.Column="3"
+                           Grid.Row="7" />
+
+                <telerik:GroupBox Grid.Column="0"
+                                  Grid.ColumnSpan="5"
+                                  Grid.Row="9"
+                                  Grid.RowSpan="2">
+                    <GroupBox.Header>
+                        <TextBlock Text="Competition Controls" />
+                    </GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Command="{Binding CommandPreviousCompetitor}"
+                                Content="Previous"
+                                Grid.Column="0" />
+
+                        <Button Command="{Binding CommandNextCompetitor}"
+                                Content="Next"
+                                Grid.Column="1" />
+                    </Grid>
+
+                </telerik:GroupBox>
             </Grid>
         </telerik:GroupBox>
 
@@ -77,7 +159,8 @@
                   CanUserDeleteRows="False"
                   CanUserAddRows="False"
                   CanUserSortColumns="False"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  SelectedIndex="{Binding SelectedCompetitorIndex, Mode=OneWay}">
 
             <!-- Grouping Style -->
             <DataGrid.GroupStyle>
@@ -94,16 +177,14 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Place"
                                     Binding="{Binding Place}"
-                                    Width="*"
-                                    IsReadOnly="True" />
+                                    Width="*" />
 
                 <DataGridTextColumn Header="Username"
                                     Binding="{Binding Username}"
                                     Width="*" />
 
                 <DataGridTextColumn Binding="{Binding TimeUnitTotal}"
-                                    Width="*"
-                                    IsReadOnly="True">
+                                    Width="*">
                     <DataGridTextColumn.Header>
                         <TextBlock
                             Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
@@ -114,8 +195,7 @@
 
                 <DataGridTextColumn Header="Time"
                                     Binding="{Binding TimeFormatted}"
-                                    Width="*"
-                                    IsReadOnly="True" />
+                                    Width="*" />
 
                 <DataGridTextColumn Header="Rerecords"
                                     Binding="{Binding Rerecords}"
@@ -127,8 +207,7 @@
 
                 <DataGridTextColumn Header="DQReason"
                                     Binding="{Binding DqReasonsAsString, Mode=OneWay}"
-                                    Width="*"
-                                    IsReadOnly="False" />
+                                    Width="*" />
 
             </DataGrid.Columns>
         </DataGrid>

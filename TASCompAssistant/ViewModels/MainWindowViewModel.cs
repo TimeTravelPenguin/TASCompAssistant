@@ -7,7 +7,7 @@
 // File Name: MainWindowViewModel.cs
 // 
 // Current Data:
-// 2019-07-22 8:40 PM
+// 2019-08-01 11:18 PM
 // 
 // Creation Date:
 // 2019-06-16 7:17 PM
@@ -317,7 +317,8 @@ namespace TASCompAssistant.ViewModels
 
             // Copy scores to clipboard
             CommandCopyCompetitionScoreToClipboard = new ActionCommand(() =>
-                CopyToClipboardModel.CopyCompetitionScoresToClipboard(ScoreTotals, ApplicationSettings.ScoreDecimalPlace));
+                CopyToClipboardModel.CopyCompetitionScoresToClipboard(ScoreTotals,
+                    ApplicationSettings.ScoreDecimalPlace));
 
             // Opens window for live stream results
             CommandOpenStreamResultsWindow = new ActionCommand(OpenStreamResultsWindow);
@@ -432,7 +433,7 @@ namespace TASCompAssistant.ViewModels
         {
             // Set up data-grid grouping
             CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
-            
+
             /* BUG
              System.InvalidOperationException
              Message='Grouping' is not allowed during an AddNew or EditItem transaction.

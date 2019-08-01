@@ -7,7 +7,7 @@
 // File Name: DqReasonModel.cs
 // 
 // Current Data:
-// 2019-07-22 5:34 PM
+// 2019-08-01 11:18 PM
 // 
 // Creation Date:
 // 2019-07-02 11:02 PM

@@ -7,7 +7,7 @@
 // File Name: ApplicationSettingsModel.cs
 // 
 // Current Data:
-// 2019-07-22 9:06 PM
+// 2019-08-01 11:18 PM
 // 
 // Creation Date:
 // 2019-07-10 2:49 PM

@@ -7,7 +7,7 @@
 // File Name: CompetitionMetadataManagerView.xaml.cs
 // 
 // Current Data:
-// 2019-07-22 5:34 PM
+// 2019-08-01 11:18 PM
 // 
 // Creation Date:
 // 2019-07-04 4:24 PM
