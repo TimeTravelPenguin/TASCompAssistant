@@ -97,7 +97,7 @@ namespace TASCompAssistant.ViewModels
 
         private void NextCompetitor()
         {
-            if (SelectedCompetitorIndex < CompetitionData.Count)
+            if (SelectedCompetitorIndex < CompetitionData.Count - 1)
             {
                 SelectedCompetitorIndex++;
                 UpdateCurrentCompetitor();

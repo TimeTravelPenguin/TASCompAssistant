@@ -7,7 +7,7 @@
 // File Name: CompetitionTaskModel.cs
 // 
 // Current Data:
-// 2019-08-01 11:18 PM
+// 2019-08-04 7:04 PM
 // 
 // Creation Date:
 // 2019-06-24 10:15 PM
@@ -56,7 +56,21 @@ namespace TASCompAssistant.Models
         public ObservableCollection<CompetitorModel> CompetitorData
         {
             get => _competitorData;
-            set => SetValue(ref _competitorData, value);
+            set
+            {
+                SetValue(ref _competitorData, value);
+                UpdateDelta();
+            }
+        }
+
+        private void UpdateDelta()
+        {
+            for (var index = 0; index < CompetitorData.Count; index++)
+            {
+                CompetitorData[index].DeltaTimeUnit = CompetitorData[index].TimeUnitTotal - (index > 0
+                                                          ? CompetitorData[index - 1].TimeUnitTotal
+                                                          : CompetitorData[index].TimeUnitTotal);
+            }
         }
 
         public string ToolTip()

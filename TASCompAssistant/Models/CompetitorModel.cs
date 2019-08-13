@@ -7,7 +7,7 @@
 // File Name: CompetitorModel.cs
 // 
 // Current Data:
-// 2019-08-01 11:18 PM
+// 2019-08-04 7:00 PM
 // 
 // Creation Date:
 // 2019-06-15 1:15 PM
@@ -24,6 +24,7 @@ namespace TASCompAssistant.Models
 {
     public class CompetitorModel : PropertyChangedBase
     {
+        private int _deltaTimeUnit;
         private bool _dq;
 
         private bool _dqOther;
@@ -68,6 +69,12 @@ namespace TASCompAssistant.Models
         {
             get => _timeUnitEnd;
             set => SetValue(ref _timeUnitEnd, value);
+        }
+
+        public int DeltaTimeUnit
+        {
+            get => _deltaTimeUnit;
+            set => SetValue(ref _deltaTimeUnit, value);
         }
 
         public int TimeUnitTotal => TimeUnitEnd - TimeUnitStart;

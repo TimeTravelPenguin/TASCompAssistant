@@ -7,7 +7,7 @@
 // File Name: CompetitionTaskMetadataModel.cs
 // 
 // Current Data:
-// 2019-08-01 11:18 PM
+// 2019-08-14 12:41 AM
 // 
 // Creation Date:
 // 2019-07-04 8:17 PM

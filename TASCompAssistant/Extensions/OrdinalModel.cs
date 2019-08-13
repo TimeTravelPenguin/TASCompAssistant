@@ -7,23 +7,23 @@
 // File Name: OrdinalModel.cs
 // 
 // Current Data:
-// 2019-08-01 11:18 PM
+// 2019-08-13 8:50 PM
 // 
 // Creation Date:
-// 2019-07-18 8:55 PM
+// 2019-08-13 8:50 PM
 
 #endregion
 
-namespace TASCompAssistant.Models
+namespace TASCompAssistant.Extensions
 {
-    internal class OrdinalModel
+    internal static class OrdinalModel
     {
         /// <summary>
         ///     Takes an integer number and returns a string of the number with the ordinal (e.g. 1 => 1st, 2 => 2nd, 3 => 3rd)
         /// </summary>
         /// <param name="num"></param>
         /// <returns>Returns string</returns>
-        public string FormatOrdinal(int num)
+        public static string FormatOrdinal(this int num)
         {
             if (num <= 0)
             {

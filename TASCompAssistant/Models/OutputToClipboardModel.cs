@@ -17,13 +17,12 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using TASCompAssistant.Extensions;
 
 namespace TASCompAssistant.Models
 {
     internal class OutputToClipboardModel
     {
-        private readonly OrdinalModel ordinalModel = new OrdinalModel();
-
         internal void CopyTaskDescriptionToClipboard(CompetitionTaskModel currentTask)
         {
             var taskName = currentTask.TaskName;
@@ -121,7 +120,7 @@ namespace TASCompAssistant.Models
                     if (!competitor.DQ)
                     {
                         var line =
-                            $"{ordinalModel.FormatOrdinal(competitor.Place)}. {competitor.Username} {competitor.TimeFormatted}";
+                            $"{competitor.Place.FormatOrdinal()}. {competitor.Username} {competitor.TimeFormatted}";
 
                         if (competitor.Place <= boldLimit)
                         {
@@ -182,7 +181,7 @@ namespace TASCompAssistant.Models
                 foreach (var competitor in scoreTotals)
                 {
                     var line =
-                        $"{ordinalModel.FormatOrdinal(competitor.ScorePlace)}. {competitor.Username} {Math.Round(competitor.Score, roundingPlace)}";
+                        $"{competitor.ScorePlace.FormatOrdinal()}. {competitor.Username} {Math.Round(competitor.Score, roundingPlace)}";
 
                     if (competitor.ScorePlace <= boldLimit)
                     {

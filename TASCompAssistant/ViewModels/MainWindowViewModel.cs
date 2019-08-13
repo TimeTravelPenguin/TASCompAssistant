@@ -7,7 +7,7 @@
 // File Name: MainWindowViewModel.cs
 // 
 // Current Data:
-// 2019-08-01 11:18 PM
+// 2019-08-14 12:27 AM
 // 
 // Creation Date:
 // 2019-06-16 7:17 PM
@@ -269,9 +269,6 @@ namespace TASCompAssistant.ViewModels
             // Command to sort data
             CommandUpdateData = new ActionCommand(RefreshAll);
 
-            // Edit current metadata in window
-            CommandEditCurrentMetadata = new ActionCommand(EditCurrentMetadata);
-
             // Command to add random test data to data-grid
             CommandAddTestData = new ActionCommand(() =>
             {
@@ -302,7 +299,12 @@ namespace TASCompAssistant.ViewModels
             CommandFileSave = new ActionCommand(SaveFile);
 
             // Opens window to modify competition metadata
-            CommandModifyCompetitionTaskMetadata = new ActionCommand(OpenMetadataManager);
+            CommandModifyCompetitionTaskMetadata =
+                new ActionCommand(() => OpenMetadataManager(EditableCompetitionTask));
+
+            // Edit current metadata in window
+            CommandEditCurrentMetadata =
+                new ActionCommand(() => OpenMetadataManager(CompetitionTasks[CompetitionTaskIndex]));
 
             // Command to Exit
             CommandExit = new ActionCommand(() => Environment.Exit(0));
@@ -330,19 +332,20 @@ namespace TASCompAssistant.ViewModels
 
         private void OpenStreamResultsWindow()
         {
-            var sOVM = new StreamOutputViewModel(CurrentCompetitors, ApplicationSettings);
+            var sOvm = new StreamOutputViewModel(CurrentCompetitors, ApplicationSettings);
 
-            var sOV = new StreamOutputView
+            var sOv = new StreamOutputView
             {
-                DataContext = sOVM
+                DataContext = sOvm
             };
 
-            sOV.ShowDialog();
+            sOv.ShowDialog();
         }
-
-        private void EditCurrentMetadata()
+        
+        private void OpenMetadataManager(CompetitionTaskModel taskModel)
         {
-            MetadataViewModel.Metadata = CompetitionTasks[CompetitionTaskIndex].Metadata;
+            MetadataViewModel.Metadata = taskModel.Metadata;
+            MetadataViewModel.RuleIndex = -1;
 
             var metadataManger = new CompetitionMetadataManagerView
             {
@@ -395,18 +398,6 @@ namespace TASCompAssistant.ViewModels
         private void SetDefaultApplicationSettings()
         {
             ApplicationSettings.SetDefaultValues();
-        }
-
-        private void OpenMetadataManager()
-        {
-            MetadataViewModel.Metadata = EditableCompetitionTask.Metadata;
-
-            var metadataManger = new CompetitionMetadataManagerView
-            {
-                DataContext = MetadataViewModel
-            };
-
-            metadataManger.ShowDialog();
         }
 
         private void RefreshAll()

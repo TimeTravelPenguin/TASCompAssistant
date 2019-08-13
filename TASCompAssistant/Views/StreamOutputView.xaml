@@ -54,6 +54,7 @@
                     <RowDefinition Height="15" />
                     <RowDefinition Height="15" />
                     <RowDefinition Height="15" />
+                    <RowDefinition Height="15" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
@@ -84,44 +85,53 @@
                            Grid.Row="3" />
 
                 <TextBlock
-                    Text="Time:"
+                    Text="{Binding ApplicationSettings.TimeMeasurementName, StringFormat=Delta {0}s:}"
                     Grid.Column="1"
                     Grid.Row="4" />
 
-                <TextBlock Text="{Binding CurrentCompetitor.TimeFormatted}"
+                <TextBlock Text="{Binding CurrentCompetitor.DeltaTimeUnit}"
                            Grid.Column="3"
                            Grid.Row="4" />
 
                 <TextBlock
-                    Text="Rerecords:"
+                    Text="Time:"
                     Grid.Column="1"
                     Grid.Row="5" />
 
-                <TextBlock Text="{Binding CurrentCompetitor.Rerecords}"
+                <TextBlock Text="{Binding CurrentCompetitor.TimeFormatted}"
                            Grid.Column="3"
                            Grid.Row="5" />
 
                 <TextBlock
-                    Text="DQ:"
+                    Text="Rerecords:"
                     Grid.Column="1"
                     Grid.Row="6" />
 
-                <TextBlock Text="{Binding CurrentCompetitor.DQ}"
+                <TextBlock Text="{Binding CurrentCompetitor.Rerecords}"
                            Grid.Column="3"
                            Grid.Row="6" />
 
                 <TextBlock
-                    Text="DQ Reason:"
+                    Text="DQ:"
                     Grid.Column="1"
                     Grid.Row="7" />
 
-                <TextBlock Text="{Binding CurrentCompetitor.DqReasonsAsString}"
+                <TextBlock Text="{Binding CurrentCompetitor.DQ}"
                            Grid.Column="3"
                            Grid.Row="7" />
 
+                <TextBlock
+                    Text="DQ Reason:"
+                    Grid.Column="1"
+                    Grid.Row="8" />
+
+                <TextBlock Text="{Binding CurrentCompetitor.DqReasonsAsString}"
+                           Grid.Column="3"
+                           Grid.Row="8" />
+
                 <telerik:GroupBox Grid.Column="0"
                                   Grid.ColumnSpan="5"
-                                  Grid.Row="9"
+                                  Grid.Row="10"
                                   Grid.RowSpan="2">
                     <GroupBox.Header>
                         <TextBlock Text="Competition Controls" />
@@ -190,6 +200,16 @@
                             Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
                                         RelativeSource={RelativeSource AncestorType={x:Type local:StreamOutputView}},
                                         StringFormat=Total {0}s}" />
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding DeltaTimeUnit}"
+                                    Width="*">
+                    <DataGridTextColumn.Header>
+                        <TextBlock
+                            Text="{Binding DataContext.ApplicationSettings.TimeMeasurementName,
+                                        RelativeSource={RelativeSource AncestorType={x:Type local:StreamOutputView}},
+                                        StringFormat=Delta {0}s}" />
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 

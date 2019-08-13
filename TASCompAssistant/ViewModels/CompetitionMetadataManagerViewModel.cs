@@ -7,7 +7,7 @@
 // File Name: CompetitionMetadataManagerViewModel.cs
 // 
 // Current Data:
-// 2019-08-01 11:18 PM
+// 2019-08-14 12:41 AM
 // 
 // Creation Date:
 // 2019-07-04 7:02 PM
@@ -61,21 +61,18 @@ namespace TASCompAssistant.ViewModels
 
         public CompetitionMetadataManagerViewModel()
         {
-            CommandAddRule = new ActionCommand(() => AddRule());
-            CommandRemoveRule = new ActionCommand(() => RemoveRule());
-            CommandMoveUp = new ActionCommand(() => MoveItemUp());
-            CommandMoveDown = new ActionCommand(() => MoveItemDown());
+            RuleIndex = -1;
 
+            CommandAddRule = new ActionCommand(AddRule);
+            CommandRemoveRule = new ActionCommand(RemoveRule);
+            CommandMoveUp = new ActionCommand(MoveItemUp);
+            CommandMoveDown = new ActionCommand(MoveItemDown);
             CommandCloseWindow = new RelayCommand<Window>(CloseWindow);
         }
 
-
         private void CloseWindow(Window window)
         {
-            if (window != null)
-            {
-                window.Close();
-            }
+            window?.Close();
         }
 
         private void AddRule()
@@ -98,11 +95,12 @@ namespace TASCompAssistant.ViewModels
             }
         }
 
+
+        // BUG: When **MOVING** items, if you do not select the itembox before clicking Up/Down, the selected index does not follow until the window resets
+
         private void MoveItemUp()
         {
-            var currentItemIndex = RuleIndex;
-
-            if (currentItemIndex > 0)
+            if (RuleIndex > 0 && RuleIndex <= Metadata.Rules.Count - 1)
             {
                 Metadata.Rules.Move(RuleIndex, RuleIndex - 1);
             }
@@ -110,9 +108,7 @@ namespace TASCompAssistant.ViewModels
 
         private void MoveItemDown()
         {
-            var currentItemIndex = RuleIndex;
-
-            if (currentItemIndex < Metadata.Rules.Count - 1)
+            if (RuleIndex >= 0 && RuleIndex < Metadata.Rules.Count - 1)
             {
                 Metadata.Rules.Move(RuleIndex, RuleIndex + 1);
             }
