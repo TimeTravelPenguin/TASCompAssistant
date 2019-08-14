@@ -7,7 +7,7 @@
 // File Name: MainWindowViewModel.cs
 // 
 // Current Data:
-// 2019-08-14 12:27 AM
+// 2019-08-14 1:25 PM
 // 
 // Creation Date:
 // 2019-06-16 7:17 PM
@@ -341,7 +341,7 @@ namespace TASCompAssistant.ViewModels
 
             sOv.ShowDialog();
         }
-        
+
         private void OpenMetadataManager(CompetitionTaskModel taskModel)
         {
             MetadataViewModel.Metadata = taskModel.Metadata;

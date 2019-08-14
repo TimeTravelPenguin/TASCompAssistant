@@ -7,7 +7,7 @@
 // File Name: CompetitionMetadataManagerViewModel.cs
 // 
 // Current Data:
-// 2019-08-14 12:41 AM
+// 2019-08-14 1:25 PM
 // 
 // Creation Date:
 // 2019-07-04 7:02 PM
@@ -78,6 +78,8 @@ namespace TASCompAssistant.ViewModels
         private void AddRule()
         {
             var rule = CurrentRule;
+
+            // Check the rule being add isn't entirely whitespace
             if (Regex.Replace(rule, @"\s+", "") != "")
             {
                 Metadata.Rules.Add(CurrentRule);
@@ -87,11 +89,9 @@ namespace TASCompAssistant.ViewModels
 
         private void RemoveRule()
         {
-            var selectedIndex = RuleIndex;
-
-            if (selectedIndex > -1 && selectedIndex < Metadata.Rules.Count)
+            if (RuleIndex > -1 && RuleIndex < Metadata.Rules.Count)
             {
-                Metadata.Rules.RemoveAt(selectedIndex);
+                Metadata.Rules.RemoveAt(RuleIndex);
             }
         }
 
@@ -100,7 +100,8 @@ namespace TASCompAssistant.ViewModels
 
         private void MoveItemUp()
         {
-            if (RuleIndex > 0 && RuleIndex <= Metadata.Rules.Count - 1)
+            // Decrement position
+            if (RuleIndex > 0 && RuleIndex < Metadata.Rules.Count)
             {
                 Metadata.Rules.Move(RuleIndex, RuleIndex - 1);
             }
@@ -108,7 +109,8 @@ namespace TASCompAssistant.ViewModels
 
         private void MoveItemDown()
         {
-            if (RuleIndex >= 0 && RuleIndex < Metadata.Rules.Count - 1)
+            // Increment position
+            if (RuleIndex > -1 && RuleIndex < Metadata.Rules.Count - 1)
             {
                 Metadata.Rules.Move(RuleIndex, RuleIndex + 1);
             }
