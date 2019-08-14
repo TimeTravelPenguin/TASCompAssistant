@@ -28,24 +28,19 @@
     <Grid>
         <!-- Column and Row Definitions to help keep shit neat -->
         <Grid.ColumnDefinitions>
-            <!--v This is padding v-->
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="120" />
-            <!--v This is padding v-->
             <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <!--v This is padding v-->
             <RowDefinition Height="20" />
-            <!--v This is padding v-->
             <RowDefinition Height="5" />
             <RowDefinition Height="20" />
             <RowDefinition Height="275" />
             <RowDefinition Height="*" />
-            <!--v This is padding v-->
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 

@@ -9,7 +9,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
-        Title="Matadata Manager" Height="460" MinHeight="460" Width="420" MinWidth="420"
+        Title="Matadata Manager" Height="460" MinHeight="460" MaxHeight="460" Width="420" MinWidth="420"
         Icon="/TASCompAssistant;component/Icons/QBlock.ico">
 
     <Window.DataContext>
@@ -29,7 +29,7 @@
             <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
 
