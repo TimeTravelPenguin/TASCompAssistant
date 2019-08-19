@@ -29,14 +29,15 @@ namespace TASCompAssistant.Models
     public class GraphModel : PropertyChangedBase
     {
         private Func<double, string> _xFormatter;
-
         private List<string> _xLabels = new List<string>();
         private Func<double, string> _yFormatter;
 
         private ChartValues<ObservablePoint> CompetitionData { get; } = new ChartValues<ObservablePoint>();
         private ChartValues<ObservablePoint> DqData { get; } = new ChartValues<ObservablePoint>();
+        private ChartValues<ObservablePoint> ScoreData { get; } = new ChartValues<ObservablePoint>();
 
-        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection CompDataSeriesCollection { get; set; }
+        public SeriesCollection ScoreDataSeriesCollection { get; set; }
 
         public List<string> XLabels
         {
@@ -48,6 +49,7 @@ namespace TASCompAssistant.Models
             }
         }
 
+        // Formatters must be public
         public Func<double, string> XFormatter
         {
             get => _xFormatter;
@@ -82,7 +84,7 @@ namespace TASCompAssistant.Models
 
         private void CreateSeriesCollection()
         {
-            SeriesCollection = new SeriesCollection
+            CompDataSeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
@@ -95,16 +97,29 @@ namespace TASCompAssistant.Models
                 {
                     Title = "DQ Data",
                     Values = DqData,
-                    LineSmoothness = 1,
+                    LineSmoothness = 0.6,
                     PointForeground = Brushes.Red
+                }
+            };
+
+            ScoreDataSeriesCollection = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Title = "Score Data",
+                    Values = ScoreData,
+                    LineSmoothness = 0.6,
+                    PointForeground = Brushes.Gold
                 }
             };
         }
 
-        public void ParseData(List<CompetitorModel> compData, List<CompetitorModel> dqData)
+        private void ParseData(List<CompetitorModel> compData, List<CompetitorModel> dqData,
+            ObservableCollection<ScoreModel> currentScores)
         {
             CompetitionData.Clear();
             DqData.Clear();
+            ScoreData.Clear();
 
             // Convert competitionData into observable points
             var count = 0;
@@ -122,9 +137,18 @@ namespace TASCompAssistant.Models
                 DqData.Add(new ObservablePoint(offsetX++, item.TimeUnitTotal));
                 XLabels.Add(Convert.ToString(item.Place));
             }
+
+            count = 0;
+            // Convert currentScores into observable points
+            foreach (var item in currentScores)
+            {
+                ScoreData.Add(new ObservablePoint(count++, item.Score));
+                XLabels.Add(Convert.ToString(item.ScorePlace));
+            }
         }
 
-        internal void UpdateData(ObservableCollection<CompetitorModel> currentCompetitors)
+        internal void UpdateData(ObservableCollection<CompetitorModel> currentCompetitors,
+            ObservableCollection<ScoreModel> currentScores)
         {
             var compData = new List<CompetitorModel>();
             var dqData = new List<CompetitorModel>();
@@ -141,7 +165,7 @@ namespace TASCompAssistant.Models
                 }
             }
 
-            ParseData(compData, dqData);
+            ParseData(compData, dqData, currentScores);
         }
     }
 }

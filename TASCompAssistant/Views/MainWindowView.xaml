@@ -213,6 +213,11 @@
             <TabItem Header="Score Leaderboard">
                 <Grid Background="#FFE5E5E5">
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
                     <!-- Datagrid Score -->
                     <DataGrid ItemsSource="{Binding CompetitionScoresCollection, UpdateSourceTrigger=PropertyChanged}"
                               HorizontalGridLinesBrush="DarkGray"
@@ -224,7 +229,8 @@
                               CanUserDeleteRows="False"
                               CanUserAddRows="False"
                               CanUserSortColumns="False"
-                              AutoGenerateColumns="False">
+                              AutoGenerateColumns="False"
+                              Grid.Row="0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Score Place"
                                                 Binding="{Binding ScorePlace}"
@@ -238,12 +244,48 @@
                                                 Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <!-- DataGrid Score Graph -->
+                    <lvc:CartesianChart Series="{Binding GraphData.ScoreDataSeriesCollection}"
+                                        LegendLocation="Top"
+                                        Grid.Row="1">
+
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis
+                                Title="Place"
+                                IsMerged="False"
+                                Labels="{Binding GraphData.XLabels}">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator
+                                        StrokeThickness="1"
+                                        StrokeDashArray="2"
+                                        Stroke="LightGray" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis
+                                Title="Points"
+                                IsMerged="False"
+                                MinValue="0"
+                                LabelFormatter="{Binding GraphData.YFormatter}">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator
+                                        StrokeThickness="1"
+                                        StrokeDashArray="4"
+                                        Stroke="LightGray" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+
+                    </lvc:CartesianChart>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Statistics">
+            <TabItem Header="Task Data">
                 <Grid>
-                    <lvc:CartesianChart Series="{Binding GraphData.SeriesCollection}"
+                    <lvc:CartesianChart Series="{Binding GraphData.CompDataSeriesCollection}"
                                         LegendLocation="Top">
 
                         <lvc:CartesianChart.AxisX>

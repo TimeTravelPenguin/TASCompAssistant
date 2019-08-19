@@ -18,7 +18,7 @@ using TASCompAssistant.Types;
 
 namespace TASCompAssistant.Models
 {
-    internal class ScoreModel : PropertyChangedBase
+    public class ScoreModel : PropertyChangedBase
     {
         private double _score;
         private int _scorePlace;

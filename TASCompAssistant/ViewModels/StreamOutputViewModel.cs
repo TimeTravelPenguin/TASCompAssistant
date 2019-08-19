@@ -120,7 +120,7 @@ namespace TASCompAssistant.ViewModels
 
         private void UpdateGraph()
         {
-            GraphData.UpdateData(CompetitionData);
+            GraphData.UpdateData(CompetitionData, new ObservableCollection<ScoreModel>());
         }
 
         private void RefreshCompetitorDataGrid()

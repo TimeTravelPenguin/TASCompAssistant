@@ -56,7 +56,7 @@ namespace TASCompAssistant.ViewModels
         private int _competitionTaskIndex;
 
         private ObservableCollection<CompetitionTaskModel> _competitionTasks =
-            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Competition 1"}};
+            new ObservableCollection<CompetitionTaskModel> {new CompetitionTaskModel {TaskName = "Task 1"}};
 
         // This is used to bind the DataGrid, to show the Competitors
         private ICollectionView _competitorCollection;
@@ -425,7 +425,7 @@ namespace TASCompAssistant.ViewModels
             // Set up data-grid grouping
             CompetitorCollection = CollectionViewSource.GetDefaultView(CurrentCompetitors);
 
-            /* BUG
+            /* BUG Occures when "refreshing" while an element is mid-edit
              System.InvalidOperationException
              Message='Grouping' is not allowed during an AddNew or EditItem transaction.
              */
@@ -654,7 +654,7 @@ namespace TASCompAssistant.ViewModels
         private void UpdateLiveCharts()
         {
             // Update graph data
-            GraphData.UpdateData(CurrentCompetitors);
+            GraphData.UpdateData(CurrentCompetitors, ScoreTotals);
         }
 
         // TODO: Open the DQReasonsProfileEditorView		

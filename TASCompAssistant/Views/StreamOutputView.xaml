@@ -235,7 +235,7 @@
         <Grid Grid.Row="2"
               Grid.Column="1">
 
-            <lvc:CartesianChart Series="{Binding GraphData.SeriesCollection}"
+            <lvc:CartesianChart Series="{Binding GraphData.CompDataSeriesCollection}"
                                 LegendLocation="Top">
 
                 <lvc:CartesianChart.AxisX>
