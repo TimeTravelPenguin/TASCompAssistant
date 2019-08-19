@@ -116,7 +116,7 @@
         <!-- Put in tabbed thingee -->
         <TabControl Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="2,0,0,0">
             <TabItem Header="Competition Leaderboard">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
 
                     <!-- Datagrid Competition -->
                     <DataGrid ItemsSource="{Binding CompetitorCollection, UpdateSourceTrigger=PropertyChanged}"
@@ -211,7 +211,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Score Leaderboard">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
