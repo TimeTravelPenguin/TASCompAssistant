@@ -257,7 +257,7 @@
                         Title="VIs"
                         IsMerged="False"
                         MinValue="0"
-                        LabelFormatter="{Binding GraphData.YFormatter}">
+                        LabelFormatter="{Binding GraphData.YFormatterCompData}">
                         <lvc:Axis.Separator>
                             <lvc:Separator
                                 StrokeThickness="1"

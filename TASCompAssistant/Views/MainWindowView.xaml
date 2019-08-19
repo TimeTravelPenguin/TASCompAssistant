@@ -240,7 +240,7 @@
                                                 Binding="{Binding Username}"
                                                 Width="*" />
                             <DataGridTextColumn Header="Score"
-                                                Binding="{Binding Score, StringFormat=N2}"
+                                                Binding="{Binding Score}"
                                                 Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -269,7 +269,7 @@
                                 Title="Points"
                                 IsMerged="False"
                                 MinValue="0"
-                                LabelFormatter="{Binding GraphData.YFormatter}">
+                                LabelFormatter="{Binding GraphData.YFormatterScoreData}">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator
                                         StrokeThickness="1"
@@ -307,7 +307,7 @@
                                 Title="VIs"
                                 IsMerged="False"
                                 MinValue="0"
-                                LabelFormatter="{Binding GraphData.YFormatter}">
+                                LabelFormatter="{Binding GraphData.YFormatterCompData}">
                                 <lvc:Axis.Separator>
                                     <lvc:Separator
                                         StrokeThickness="1"

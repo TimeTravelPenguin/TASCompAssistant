@@ -115,7 +115,11 @@ namespace TASCompAssistant.ViewModels
 
         private void UpdateCurrentCompetitor()
         {
-            CurrentCompetitor = new CompetitorModel(CompetitionData[SelectedCompetitorIndex]);
+            // Code only runs if there is an element in the competition collection
+            if (CompetitionData.Count > 0)
+            {
+                CurrentCompetitor = new CompetitorModel(CompetitionData[SelectedCompetitorIndex]);
+            }
         }
 
         private void UpdateGraph()

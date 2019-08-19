@@ -30,7 +30,8 @@ namespace TASCompAssistant.Models
     {
         private Func<double, string> _xFormatter;
         private List<string> _xLabels = new List<string>();
-        private Func<double, string> _yFormatter;
+        private Func<double, string> _yFormatterCompData;
+        private Func<double, string> _yFormatterScoreData;
 
         private ChartValues<ObservablePoint> CompetitionData { get; } = new ChartValues<ObservablePoint>();
         private ChartValues<ObservablePoint> DqData { get; } = new ChartValues<ObservablePoint>();
@@ -60,13 +61,22 @@ namespace TASCompAssistant.Models
             }
         }
 
-        public Func<double, string> YFormatter
+        public Func<double, string> YFormatterCompData
         {
-            get => _yFormatter;
+            get => _yFormatterCompData;
             set
             {
-                _yFormatter = value;
-                OnPropertyChanged("YFormatter");
+                _yFormatterCompData = value;
+                OnPropertyChanged("YFormatterCompData");
+            }
+        }
+        public Func<double, string> YFormatterScoreData
+        {
+            get => _yFormatterScoreData;
+            set
+            {
+                _yFormatterScoreData = value;
+                OnPropertyChanged("YFormatterScoreData");
             }
         }
 
@@ -79,7 +89,8 @@ namespace TASCompAssistant.Models
         private void SetFormatters()
         {
             XFormatter = val => $"{val}";
-            YFormatter = val => $"{val} {Settings.Default.TimeMeasurementName}s";
+            YFormatterCompData = val => $"{val} {Settings.Default.TimeMeasurementName}s";
+            YFormatterScoreData = val => $"{val} pts";
         }
 
         private void CreateSeriesCollection()
