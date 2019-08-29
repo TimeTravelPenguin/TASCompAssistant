@@ -69,13 +69,13 @@ A task is serialized into the following JSON structure (an example competition t
 To elaborate on the properties:
 ### Task metadata
 
-| Variable Name              | Data Type      |
-|----------------------------|----------------|
-| `TaskDescription`          | `string`       |
-| `TaskTimingDescription`    | `string`       |
-| `Rules`                    | `List<string>` |
-| `MandatorySaveState`       | `bool`         |
-| `CooperativeTask`          | `bool`         |
+| Variable Name              | Data Type             |
+|----------------------------|-----------------------|
+| `TaskDescription`          | `string`              |
+| `TaskTimingDescription`    | `string`              |
+| `Rules`                    | `IEnumerable<string>` |
+| `MandatorySaveState`       | `bool`                |
+| `CooperativeTask`          | `bool`                |
 
 - `TaskName` is the name of the current task.
 - `Metadata` contains descriptive guidelines for the task:
