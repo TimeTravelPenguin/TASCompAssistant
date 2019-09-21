@@ -106,9 +106,9 @@ It should be noted that for these properties, the second and millisecond fields 
 |----------------------------|----------------|
 | `Place`                    | `int`          |
 | `Username`                 | `string`       |
-| `TimeUnitStart`            | int            |
-| `TimeUnitEnd`              | int            |
-| `TimeUnitCount`            | int            |
+| `TimeUnitStart`            | `int`          |
+| `TimeUnitEnd`              | `int`          |
+| `TimeUnitCount`            | `int`          |
 | `TimeInSeconds`            | `double`       |
 | `TimeFormatted`            | `string`       |
 | `Rerecords`                | `int`          |
